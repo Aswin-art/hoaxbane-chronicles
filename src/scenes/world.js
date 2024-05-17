@@ -15,6 +15,7 @@ import { gameState } from "../states/index.js";
 // import { healthBar } from "../state/UIComponents/healthbar.js";
 
 export default async function world(k) {
+  console.log(k);
   colorizeBackground(k, 76, 170, 255);
   const mapData = await fetchMapData("./assets/map/world.json");
 

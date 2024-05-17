@@ -1,7 +1,8 @@
 import kaboom from "kaboom";
-import world from "./src/scenes/world";
-import house from "./src/scenes/house";
+import world from "./scenes/world";
+import house from "./scenes/house";
 
+console.log("masuk");
 const k = kaboom({
   width: window.innerWidth,
   height: window.innerHeight,
@@ -9,11 +10,14 @@ const k = kaboom({
   global: false,
 });
 
+console.log("main", k);
+console.log("test-2");
+
 // memuat font
-k.loadFont("gameboy", "/public/assets/fonts/gb.ttf");
+k.loadFont("gameboy", "/assets/fonts/gb.ttf");
 
 // memuat asset gambar
-k.loadSprite("assets", "/public/assets/images/topdownasset.png", {
+k.loadSprite("assets", "/assets/images/topdownasset.png", {
   sliceX: 39,
   sliceY: 31,
   anims: {
@@ -69,7 +73,7 @@ k.loadSprite("assets", "/public/assets/images/topdownasset.png", {
 });
 
 // memuat asset heart (nyawa)
-k.loadSpriteAtlas("/public/assets/images/topdownasset.png", {
+k.loadSpriteAtlas("/assets/images/topdownasset.png", {
   "full-heart": {
     x: 0,
     y: 224,
