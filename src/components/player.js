@@ -39,6 +39,13 @@ function leftPlayerMovementLogic(
 }
 
 export function setPlayerMovement(k, player) {
+  let stopMovement = false;
+
+  player.onCollide("boundaries", () => {
+    stopMovement = true;
+    player.stop();
+  });
+
   k.onKeyDown((key) => {
     // leftPlayerMovementLogic(
     //   k,
@@ -51,6 +58,7 @@ export function setPlayerMovement(k, player) {
     // );
 
     if (gameState.getFreezePlayer()) return;
+    if (stopMovement) return;
 
     if (
       ["left"].includes(key) &&
@@ -136,6 +144,7 @@ export function setPlayerMovement(k, player) {
   k.onKeyRelease(() => {
     player.isAttack = false;
     player.stop();
+    stopMovement = false;
 
     if (player.direction === "up") {
       player.play("player-idle-up");

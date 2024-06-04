@@ -56,7 +56,7 @@ export function generateColliderBoxComponents(k, width, height, pos, tag) {
     k.pos(pos),
     k.body({ isStatic: true }),
     k.offscreen(),
-    tag,
+    tag != "" ? tag : "boundaries",
   ];
 }
 
