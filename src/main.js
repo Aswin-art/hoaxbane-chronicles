@@ -1,17 +1,18 @@
 import kaboom from "kaboom";
 import world from "./scenes/world";
 import house from "./scenes/house";
+import halaman from "./scenes/halaman";
+import hutanKiri from "./scenes/hutanKiri";
+import village from "./scenes/village";
+import bos from "./scenes/bos";
+import battle from "./scenes/battle";
 
-console.log("masuk");
 const k = kaboom({
   width: window.innerWidth,
   height: window.innerHeight,
   letterbox: true,
   global: false,
 });
-
-console.log("main", k);
-console.log("test-2");
 
 // memuat font
 k.loadFont("gameboy", "/assets/fonts/gb.ttf");
@@ -72,6 +73,15 @@ k.loadSprite("assets", "/assets/images/topdownasset.png", {
   },
 });
 
+k.loadSprite("topdown-assets", "/assets/images/tilesheet2.png", {
+  sliceX: 20,
+  sliceY: 98,
+});
+
+k.loadSprite("backpack", "/assets/images/backpack.png");
+
+k.loadSprite("battle-background", "/assets/images/battleBackground.png");
+
 // memuat asset heart (nyawa)
 k.loadSpriteAtlas("/assets/images/topdownasset.png", {
   "full-heart": {
@@ -94,13 +104,20 @@ k.loadSpriteAtlas("/assets/images/topdownasset.png", {
   },
 });
 
+k.add([k.pos(100, 500), k.fixed(), "backpack"]);
+
 const scenes = {
   world,
   house,
+  halaman,
+  hutanKiri,
+  village,
+  bos,
+  battle,
 };
 
 for (const sceneName in scenes) {
   k.scene(sceneName, () => scenes[sceneName](k));
 }
 
-k.go("world");
+k.go("halaman");

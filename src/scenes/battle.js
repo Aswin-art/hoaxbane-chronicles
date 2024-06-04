@@ -1,0 +1,374 @@
+import {
+  colorizeBackground,
+  drawBoundaries,
+  drawTiles,
+  fetchMapData,
+  onAttacked,
+  onCollideWithPlayer,
+} from "../../utils.js";
+import {
+  generatePlayerComponents,
+  setPlayerMovement,
+} from "../components/player.js";
+// import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
+import { gameState } from "../states/index.js";
+import { healthBar } from "../states/healthbar.js";
+import { generateIconComponents } from "../components/icon.js";
+
+const correctSound = new Audio("correct.mp3");
+const wrongSound = new Audio("wrong.mp3");
+const hitSound = new Audio("hit.mp3");
+
+export default async function battle(k) {
+  colorizeBackground(k, 0, 0, 0);
+
+  const map = k.add([
+    k.sprite("battle-background"),
+    k.scale(1.5),
+    k.pos(170, 50),
+  ]);
+
+  const enemyMon = k.add([
+    k.sprite("assets", {
+      anim: "slime-idle-down",
+    }),
+    k.scale(8),
+    k.pos(1000, 200),
+    k.opacity(1),
+    {
+      fainted: false,
+    },
+  ]);
+  enemyMon.flipX = true;
+
+  k.tween(
+    enemyMon.pos.x,
+    1400,
+    0.3,
+    (val) => (enemyMon.pos.x = val),
+    k.easings.easeInSine
+  );
+
+  const playerMon = map.add([
+    k.sprite("assets", {
+      anim: "player-idle-up",
+    }),
+    k.scale(8),
+    k.pos(450, 250),
+    k.opacity(1),
+    {
+      fainted: false,
+    },
+  ]);
+
+  k.tween(
+    playerMon.pos.x,
+    300,
+    0.3,
+    (val) => (playerMon.pos.x = val),
+    k.easings.easeInSine
+  );
+
+  const playerMonHealthBox = k.add([
+    k.rect(400, 100),
+    k.outline(4),
+    k.pos(400, 500),
+  ]);
+
+  playerMonHealthBox.add([
+    k.text("PLAYER", { size: 32, width: 380 }),
+    k.color(10, 10, 10),
+    k.pos(10, 10),
+  ]);
+
+  playerMonHealthBox.add([
+    k.rect(370, 10),
+    k.color(200, 200, 200),
+    k.pos(15, 50),
+  ]);
+
+  const playerMonHealthBar = playerMonHealthBox.add([
+    k.rect(370, 10),
+    k.color(0, 200, 0),
+    k.pos(15, 50),
+  ]);
+
+  k.tween(
+    playerMonHealthBox.pos.x,
+    1200,
+    0.3,
+    (val) => (playerMonHealthBox.pos.x = val),
+    k.easings.easeInSine
+  );
+
+  const enemyMonHealthBox = k.add([
+    k.rect(400, 100),
+    k.outline(4),
+    k.pos(-100, 100),
+  ]);
+
+  enemyMonHealthBox.add([
+    k.text("MONSTER", { size: 32, width: 380 }),
+    k.color(10, 10, 10),
+    k.pos(10, 10),
+  ]);
+
+  enemyMonHealthBox.add([
+    k.rect(370, 10),
+    k.color(200, 200, 200),
+    k.pos(15, 50),
+  ]);
+
+  const enemyMonHealthBar = enemyMonHealthBox.add([
+    k.rect(370, 10),
+    k.color(0, 200, 0),
+    k.pos(15, 50),
+  ]);
+
+  k.tween(
+    enemyMonHealthBox.pos.x,
+    250,
+    0.3,
+    (val) => (enemyMonHealthBox.pos.x = val),
+    k.easings.easeInSine
+  );
+
+  const box = k.add([k.rect(1300, 300), k.outline(4), k.pos(300, 650)]);
+
+  const content = box.add([
+    k.text(
+      "Kalahkan monster dengan memilih jawaban yang tepat! Tekan enter untuk memulai.",
+      { size: 32, width: 1260 }
+    ),
+    k.color(10, 10, 10),
+    k.pos(20, 20),
+  ]);
+
+  const timerContainer = k.add([k.rect(1535, 30), k.pos(170, 5), k.outline(2)]);
+  const timerBar = timerContainer.add([k.rect(1535, 30), k.color(0, 200, 0)]);
+  const timerText = timerContainer.add([
+    k.text(`Time: 30`, { size: 24 }),
+    k.color(10, 10, 10),
+    k.pos(750, 5),
+  ]);
+
+  const questions = [
+    {
+      question: "Apa ibu kota Indonesia?",
+      answers: ["Jakarta", "Bandung", "Surabaya", "Medan"],
+      correct: 0,
+    },
+    {
+      question: "Berapa jumlah provinsi di Indonesia?",
+      answers: ["33", "34", "35", "36"],
+      correct: 1,
+    },
+    // Tambahkan pertanyaan lainnya di sini
+  ];
+
+  let currentQuestionIndex = 0;
+  let selectedAnswerIndex = 0;
+  let phase = "intro";
+  let answerElements = [];
+  let canProceed = false;
+  let timer = 30;
+  let timerInterval;
+
+  function startTimer() {
+    timer = 30;
+    timerText.text = `Time: ${timer}`;
+    timerBar.width = 1535;
+
+    timerInterval = setInterval(() => {
+      if (phase !== "question") {
+        clearInterval(timerInterval);
+        return;
+      }
+      timer--;
+      timerText.text = `Time: ${timer}`;
+      timerBar.width = (timer / 30) * 1535;
+      if (timer <= 0) {
+        clearInterval(timerInterval);
+        handleIncorrectAnswer();
+      }
+    }, 1000);
+  }
+
+  function displayQuestion() {
+    if (phase === "end") return;
+    const question = questions[currentQuestionIndex];
+    content.text = question.question;
+
+    answerElements.forEach((element) => element.destroy());
+    answerElements = [];
+
+    question.answers.forEach((answer, index) => {
+      const answerElement = box.add([
+        k.text(answer, { size: 32, width: 1260 }),
+        k.color(index === selectedAnswerIndex ? 255 : 10, 10, 10),
+        k.pos(20, 80 + index * 40),
+        { tag: "answers" },
+      ]);
+      answerElements.push(answerElement);
+    });
+  }
+
+  function reduceHealth(healthBar, damageDealt, mon) {
+    k.tween(
+      healthBar.width,
+      healthBar.width - damageDealt,
+      0.5,
+      (val) => (healthBar.width = val),
+      k.easings.easeInSine
+    ).then(() => {
+      makeMonFlash(mon);
+    });
+  }
+
+  function makeMonFlash(mon) {
+    k.tween(
+      mon.opacity,
+      0,
+      0.3,
+      (val) => {
+        mon.opacity = val;
+        if (mon.opacity === 0) {
+          mon.opacity = 1;
+        }
+      },
+      k.easings.easeInBounce
+    );
+  }
+
+  function colorizeHealthBar(healthBar) {
+    if (healthBar.width < 200) {
+      healthBar.use(k.color(250, 150, 0));
+    }
+
+    if (healthBar.width < 100) {
+      healthBar.use(k.color(200, 0, 0));
+    }
+  }
+
+  function makeMonDrop(mon) {
+    k.tween(
+      mon.pos.y,
+      800,
+      0.5,
+      (val) => (mon.pos.y = val),
+      k.easings.easeInSine
+    );
+  }
+
+  function handleCorrectAnswer() {
+    content.text = "Jawaban benar!";
+    const timeBonus = timer > 20 ? 2 : 1;
+    const baseHit = 20;
+    const hit = baseHit * timeBonus;
+    const criticalChance = timer > 20 ? Math.random() : 0;
+    const damageDealt = criticalChance > 0.8 ? hit * 2 : hit;
+    reduceHealth(enemyMonHealthBar, damageDealt, enemyMon);
+    // correctSound.play();
+    nextQuestion();
+  }
+
+  function handleIncorrectAnswer() {
+    content.text = "Jawaban salah!";
+    const baseHit = 20;
+    const hit = timer < 10 ? baseHit - 10 : baseHit;
+    const damageDealt = hit;
+    reduceHealth(playerMonHealthBar, damageDealt, playerMon);
+    // wrongSound.play();
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    clearInterval(timerInterval);
+    if (phase === "end") {
+      answerElements.forEach((element) => element.destroy());
+      k.destroyAll("answers");
+      content.text =
+        "Pertandingan berakhir. Tekan Enter untuk kembali ke dunia.";
+      k.onKeyPress("enter", () => {
+        k.go(gameState.getPreviousScene());
+      });
+      return;
+    }
+
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+    phase = "answer";
+
+    setTimeout(() => {
+      if (phase !== "end") {
+        phase = "question";
+        displayQuestion();
+        startTimer();
+      }
+    }, 2000);
+  }
+
+  k.onKeyPress("enter", () => {
+    if (phase === "intro") {
+      phase = "question";
+      displayQuestion();
+      startTimer();
+    }
+
+    if (phase === "end") {
+      k.go(gameState.getPreviousScene());
+    }
+  });
+
+  k.onKeyPress("up", () => {
+    if (phase !== "question") return;
+    selectedAnswerIndex =
+      (selectedAnswerIndex -
+        1 +
+        questions[currentQuestionIndex].answers.length) %
+      questions[currentQuestionIndex].answers.length;
+    displayQuestion();
+  });
+
+  k.onKeyPress("down", () => {
+    if (phase !== "question") return;
+    selectedAnswerIndex =
+      (selectedAnswerIndex + 1) %
+      questions[currentQuestionIndex].answers.length;
+    displayQuestion();
+  });
+
+  k.onKeyPress("space", () => {
+    if (phase !== "question") return;
+
+    if (selectedAnswerIndex === questions[currentQuestionIndex].correct) {
+      handleCorrectAnswer();
+    } else {
+      handleIncorrectAnswer();
+    }
+  });
+
+  k.onUpdate(() => {
+    colorizeHealthBar(playerMonHealthBar);
+    colorizeHealthBar(enemyMonHealthBar);
+
+    if (enemyMonHealthBar.width < 0 && !enemyMon.fainted) {
+      makeMonDrop(enemyMon);
+      content.text =
+        "Monster kalah! Kamu memenangkan pertandingan, tekan enter untuk kembali!";
+      enemyMon.fainted = true;
+      phase = "end";
+      canProceed = true;
+      k.destroyAll("answers");
+    }
+
+    if (playerMonHealthBar.width < 0 && !playerMon.fainted) {
+      makeMonDrop(playerMon);
+      content.text =
+        "Kamu kalah! Tingkatkan level terlebih dahulu, tekan enter untuk kembali!";
+      playerMon.fainted = true;
+      phase = "end";
+      canProceed = true;
+      k.destroyAll("answers");
+    }
+  });
+}

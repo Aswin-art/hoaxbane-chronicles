@@ -14,16 +14,17 @@ import {
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import { generateIconComponents } from "../components/icon.js";
+import { generateSlimeComponents } from "../components/slime.js";
 
-export default async function world(k) {
+export default async function hutanKiri(k) {
   colorizeBackground(k, 76, 170, 255);
-  const mapData = await fetchMapData("./assets/map/world.json");
+  const mapData = await fetchMapData("./assets/map/hutan-kiri.json");
 
-  const map = k.add([k.pos(0, 0)]);
+  const map = k.add([k.pos(768, 300)]);
 
   const entities = {
     player: null,
-    slimes: [],
+    monster: null,
   };
 
   const layers = mapData.layers;
@@ -54,19 +55,26 @@ export default async function world(k) {
           );
         }
 
-        // if (object.name === "slime") {
-        //   entities.slimes.push(
-        //     map.add(generateSlimeComponents(k, k.vec2(object.x, object.y)))
-        //   );
-        // }
+        if (object.name === "monster") {
+          entities.monster = map.add(
+            generateSlimeComponents(k, k.vec2(object.x, object.y))
+          );
+        }
       }
       continue;
     }
 
-    drawTiles(k, "assets", map, layer, mapData.tileheight, mapData.tilewidth);
+    drawTiles(
+      k,
+      "topdown-assets",
+      map,
+      layer,
+      mapData.tileheight,
+      mapData.tilewidth
+    );
   }
 
-  k.camScale(6);
+  k.camScale(5);
   k.camPos(entities.player.worldPos());
 
   k.onUpdate(async () => {
@@ -83,22 +91,41 @@ export default async function world(k) {
 
   setPlayerMovement(k, entities.player);
 
-  //   for (const slime of entities.slimes) {
-  //     setSlimeAI(k, slime);
-  //     onAttacked(k, slime, entities.player);
-  //     onCollideWithPlayer(k, slime);
-  //   }
+  //   //   for (const slime of entities.slimes) {
+  //   //     setSlimeAI(k, slime);
+  //   //     onAttacked(k, slime, entities.player);
+  //   //     onCollideWithPlayer(k, slime);
+  //   //   }
 
-  entities.player.onCollide("door-entrance", () => {
-    gameState.setPreviousScene("world");
-    k.go("house");
+  entities.player.onCollide("exit-village", () => {
+    gameState.setPreviousScene("hutanKiri");
+    k.go("halaman");
   });
 
-  entities.player.onCollide("dungeon-door-entrance", () => {
-    gameState.setPreviousScene("world");
-    k.go("dungeon");
+  function flashScreen() {
+    const flash = k.add([
+      k.rect(window.innerWidth, window.innerHeight),
+      k.color(10, 10, 10),
+      k.fixed(),
+      k.opacity(0),
+    ]);
+    k.tween(
+      flash.opacity,
+      1,
+      0.5,
+      (val) => (flash.opacity = val),
+      k.easings.easeInBounce
+    );
+  }
+
+  entities.player.onCollide("monster", () => {
+    flashScreen();
+    setTimeout(() => {
+      gameState.setPreviousScene("hutanKiri");
+      k.go("battle");
+    }, 1000);
   });
 
   healthBar(k);
-  generateIconComponents(k);
+  //   generateIconComponents(k);
 }

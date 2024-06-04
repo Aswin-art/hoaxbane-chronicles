@@ -14,7 +14,7 @@ import {
   setPlayerMovement,
 } from "../components/player.js";
 import { gameState } from "../states/index.js";
-// import { healthBar } from "../state/UIComponents/healthbar.js";
+import { healthBar } from "../states/healthbar.js";
 
 export default async function house(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -85,5 +85,5 @@ export default async function house(k) {
     k.go("world");
   });
 
-  // healthBar(k);
+  healthBar(k);
 }

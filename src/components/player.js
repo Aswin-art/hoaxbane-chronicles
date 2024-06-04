@@ -3,6 +3,7 @@ import { gameState, playerState } from "../states/index.js";
 
 export function generatePlayerComponents(k, pos) {
   return [
+    // k.scale(1.2),
     k.sprite("assets", {
       anim: "player-idle-down",
     }),
@@ -52,7 +53,7 @@ export function setPlayerMovement(k, player) {
     if (gameState.getFreezePlayer()) return;
 
     if (
-      ["left", "a"].includes(key) &&
+      ["left"].includes(key) &&
       !areAnyOfTheseKeysDown(k, ["up", "down", "w", "s"])
     ) {
       player.flipX = true;
@@ -62,7 +63,7 @@ export function setPlayerMovement(k, player) {
     }
 
     if (
-      ["right", "d"].includes(key) &&
+      ["right"].includes(key) &&
       !areAnyOfTheseKeysDown(k, ["up", "down", "w", "s"])
     ) {
       player.flipX = false;
@@ -71,13 +72,13 @@ export function setPlayerMovement(k, player) {
       player.direction = "right";
     }
 
-    if (["up", "w"].includes(key)) {
+    if (["up"].includes(key)) {
       playAnimIfNotPlaying(player, "player-up");
       player.move(0, -player.speed);
       player.direction = "up";
     }
 
-    if (["down", "s"].includes(key)) {
+    if (["down"].includes(key)) {
       playAnimIfNotPlaying(player, "player-down");
       player.move(0, player.speed);
       player.direction = "down";

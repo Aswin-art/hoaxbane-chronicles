@@ -18,13 +18,13 @@ export function colorizeBackground(k, r, g, b) {
 }
 
 export async function fetchMapData(mapPath) {
-  //   const response = await fetch(mapPath);
-  //   const json = await response.json();
+  // const response = await fetch(mapPath);
+  // const json = await response.json();
   //   OR
   return await (await fetch(mapPath)).json();
 }
 
-export function drawTiles(k, map, layer, tileheight, tilewidth) {
+export function drawTiles(k, assets, map, layer, tileheight, tilewidth) {
   let number_of_drawn_tiles = 0;
   const tile_pos = k.vec2(0, 0);
 
@@ -43,7 +43,7 @@ export function drawTiles(k, map, layer, tileheight, tilewidth) {
     }
 
     map.add([
-      k.sprite("assets", { frame: tile - 1 }),
+      k.sprite(assets, { frame: tile - 1 }),
       k.pos(tile_pos),
       k.offscreen(),
     ]);
