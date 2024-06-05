@@ -119,3 +119,7 @@ export function onCollideWithPlayer(k, entity) {
     }
   });
 }
+
+export async function getRandomQuestion() {
+  const query = await fetch("https://digital-odyssey-sable.vercel.app/");
+}

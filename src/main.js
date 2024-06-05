@@ -6,6 +6,8 @@ import hutanKiri from "./scenes/hutanKiri";
 import village from "./scenes/village";
 import bos from "./scenes/bos";
 import battle from "./scenes/battle";
+import hutanAtas from "./scenes/hutanAtas";
+import hutanBawah from "./scenes/hutanBawah";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -104,6 +106,34 @@ k.loadSpriteAtlas("/assets/images/topdownasset.png", {
   },
 });
 
+// memuat asset keys (arrow key)
+k.loadSpriteAtlas("/assets/images/keys.png", {
+  "arrow-up": {
+    x: 28,
+    y: 30,
+    width: 75,
+    height: 75,
+  },
+  "arrow-right": {
+    x: 318,
+    y: 33,
+    width: 72,
+    height: 72,
+  },
+  "arrow-left": {
+    x: 220,
+    y: 30,
+    width: 75,
+    height: 75,
+  },
+  "arrow-down": {
+    x: 127,
+    y: 33,
+    width: 72,
+    height: 70,
+  },
+});
+
 k.add([k.pos(100, 500), k.fixed(), "backpack"]);
 
 const scenes = {
@@ -111,6 +141,8 @@ const scenes = {
   house,
   halaman,
   hutanKiri,
+  hutanAtas,
+  hutanBawah,
   village,
   bos,
   battle,

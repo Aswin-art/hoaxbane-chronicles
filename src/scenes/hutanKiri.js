@@ -126,6 +126,6 @@ export default async function hutanKiri(k) {
     }, 1000);
   });
 
-  healthBar(k);
+  // healthBar(k);
   //   generateIconComponents(k);
 }

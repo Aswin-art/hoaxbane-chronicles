@@ -14,6 +14,7 @@ import {
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import { generateIconComponents } from "../components/icon.js";
+import { generateSlimeComponents } from "../components/slime.js";
 
 export default async function bos(k) {
   colorizeBackground(k, 76, 170, 255);
@@ -23,7 +24,7 @@ export default async function bos(k) {
 
   const entities = {
     player: null,
-    slimes: [],
+    boss: null,
   };
 
   const layers = mapData.layers;
@@ -54,11 +55,11 @@ export default async function bos(k) {
           );
         }
 
-        // if (object.name === "slime") {
-        //   entities.slimes.push(
-        //     map.add(generateSlimeComponents(k, k.vec2(object.x, object.y)))
-        //   );
-        // }
+        if (object.name === "boss") {
+          entities.boss = map.add(
+            generateSlimeComponents(k, k.vec2(object.x, object.y))
+          );
+        }
       }
       continue;
     }
@@ -73,7 +74,7 @@ export default async function bos(k) {
     );
   }
 
-  k.camScale(6);
+  k.camScale(5);
   k.camPos(entities.player.worldPos());
 
   k.onUpdate(async () => {
@@ -101,11 +102,35 @@ export default async function bos(k) {
     k.go("hutanKiri");
   });
 
+  function flashScreen() {
+    const flash = k.add([
+      k.rect(window.innerWidth, window.innerHeight),
+      k.color(10, 10, 10),
+      k.fixed(),
+      k.opacity(0),
+    ]);
+    k.tween(
+      flash.opacity,
+      1,
+      0.5,
+      (val) => (flash.opacity = val),
+      k.easings.easeInBounce
+    );
+  }
+
+  entities.player.onCollide("monster", () => {
+    flashScreen();
+    setTimeout(() => {
+      gameState.setPreviousScene("bos");
+      k.go("battle");
+    }, 1000);
+  });
+
   //   entities.player.onCollide("dungeon-door-entrance", () => {
   //     gameState.setPreviousScene("world");
   //     k.go("dungeon");
   //   });
 
-  healthBar(k);
+  // healthBar(k);
   //   generateIconComponents(k);
 }

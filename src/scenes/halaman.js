@@ -14,6 +14,7 @@ import {
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import { generateIconComponents } from "../components/icon.js";
+import { keys } from "../states/keys.js";
 
 export default async function halaman(k) {
   colorizeBackground(k, 76, 170, 255);
@@ -97,15 +98,17 @@ export default async function halaman(k) {
   //   //   }
 
   entities.player.onCollide("exit-village", () => {
-    gameState.setPreviousScene("world");
-    k.go("hutanKiri");
+    gameState.setPreviousScene("halaman");
+    k.go("hutanBawah");
   });
+
+  keys(k);
 
   //   entities.player.onCollide("dungeon-door-entrance", () => {
   //     gameState.setPreviousScene("world");
   //     k.go("dungeon");
   //   });
 
-  healthBar(k);
+  // healthBar(k);
   //   generateIconComponents(k);
 }
