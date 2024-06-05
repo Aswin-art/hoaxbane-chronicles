@@ -13,14 +13,14 @@ import {
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
-import { generateIconComponents } from "../components/icon.js";
+import { generateIconsComponents } from "../components/icons.js";
 import { keys } from "../states/keys.js";
 
 export default async function halaman(k) {
-  colorizeBackground(k, 76, 170, 255);
+  colorizeBackground(k, 0, 0, 0);
   const mapData = await fetchMapData("/assets/map/halaman-rumah.json");
 
-  const map = k.add([k.pos(768, 300)]);
+  const map = k.add([k.pos(0, 0)]);
 
   const entities = {
     player: null,
@@ -110,5 +110,5 @@ export default async function halaman(k) {
   //   });
 
   // healthBar(k);
-  //   generateIconComponents(k);
+  generateIconsComponents(k);
 }

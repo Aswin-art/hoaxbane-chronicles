@@ -13,7 +13,7 @@ import {
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
-import { generateIconComponents } from "../components/icon.js";
+import { generateIconsComponents } from "../components/icons.js";
 import { generateSlimeComponents } from "../components/slime.js";
 
 export default async function hutanAtas(k) {
@@ -127,5 +127,5 @@ export default async function hutanAtas(k) {
   });
 
   // healthBar(k);
-  //   generateIconComponents(k);
+  //   generateIconsComponents(k);
 }

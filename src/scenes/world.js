@@ -13,7 +13,7 @@ import {
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
-import { generateIconComponents } from "../components/icon.js";
+import { generateIconsComponents } from "../components/icons.js";
 
 export default async function world(k) {
   colorizeBackground(k, 76, 170, 255);
@@ -100,5 +100,5 @@ export default async function world(k) {
   });
 
   healthBar(k);
-  generateIconComponents(k);
+  generateIconsComponents(k);
 }

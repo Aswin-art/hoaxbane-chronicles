@@ -118,7 +118,7 @@ k.loadSpriteAtlas("/assets/images/keys.png", {
     x: 318,
     y: 33,
     width: 72,
-    height: 72,
+    height: 68,
   },
   "arrow-left": {
     x: 220,
@@ -130,7 +130,23 @@ k.loadSpriteAtlas("/assets/images/keys.png", {
     x: 127,
     y: 33,
     width: 72,
-    height: 70,
+    height: 68,
+  },
+});
+
+// memuat asset icons (quest, map)
+k.loadSpriteAtlas("/assets/images/items.png", {
+  "quest-icon": {
+    x: 6,
+    y: 71,
+    width: 21,
+    height: 21,
+  },
+  "map-icon": {
+    x: 6,
+    y: 365,
+    width: 21,
+    height: 21,
   },
 });
 

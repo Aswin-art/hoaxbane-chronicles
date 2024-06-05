@@ -13,7 +13,7 @@ import {
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
-import { generateIconComponents } from "../components/icon.js";
+import { generateIconsComponents } from "../components/icons.js";
 
 const correctSound = new Audio("correct.mp3");
 const wrongSound = new Audio("wrong.mp3");
