@@ -17,7 +17,7 @@ import {
 } from "../components/icons.js";
 
 export default async function halaman(k) {
-  colorizeBackground(k, 0, 0, 0);
+  colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("/assets/map/halaman-rumah.json");
 
   const map = k.add([k.pos(0, 0)]);
@@ -90,10 +90,10 @@ export default async function halaman(k) {
     k.go("village");
   });
 
-  //   entities.player.onCollide("dungeon-door-entrance", () => {
-  //     gameState.setPreviousScene("world");
-  //     k.go("dungeon");
-  //   });
+  entities.player.onCollide("exit-rumah", () => {
+    gameState.setPreviousScene("halaman");
+    k.go("house");
+  });
 
   healthBar(k);
   generateIconsComponents(k);

@@ -21,7 +21,7 @@ import {
 import { generateSlimeComponents } from "../components/slime.js";
 
 export default async function hutanKiri(k) {
-  colorizeBackground(k, 0, 0, 0);
+  colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("./assets/map/hutan-kiri.json");
 
   const map = k.add([k.pos(0, 0)]);

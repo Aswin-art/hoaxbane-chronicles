@@ -20,7 +20,7 @@ import {
 } from "../components/icons.js";
 
 export default async function village(k) {
-  colorizeBackground(k, 0, 0, 0);
+  colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("/assets/map/village.json");
 
   const map = k.add([k.pos(0, 0)]);

@@ -23,7 +23,7 @@ const playerMaxHealth = playerState.getMaxHealth();
 const playerHealth = playerState.getHealth();
 
 export default async function battle(k) {
-  colorizeBackground(k, 0, 0, 0);
+  colorizeBackground(k, 27, 29, 52);
 
   const map = k.add([
     k.sprite("battle-background"),

@@ -15,10 +15,15 @@ import {
 } from "../components/player.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
+import {
+  generateArrowKeyComponents,
+  generateIconsComponents,
+  generateInventoryBarComponents,
+} from "../components/icons.js";
 
 export default async function house(k) {
   colorizeBackground(k, 27, 29, 52);
-  const mapData = await fetchMapData("./assets/map/house.json");
+  const mapData = await fetchMapData("/assets/map/house.json");
 
   const map = k.add([k.pos(0, 0)]);
 
@@ -42,17 +47,11 @@ export default async function house(k) {
             generatePlayerComponents(k, k.vec2(object.x, object.y))
           );
         }
-
-        if (object.name === "oldman") {
-          entities.oldman = map.add(
-            generateNPCComponents(k, k.vec2(object.x, object.y))
-          );
-        }
       }
       continue;
     }
 
-    drawTiles(k, map, layer, mapData.tileheight, mapData.tilewidth);
+    drawTiles(k, "assets", map, layer, mapData.tileheight, mapData.tilewidth);
   }
 
   k.camScale(6);
@@ -72,18 +71,13 @@ export default async function house(k) {
 
   setPlayerMovement(k, entities.player);
 
-  entities.player.onCollide("oldman", () => {
-    startInteraction(k, entities.oldman, entities.player);
-  });
-
-  entities.player.onCollideEnd("oldman", () => {
-    endInteraction(entities.oldman);
-  });
-
   entities.player.onCollide("door-exit", () => {
     gameState.setPreviousScene("house");
-    k.go("world");
+    k.go("halaman");
   });
 
   healthBar(k);
+  generateIconsComponents(k);
+  generateArrowKeyComponents(k);
+  generateInventoryBarComponents(k);
 }
