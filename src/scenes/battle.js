@@ -91,9 +91,6 @@ export default async function battle(k) {
   ]);
 
   const playerMonHealthBar = playerMonHealthBox.add([
-    // k.rect(370, 10),
-    // k.color(0, 200, 0),
-    // k.pos(15, 50),
     k.rect((playerHealth / playerMaxHealth) * 370, 10),
     k.color(0, 200, 0),
     k.pos(15, 50),
@@ -290,7 +287,7 @@ export default async function battle(k) {
   function handleCorrectAnswer() {
     content.text = "Jawaban benar!";
     const timeBonus = timer > 20 ? 2 : 1;
-    const baseHit = 20;
+    const baseHit = 100;
     const hit = baseHit * timeBonus;
     const criticalChance = timer > 20 ? Math.random() : 0;
     const damageDealt = criticalChance > 0.8 ? hit * 2 : hit;
@@ -330,6 +327,35 @@ export default async function battle(k) {
         startTimer();
       }
     }, 2000);
+  }
+
+  function showGameOverModal(text) {
+    const modal = k.add([
+      k.rect(600, 300),
+      k.pos(k.width() / 2 - 300, k.height() / 2 - 150),
+      k.color(0, 0, 0),
+      k.opacity(0.8),
+      k.fixed(),
+      "gameOverModal",
+    ]);
+
+    modal.add([
+      k.text(text, { size: 32, width: 580, align: "center" }),
+      k.color(255, 255, 255),
+      k.pos(20, 100),
+      k.fixed(),
+    ]);
+
+    modal.add([
+      k.text("Tekan 'Enter' untuk kembali!", {
+        size: 32,
+        width: 580,
+        align: "center",
+      }),
+      k.color(255, 255, 255),
+      k.pos(20, 200),
+      k.fixed(),
+    ]);
   }
 
   k.onKeyPress("enter", () => {
@@ -376,10 +402,9 @@ export default async function battle(k) {
     colorizeHealthBar(playerMonHealthBar);
     colorizeHealthBar(enemyMonHealthBar);
 
-    if (enemyMonHealthBar.width < 0 && !enemyMon.fainted) {
+    if (enemyMonHealthBar.width <= 0 && !enemyMon.fainted) {
       makeMonDrop(enemyMon);
-      content.text =
-        "Monster kalah! Kamu memenangkan pertandingan, tekan enter untuk kembali!";
+      showGameOverModal("Monster kalah! Kamu memenangkan pertandingan!");
       enemyMon.fainted = true;
       playerState.setCoin(20);
       phase = "end";
@@ -387,10 +412,9 @@ export default async function battle(k) {
       k.destroyAll("answers");
     }
 
-    if (playerState.getHealth() < 0 && !playerMon.fainted) {
+    if (playerState.getHealth() <= 0 && !playerMon.fainted) {
       makeMonDrop(playerMon);
-      content.text =
-        "Kamu kalah! Jawab pertanyaan dengan benar, tekan enter untuk kembali!";
+      showGameOverModal("Kamu kalah! Jawab pertanyaan dengan benar!");
       playerMon.fainted = true;
       phase = "end";
       canProceed = true;
