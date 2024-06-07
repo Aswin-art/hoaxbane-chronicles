@@ -18,8 +18,8 @@ const indonesia = [
   [
     "Pahlawan, para monster ganas muncul dari arah hutan sebelah barat!",
     "Para monster telah menyerang! menyebabkan kekacauan dan ketakutan.",
-    "Kami membutuhkan seseorang yang berani untuk menghadapi mereka.",
-    "Bisakah kamu menaklukkan monster-monster tersebut?",
+    "Pergi ke hutan barat dan kalah monster tersebut!",
+    "Aku akan memberimu hadiah yang bagus!",
   ],
   [
     "Cepat! orang - orang memerlukan bantuanmu",

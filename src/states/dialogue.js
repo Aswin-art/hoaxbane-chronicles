@@ -6,7 +6,7 @@ async function displayLine(textContainer, line) {
       setTimeout(() => {
         textContainer.text += char;
         resolve();
-      }, 10);
+      }, 5);
     });
   }
 }
