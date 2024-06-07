@@ -1,10 +1,10 @@
 import { playAnimIfNotPlaying } from "../../utils.js";
 
 const directionalState = ["left", "right", "up", "down"];
-export function generateSlimeComponents(k, pos) {
+export function generateSlimeComponents(k, pos, slimePosition) {
   return [
     k.sprite("assets", {
-      anim: "slime-side",
+      anim: slimePosition,
     }),
     k.area({ shape: new k.Rect(k.vec2(0, 6), 16, 10) }),
     k.body({ isStatic: true }),

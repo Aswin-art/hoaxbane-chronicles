@@ -13,14 +13,18 @@ import {
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
-import { generateIconsComponents } from "../components/icons.js";
+import {
+  generateArrowKeyComponents,
+  generateIconsComponents,
+  generateInventoryBarComponents,
+} from "../components/icons.js";
 import { generateSlimeComponents } from "../components/slime.js";
 
 export default async function hutanKiri(k) {
-  colorizeBackground(k, 76, 170, 255);
+  colorizeBackground(k, 0, 0, 0);
   const mapData = await fetchMapData("./assets/map/hutan-kiri.json");
 
-  const map = k.add([k.pos(768, 300)]);
+  const map = k.add([k.pos(0, 0)]);
 
   const entities = {
     player: null,
@@ -57,7 +61,11 @@ export default async function hutanKiri(k) {
 
         if (object.name === "monster") {
           entities.monster = map.add(
-            generateSlimeComponents(k, k.vec2(object.x, object.y))
+            generateSlimeComponents(
+              k,
+              k.vec2(object.x, object.y),
+              "slime-idle-side"
+            )
           );
         }
       }
@@ -99,7 +107,7 @@ export default async function hutanKiri(k) {
 
   entities.player.onCollide("exit-village", () => {
     gameState.setPreviousScene("hutanKiri");
-    k.go("halaman");
+    k.go("village");
   });
 
   function flashScreen() {
@@ -126,6 +134,8 @@ export default async function hutanKiri(k) {
     }, 1000);
   });
 
-  // healthBar(k);
-  //   generateIconsComponents(k);
+  healthBar(k);
+  generateIconsComponents(k);
+  generateArrowKeyComponents(k);
+  generateInventoryBarComponents(k);
 }

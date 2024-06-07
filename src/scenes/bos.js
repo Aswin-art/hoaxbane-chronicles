@@ -17,10 +17,10 @@ import { generateIconsComponents } from "../components/icons.js";
 import { generateSlimeComponents } from "../components/slime.js";
 
 export default async function bos(k) {
-  colorizeBackground(k, 76, 170, 255);
+  colorizeBackground(k, 0, 0, 0);
   const mapData = await fetchMapData("/assets/map/boss.json");
 
-  const map = k.add([k.pos(768, 300)]);
+  const map = k.add([k.pos(0, 0)]);
 
   const entities = {
     player: null,
@@ -57,7 +57,11 @@ export default async function bos(k) {
 
         if (object.name === "boss") {
           entities.boss = map.add(
-            generateSlimeComponents(k, k.vec2(object.x, object.y))
+            generateSlimeComponents(
+              k,
+              k.vec2(object.x, object.y),
+              "slime-idle-down"
+            )
           );
         }
       }

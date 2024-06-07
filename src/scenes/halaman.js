@@ -3,14 +3,11 @@ import {
   drawBoundaries,
   drawTiles,
   fetchMapData,
-  onAttacked,
-  onCollideWithPlayer,
 } from "../../utils.js";
 import {
   generatePlayerComponents,
   setPlayerMovement,
 } from "../components/player.js";
-// import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import {
@@ -42,7 +39,7 @@ export default async function halaman(k) {
       for (const object of layer.objects) {
         if (
           object.name === "player-entrance" &&
-          gameState.getPreviousScene() === "hutanKiri"
+          gameState.getPreviousScene() === "village"
         ) {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
@@ -51,18 +48,12 @@ export default async function halaman(k) {
 
         if (
           object.name === "player" &&
-          gameState.getPreviousScene() !== "hutanKiri"
+          gameState.getPreviousScene() !== "village"
         ) {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
           );
         }
-
-        // if (object.name === "slime") {
-        //   entities.slimes.push(
-        //     map.add(generateSlimeComponents(k, k.vec2(object.x, object.y)))
-        //   );
-        // }
       }
       continue;
     }
@@ -93,12 +84,6 @@ export default async function halaman(k) {
   });
 
   setPlayerMovement(k, entities.player);
-
-  //   //   for (const slime of entities.slimes) {
-  //   //     setSlimeAI(k, slime);
-  //   //     onAttacked(k, slime, entities.player);
-  //   //     onCollideWithPlayer(k, slime);
-  //   //   }
 
   entities.player.onCollide("exit-village", () => {
     gameState.setPreviousScene("halaman");
