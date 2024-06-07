@@ -49,7 +49,11 @@ export async function startInteraction(k, npc, player) {
   }
 
   if (responses[numberTalked]) {
-    await dialogue(k, k.vec2(500, 700), responses[numberTalked]);
+    await dialogue(
+      k,
+      k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+      responses[numberTalked]
+    );
     NPCState.setNumberTalkedOldMan(numberTalked + 1);
   }
 }
