@@ -80,8 +80,6 @@ k.loadSprite("topdown-assets", "/assets/images/tilesheet2.png", {
   sliceY: 98,
 });
 
-k.loadSprite("backpack", "/assets/images/backpack.png");
-
 k.loadSprite("battle-background", "/assets/images/battleBackground.png");
 
 // memuat asset heart (nyawa)
@@ -150,6 +148,28 @@ k.loadSpriteAtlas("/assets/images/items.png", {
   },
 });
 
+// memuat asset icons (coin, shop)
+k.loadSpriteAtlas("/assets/images/general.png", {
+  "shop-icon": {
+    x: 45,
+    y: 45,
+    width: 50,
+    height: 45,
+  },
+  "coin-icon": {
+    x: 228,
+    y: 38,
+    width: 52,
+    height: 50,
+  },
+});
+
+// memuat asset inventory bar
+k.loadSprite("inventory_bar", "/assets/images/inventory_bar.png");
+
+// memuat asset inventory
+k.loadSprite("inventory", "/assets/images/inventory.png");
+
 k.add([k.pos(100, 500), k.fixed(), "backpack"]);
 
 const scenes = {
@@ -168,4 +188,4 @@ for (const sceneName in scenes) {
   k.scene(sceneName, () => scenes[sceneName](k));
 }
 
-k.go("halaman");
+k.go("village");

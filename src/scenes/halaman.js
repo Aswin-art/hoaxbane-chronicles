@@ -13,8 +13,11 @@ import {
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
-import { generateIconsComponents } from "../components/icons.js";
-import { keys } from "../states/keys.js";
+import {
+  generateArrowKeyComponents,
+  generateIconsComponents,
+  generateInventoryBarComponents,
+} from "../components/icons.js";
 
 export default async function halaman(k) {
   colorizeBackground(k, 0, 0, 0);
@@ -99,16 +102,16 @@ export default async function halaman(k) {
 
   entities.player.onCollide("exit-village", () => {
     gameState.setPreviousScene("halaman");
-    k.go("hutanBawah");
+    k.go("village");
   });
-
-  keys(k);
 
   //   entities.player.onCollide("dungeon-door-entrance", () => {
   //     gameState.setPreviousScene("world");
   //     k.go("dungeon");
   //   });
 
-  // healthBar(k);
+  healthBar(k);
   generateIconsComponents(k);
+  generateArrowKeyComponents(k);
+  generateInventoryBarComponents(k);
 }

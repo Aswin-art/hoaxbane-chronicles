@@ -1,5 +1,29 @@
+import { playerState } from "../states";
+
+export function generateArrowKeyComponents(k) {
+  const keysContainer = k.add([k.pos(20, 20), k.fixed(), "keysContainer"]);
+
+  const keyData = [
+    { sprite: "arrow-up", text: "Jalan Atas", pos: k.vec2(0, 0) },
+    { sprite: "arrow-right", text: "Jalan Kanan", pos: k.vec2(0, 60) },
+    { sprite: "arrow-down", text: "Jalan Bawah", pos: k.vec2(0, 120) },
+    { sprite: "arrow-left", text: "Jalan Kiri", pos: k.vec2(0, 180) },
+  ];
+
+  keyData.forEach((key) => {
+    keysContainer.add([k.sprite(key.sprite), k.pos(key.pos), k.scale(0.6)]);
+    keysContainer.add([
+      k.text(key.text, { size: 24 }),
+      k.pos(key.pos.add(k.vec2(50, 10))),
+      k.color(255, 255, 255),
+    ]);
+  });
+
+  return keysContainer;
+}
 export function generateIconsComponents(k) {
   const iconsContainer = k.add([k.pos(1850, 20), k.fixed(), "iconsContainer"]);
+  const playerCoin = playerState.getCoin();
 
   const iconData = [
     {
@@ -7,12 +31,40 @@ export function generateIconsComponents(k) {
       text: "Misi",
       pos: k.vec2(0, 0),
       scale: 2.5,
+      textPosition: {
+        x: -5,
+        y: 60,
+      },
+    },
+    {
+      sprite: "shop-icon",
+      text: "Toko",
+      pos: k.vec2(0, 240),
+      scale: 1,
+      textPosition: {
+        x: -5,
+        y: 60,
+      },
+    },
+    {
+      sprite: "coin-icon",
+      text: playerCoin,
+      pos: k.vec2(-120, 5),
+      scale: 0.8,
+      textPosition: {
+        x: 60,
+        y: 12,
+      },
     },
     {
       sprite: "map-icon",
       text: "Peta",
       pos: k.vec2(0, 120),
       scale: 2.5,
+      textPosition: {
+        x: -5,
+        y: 60,
+      },
     },
   ];
 
@@ -27,7 +79,7 @@ export function generateIconsComponents(k) {
 
     iconsContainer.add([
       k.text(icon.text, { size: 24 }),
-      k.pos(icon.pos.add(k.vec2(-5, 60))),
+      k.pos(icon.pos.add(k.vec2(icon.textPosition.x, icon.textPosition.y))),
       k.color(255, 255, 255),
     ]);
 
@@ -40,5 +92,31 @@ export function generateIconsComponents(k) {
       document.body.style.cursor = "default";
       document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
     });
+  });
+}
+
+export function generateInventoryBarComponents(k) {
+  const inventoryBarContainer = k.add([
+    k.pos(20, 850),
+    k.fixed(),
+    "inventoryBarContainer",
+  ]);
+
+  inventoryBarContainer.add([
+    k.sprite("inventory_bar"),
+    k.pos(0, 0),
+    k.area(),
+    k.scale(2),
+    "inventory_bar",
+  ]);
+
+  k.onHover("inventory_bar", () => {
+    document.body.style.cursor = "pointer";
+    document.body.getElementsByTagName("canvas")[0].style.cursor = "pointer";
+  });
+
+  k.onHoverEnd("inventory_bar", () => {
+    document.body.style.cursor = "default";
+    document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
   });
 }

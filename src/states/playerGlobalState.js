@@ -3,9 +3,10 @@ export default function playerGlobalStateManager() {
 
   function createInstance() {
     let isSwordEquipped = false;
-    const maxHealth = 3;
-    let health = maxHealth;
+    const maxHealth = 100;
+    let health = 100;
     let hasKey = false;
+    let coin = 0;
 
     return {
       setIsSwordEquipped(value) {
@@ -16,6 +17,10 @@ export default function playerGlobalStateManager() {
         health = value;
       },
       getHealth: () => health,
+      setCoin(value) {
+        coin = value;
+      },
+      getCoin: () => coin,
       setHasKey(value) {
         hasKey = value;
       },

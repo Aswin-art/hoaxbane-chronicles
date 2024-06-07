@@ -16,7 +16,7 @@ import { healthBar } from "../states/healthbar.js";
 import { generateIconsComponents } from "../components/icons.js";
 
 export default async function village(k) {
-  colorizeBackground(k, 76, 170, 255);
+  colorizeBackground(k, 0, 0, 0);
   const mapData = await fetchMapData("/assets/map/village.json");
 
   const map = k.add([k.pos(0, 0)]);

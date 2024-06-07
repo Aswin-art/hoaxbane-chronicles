@@ -11,13 +11,16 @@ import {
   setPlayerMovement,
 } from "../components/player.js";
 // import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
-import { gameState } from "../states/index.js";
+import { gameState, playerState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import { generateIconsComponents } from "../components/icons.js";
 
 const correctSound = new Audio("correct.mp3");
 const wrongSound = new Audio("wrong.mp3");
 const hitSound = new Audio("hit.mp3");
+
+const playerMaxHealth = playerState.getMaxHealth();
+const playerHealth = playerState.getHealth();
 
 export default async function battle(k) {
   colorizeBackground(k, 0, 0, 0);
@@ -88,9 +91,13 @@ export default async function battle(k) {
   ]);
 
   const playerMonHealthBar = playerMonHealthBox.add([
-    k.rect(370, 10),
+    // k.rect(370, 10),
+    // k.color(0, 200, 0),
+    // k.pos(15, 50),
+    k.rect((playerHealth / playerMaxHealth) * 370, 10),
     k.color(0, 200, 0),
     k.pos(15, 50),
+    k.fixed(),
   ]);
 
   k.tween(
@@ -137,7 +144,7 @@ export default async function battle(k) {
 
   const content = box.add([
     k.text(
-      "Kalahkan monster dengan memilih jawaban yang tepat! Tekan enter untuk memulai.",
+      "Kalahkan monster dengan memilih jawaban yang tepat! Tekan enter untuk memulai dan tekan spasi untuk menjawab.",
       { size: 32, width: 1260 }
     ),
     k.color(10, 10, 10),
@@ -214,9 +221,17 @@ export default async function battle(k) {
   }
 
   function reduceHealth(healthBar, damageDealt, mon) {
+    const playerMaxHealth = playerState.getMaxHealth();
+    let playerHealth = playerState.getHealth();
+    playerHealth -= damageDealt;
+    playerState.setHealth(playerHealth);
+
+    const healthPercentage = playerHealth / playerMaxHealth;
+    const newWidth = healthPercentage * 370;
+
     k.tween(
       healthBar.width,
-      healthBar.width - damageDealt,
+      newWidth,
       0.5,
       (val) => (healthBar.width = val),
       k.easings.easeInSine
@@ -275,9 +290,7 @@ export default async function battle(k) {
   function handleIncorrectAnswer() {
     content.text = "Jawaban salah!";
     const baseHit = 20;
-    const hit = timer < 10 ? baseHit - 10 : baseHit;
-    const damageDealt = hit;
-    reduceHealth(playerMonHealthBar, damageDealt, playerMon);
+    reduceHealth(playerMonHealthBar, baseHit, playerMon);
     // wrongSound.play();
     nextQuestion();
   }
@@ -356,15 +369,16 @@ export default async function battle(k) {
       content.text =
         "Monster kalah! Kamu memenangkan pertandingan, tekan enter untuk kembali!";
       enemyMon.fainted = true;
+      playerState.setCoin(20);
       phase = "end";
       canProceed = true;
       k.destroyAll("answers");
     }
 
-    if (playerMonHealthBar.width < 0 && !playerMon.fainted) {
+    if (playerState.getHealth() <= 0 && !playerMon.fainted) {
       makeMonDrop(playerMon);
       content.text =
-        "Kamu kalah! Tingkatkan level terlebih dahulu, tekan enter untuk kembali!";
+        "Kamu kalah! Jawab pertanyaan dengan benar, tekan enter untuk kembali!";
       playerMon.fainted = true;
       phase = "end";
       canProceed = true;
