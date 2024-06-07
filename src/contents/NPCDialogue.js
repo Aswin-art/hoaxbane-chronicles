@@ -16,17 +16,16 @@ const english = [
 
 const indonesia = [
   [
-    "Berbahaya untuk pergi sendirian!",
-    "Ambil pedang ini, tekan 'spasi' untuk menggunakannya",
-    "Tolong selamatkan anakku! dia ditangkap didalam dungeon diarah barat",
-    "aku akan memberimu hadiah yang bagus!",
+    "Pahlawan, para monster ganas muncul dari arah hutan sebelah barat!",
+    "Para monster telah menyerang! menyebabkan kekacauan dan ketakutan.",
+    "Kami membutuhkan seseorang yang berani untuk menghadapi mereka.",
+    "Bisakah kamu menaklukkan monster-monster tersebut?",
   ],
   [
-    "Tu as oublie comment utiliser ton epee?",
-    "Presses la touche espace pour attaquer.",
-    "S'il te plait, sauves mon fils avant que ça soit trop tard!",
+    "Cepat! orang - orang memerlukan bantuanmu",
+    "Pergi ke arah hutan barat dan taklukan monster tersebut!",
   ],
-  ["S'il te plait, sauves mon fils!"],
+  ["Tolong selamatkan kami!"],
   ["Comme recompense pour avoir sauve mon fils...", "Tu peux garder l'epee."],
 ];
 

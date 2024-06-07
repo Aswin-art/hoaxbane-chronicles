@@ -3,7 +3,7 @@ export default function globalStateManager() {
 
   function createInstance() {
     let freezePlayer = false;
-    let locale = "english";
+    let locale = "indonesia";
     let fontSize = 30;
     let previousScene = null;
     let isSonSaved = false;
@@ -11,13 +11,21 @@ export default function globalStateManager() {
     let monster1 = false;
     let monster2 = false;
     let monster3 = false;
+    let mission1 = false;
+    let mission2 = false;
+    let mission3 = false;
     let boss = false;
+    let currMission = null;
 
     return {
       setFreezePlayer(value) {
         freezePlayer = value;
       },
       getFreezePlayer: () => freezePlayer,
+      setCurrMission(value) {
+        currMission = value;
+      },
+      getCurrMission: () => currMission,
       setMonster1Defeated(value) {
         monster1 = value;
       },
@@ -30,6 +38,18 @@ export default function globalStateManager() {
         monster3 = value;
       },
       getMonster3: () => monster3,
+      setMission1Defeated(value) {
+        mission1 = value;
+      },
+      getMission1: () => mission1,
+      setMission2Defeated(value) {
+        mission2 = value;
+      },
+      getMission2: () => mission2,
+      setMission3Defeated(value) {
+        mission3 = value;
+      },
+      getMission3: () => mission3,
       setBossDefeated(value) {
         boss = value;
       },

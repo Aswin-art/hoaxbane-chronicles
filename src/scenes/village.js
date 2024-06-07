@@ -18,7 +18,11 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
-import { generateNPCComponents } from "../components/npc.js";
+import {
+  endInteraction,
+  generateNPCComponents,
+  startInteraction,
+} from "../components/npc.js";
 
 export default async function village(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -28,7 +32,7 @@ export default async function village(k) {
 
   const entities = {
     player: null,
-    slimes: [],
+    npc: null,
   };
 
   const layers = mapData.layers;
@@ -76,7 +80,7 @@ export default async function village(k) {
         }
 
         if (object.name === "npc") {
-          entities.oldman = map.add(
+          entities.npc = map.add(
             generateNPCComponents(k, k.vec2(object.x, object.y))
           );
         }
@@ -111,11 +115,13 @@ export default async function village(k) {
 
   setPlayerMovement(k, entities.player);
 
-  //   //   for (const slime of entities.slimes) {
-  //   //     setSlimeAI(k, slime);
-  //   //     onAttacked(k, slime, entities.player);
-  //   //     onCollideWithPlayer(k, slime);
-  //   //   }
+  entities.player.onCollide("npc", () => {
+    startInteraction(k, entities.npc, entities.player);
+  });
+
+  entities.player.onCollideEnd("npc", () => {
+    endInteraction(entities.npc);
+  });
 
   entities.player.onCollide("exit-rumah", () => {
     gameState.setPreviousScene("village");

@@ -11,32 +11,36 @@ export function generateNPCComponents(k, pos) {
     k.area({ shape: new k.Rect(k.vec2(2, 4), 12, 12) }),
     k.body({ isStatic: true }),
     k.pos(pos),
-    "oldman",
+    "npc",
   ];
 }
 
-export async function startInteraction(k, oldman, player) {
+export async function startInteraction(k, npc, player) {
   if (player.direction === "left") {
-    oldman.flipX = true;
-    playAnimIfNotPlaying(oldman, "oldman-side");
+    npc.flipX = true;
+    playAnimIfNotPlaying(npc, "oldman-side");
   }
 
   if (player.direction === "right") {
-    oldman.flipX = false;
-    playAnimIfNotPlaying(oldman, "oldman-side");
+    npc.flipX = false;
+    playAnimIfNotPlaying(npc, "oldman-side");
   }
 
   if (player.direction === "down") {
-    playAnimIfNotPlaying(oldman, "oldman-up");
+    playAnimIfNotPlaying(npc, "oldman-up");
   }
 
   if (player.direction === "up") {
-    playAnimIfNotPlaying(oldman, "oldman-down");
+    playAnimIfNotPlaying(npc, "oldman-down");
   }
 
-  playerState.setIsSwordEquipped(true);
-
   const responses = npcLines[gameState.getLocale()];
+
+  const currMission = gameState.getCurrMission();
+
+  if (currMission == null) {
+    gameState.setCurrMission(1);
+  }
 
   let numberTalked = NPCState.getNumberTalkedOldMan();
   if (numberTalked > responses.length - 2) {
