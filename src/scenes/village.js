@@ -18,6 +18,7 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
+import { generateNPCComponents } from "../components/npc.js";
 
 export default async function village(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -71,6 +72,12 @@ export default async function village(k) {
         ) {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
+          );
+        }
+
+        if (object.name === "npc") {
+          entities.oldman = map.add(
+            generateNPCComponents(k, k.vec2(object.x, object.y))
           );
         }
       }
