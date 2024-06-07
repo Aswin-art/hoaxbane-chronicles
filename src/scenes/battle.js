@@ -389,6 +389,18 @@ export default async function battle(k) {
     colorizeHealthBar(enemyMonHealthBar);
 
     if (enemyMonHealthBar.width <= 0 && !enemyMon.fainted) {
+      if (gameState.getPreviousScene() == "hutanKiri") {
+        gameState.setMonster1Defeated(true);
+      }
+      if (gameState.getPreviousScene() == "hutanAtas") {
+        gameState.setMonster2Defeated(true);
+      }
+      if (gameState.getPreviousScene() == "hutanBawah") {
+        gameState.setMonster3Defeated(true);
+      }
+      if (gameState.getPreviousScene() == "bos") {
+        gameState.setBossDefeated(true);
+      }
       makeMonDrop(enemyMon);
       showGameOverModal("Monster kalah! Kamu memenangkan pertandingan!");
       enemyMon.fainted = true;

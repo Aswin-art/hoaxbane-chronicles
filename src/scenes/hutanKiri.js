@@ -59,7 +59,7 @@ export default async function hutanKiri(k) {
           );
         }
 
-        if (object.name === "monster") {
+        if (object.name === "monster" && gameState.getMonster1() == false) {
           entities.monster = map.add(
             generateSlimeComponents(
               k,

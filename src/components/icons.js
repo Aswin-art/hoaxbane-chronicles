@@ -22,6 +22,36 @@ export function generateArrowKeyComponents(k) {
   return keysContainer;
 }
 
+function showModal(k, text) {
+  const modal = k.add([
+    k.rect(600, 300),
+    k.pos(500, 500),
+    k.color(0, 0, 0),
+    k.opacity(0.8),
+    "modal",
+  ]);
+
+  modal.add([
+    k.text(text, { size: 32, width: 580, align: "center" }),
+    k.color(255, 255, 255),
+    k.pos(20, 100),
+  ]);
+
+  modal.add([
+    k.text("Tekan 'Enter' untuk menutup", {
+      size: 24,
+      width: 580,
+      align: "center",
+    }),
+    k.color(255, 255, 255),
+    k.pos(20, 200),
+  ]);
+
+  k.onKeyPress("enter", () => {
+    k.destroyAll("modal");
+  });
+}
+
 export function generateIconsComponents(k) {
   const iconsContainer = k.add([
     k.pos(k.width() - 70, 20),
@@ -86,15 +116,13 @@ export function generateIconsComponents(k) {
       "icons",
     ]);
 
-    iconsContainer.add([
+    const iconText = iconsContainer.add([
       k.text(icon.text, { size: 24 }),
       k.pos(icon.pos.add(k.vec2(icon.textPosition.x, icon.textPosition.y))),
       k.color(255, 255, 255),
     ]);
 
-    iconSprite.onClick(() => {
-      showModal(k, icon.modalText);
-    });
+    k.onClick("icons", () => showModal(k, icon.modalText));
 
     k.onHover("icons", () => {
       document.body.style.cursor = "pointer";
@@ -108,37 +136,6 @@ export function generateIconsComponents(k) {
   });
 }
 
-function showModal(k, text) {
-  const modal = k.add([
-    k.rect(600, 300),
-    k.pos(k.width() / 2 - 300, k.height() / 2 - 150),
-    k.color(0, 0, 0),
-    k.opacity(0.8),
-    k.layer("ui"),
-    "modal",
-  ]);
-
-  modal.add([
-    k.text(text, { size: 32, width: 580, align: "center" }),
-    k.color(255, 255, 255),
-    k.pos(20, 100),
-  ]);
-
-  modal.add([
-    k.text("Tekan 'Enter' untuk menutup", {
-      size: 24,
-      width: 580,
-      align: "center",
-    }),
-    k.color(255, 255, 255),
-    k.pos(20, 200),
-  ]);
-
-  k.onKeyPress("enter", () => {
-    k.destroyAll("modal");
-  });
-}
-
 export function generateInventoryBarComponents(k) {
   const inventoryBarContainer = k.add([
     k.pos(20, k.height() - 90),
@@ -146,7 +143,7 @@ export function generateInventoryBarComponents(k) {
     "inventoryBarContainer",
   ]);
 
-  inventoryBarContainer.add([
+  const inventoryBarSprite = inventoryBarContainer.add([
     k.sprite("inventory_bar"),
     k.pos(0, 0),
     k.area(),
@@ -154,13 +151,17 @@ export function generateInventoryBarComponents(k) {
     "inventory_bar",
   ]);
 
-  k.onHover("inventory_bar", () => {
+  k.onHover(inventoryBarSprite, () => {
     document.body.style.cursor = "pointer";
     document.body.getElementsByTagName("canvas")[0].style.cursor = "pointer";
   });
 
-  k.onHoverEnd("inventory_bar", () => {
+  k.onHoverEnd(inventoryBarSprite, () => {
     document.body.style.cursor = "default";
     document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
+  });
+
+  k.onClick(inventoryBarSprite, () => {
+    showModal(k, "Ini adalah modal untuk inventaris");
   });
 }

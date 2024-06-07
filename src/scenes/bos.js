@@ -102,7 +102,7 @@ export default async function bos(k) {
   //   //   }
 
   entities.player.onCollide("exit-village", () => {
-    gameState.setPreviousScene("world");
+    gameState.setPreviousScene("bos");
     k.go("hutanKiri");
   });
 
