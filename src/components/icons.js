@@ -23,7 +23,11 @@ export function generateArrowKeyComponents(k) {
 }
 
 export function generateIconsComponents(k) {
-  const iconsContainer = k.add([k.pos(1850, 20), k.fixed(), "iconsContainer"]);
+  const iconsContainer = k.add([
+    k.pos(k.width() - 70, 20),
+    k.fixed(),
+    "iconsContainer",
+  ]);
   const playerCoin = playerState.getCoin();
 
   const iconData = [
@@ -137,7 +141,7 @@ function showModal(k, text) {
 
 export function generateInventoryBarComponents(k) {
   const inventoryBarContainer = k.add([
-    k.pos(20, 850),
+    k.pos(20, k.height() - 90),
     k.fixed(),
     "inventoryBarContainer",
   ]);
