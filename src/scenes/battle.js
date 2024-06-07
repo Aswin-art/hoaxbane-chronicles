@@ -220,7 +220,7 @@ export default async function battle(k) {
     });
   }
 
-  function reduceHealth(healthBar, damageDealt, mon) {
+  function reducePlayerHealth(healthBar, damageDealt, mon) {
     const playerMaxHealth = playerState.getMaxHealth();
     let playerHealth = playerState.getHealth();
     playerHealth -= damageDealt;
@@ -237,6 +237,18 @@ export default async function battle(k) {
       k.easings.easeInSine
     ).then(() => {
       makeMonFlash(mon);
+    });
+  }
+
+  function reduceMonsterHealth(enemyMonHealthBar, damageDealt, enemyMon) {
+    k.tween(
+      enemyMonHealthBar.width,
+      enemyMonHealthBar.width - damageDealt,
+      0.5,
+      (val) => (enemyMonHealthBar.width = val),
+      k.easings.easeInSine
+    ).then(() => {
+      makeMonFlash(enemyMon);
     });
   }
 
@@ -282,7 +294,7 @@ export default async function battle(k) {
     const hit = baseHit * timeBonus;
     const criticalChance = timer > 20 ? Math.random() : 0;
     const damageDealt = criticalChance > 0.8 ? hit * 2 : hit;
-    reduceHealth(enemyMonHealthBar, damageDealt, enemyMon);
+    reduceMonsterHealth(enemyMonHealthBar, damageDealt, enemyMon);
     // correctSound.play();
     nextQuestion();
   }
@@ -290,7 +302,7 @@ export default async function battle(k) {
   function handleIncorrectAnswer() {
     content.text = "Jawaban salah!";
     const baseHit = 20;
-    reduceHealth(playerMonHealthBar, baseHit, playerMon);
+    reducePlayerHealth(playerMonHealthBar, baseHit, playerMon);
     // wrongSound.play();
     nextQuestion();
   }
@@ -375,7 +387,7 @@ export default async function battle(k) {
       k.destroyAll("answers");
     }
 
-    if (playerState.getHealth() <= 0 && !playerMon.fainted) {
+    if (playerState.getHealth() < 0 && !playerMon.fainted) {
       makeMonDrop(playerMon);
       content.text =
         "Kamu kalah! Jawab pertanyaan dengan benar, tekan enter untuk kembali!";
