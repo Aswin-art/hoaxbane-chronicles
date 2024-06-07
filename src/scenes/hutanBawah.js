@@ -132,6 +132,7 @@ export default async function hutanBawah(k) {
   }
 
   entities.player.onCollide("monster", () => {
+    gameState.setFreezePlayer(true);
     flashScreen();
     setTimeout(() => {
       gameState.setPreviousScene("hutanBawah");

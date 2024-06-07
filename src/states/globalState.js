@@ -8,6 +8,10 @@ export default function globalStateManager() {
     let previousScene = null;
     let isSonSaved = false;
     let isGhostDefeated = false;
+    let monster1 = true;
+    let monster2 = true;
+    let monster3 = true;
+    let boss = true;
 
     return {
       setFreezePlayer(value) {

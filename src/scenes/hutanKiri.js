@@ -127,6 +127,7 @@ export default async function hutanKiri(k) {
   }
 
   entities.player.onCollide("monster", () => {
+    gameState.setFreezePlayer(true);
     flashScreen();
     setTimeout(() => {
       gameState.setPreviousScene("hutanKiri");

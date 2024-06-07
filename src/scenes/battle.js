@@ -1,19 +1,6 @@
-import {
-  colorizeBackground,
-  drawBoundaries,
-  drawTiles,
-  fetchMapData,
-  onAttacked,
-  onCollideWithPlayer,
-} from "../../utils.js";
-import {
-  generatePlayerComponents,
-  setPlayerMovement,
-} from "../components/player.js";
-// import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
+import { colorizeBackground } from "../../utils.js";
+import { generatePlayerComponents } from "../components/player.js";
 import { gameState, playerState } from "../states/index.js";
-import { healthBar } from "../states/healthbar.js";
-import { generateIconsComponents } from "../components/icons.js";
 
 const correctSound = new Audio("correct.mp3");
 const wrongSound = new Audio("wrong.mp3");
@@ -141,7 +128,7 @@ export default async function battle(k) {
 
   const content = box.add([
     k.text(
-      "Kalahkan monster dengan memilih jawaban yang tepat! Tekan enter untuk memulai dan tekan spasi untuk menjawab.",
+      "Kalahkan monster dengan memilih jawaban yang tepat! Tekan 'Enter' untuk memulai dan tekan 'Spasi' untuk menjawab.",
       { size: 32, width: 1260 }
     ),
     k.color(10, 10, 10),
@@ -167,14 +154,12 @@ export default async function battle(k) {
       answers: ["33", "34", "35", "36"],
       correct: 1,
     },
-    // Tambahkan pertanyaan lainnya di sini
   ];
 
   let currentQuestionIndex = 0;
   let selectedAnswerIndex = 0;
   let phase = "intro";
   let answerElements = [];
-  let canProceed = false;
   let timer = 30;
   let timerInterval;
 
@@ -366,6 +351,7 @@ export default async function battle(k) {
     }
 
     if (phase === "end") {
+      gameState.setFreezePlayer(false);
       k.go(gameState.getPreviousScene());
     }
   });
@@ -408,7 +394,6 @@ export default async function battle(k) {
       enemyMon.fainted = true;
       playerState.setCoin(20);
       phase = "end";
-      canProceed = true;
       k.destroyAll("answers");
     }
 
@@ -417,7 +402,6 @@ export default async function battle(k) {
       showGameOverModal("Kamu kalah! Jawab pertanyaan dengan benar!");
       playerMon.fainted = true;
       phase = "end";
-      canProceed = true;
       k.destroyAll("answers");
     }
   });

@@ -21,6 +21,7 @@ export function generateArrowKeyComponents(k) {
 
   return keysContainer;
 }
+
 export function generateIconsComponents(k) {
   const iconsContainer = k.add([k.pos(1850, 20), k.fixed(), "iconsContainer"]);
   const playerCoin = playerState.getCoin();
@@ -35,6 +36,7 @@ export function generateIconsComponents(k) {
         x: -5,
         y: 60,
       },
+      modalText: "Ini adalah modal untuk Misi",
     },
     {
       sprite: "shop-icon",
@@ -45,6 +47,7 @@ export function generateIconsComponents(k) {
         x: -5,
         y: 60,
       },
+      modalText: "Ini adalah modal untuk Toko",
     },
     {
       sprite: "coin-icon",
@@ -55,6 +58,7 @@ export function generateIconsComponents(k) {
         x: 60,
         y: 12,
       },
+      modalText: "Ini adalah modal untuk Coin",
     },
     {
       sprite: "map-icon",
@@ -65,11 +69,12 @@ export function generateIconsComponents(k) {
         x: -5,
         y: 60,
       },
+      modalText: "Ini adalah modal untuk Peta",
     },
   ];
 
   iconData.forEach((icon) => {
-    iconsContainer.add([
+    const iconSprite = iconsContainer.add([
       k.sprite(icon.sprite),
       k.pos(icon.pos),
       k.scale(icon.scale),
@@ -83,6 +88,10 @@ export function generateIconsComponents(k) {
       k.color(255, 255, 255),
     ]);
 
+    iconSprite.onClick(() => {
+      showModal(k, icon.modalText);
+    });
+
     k.onHover("icons", () => {
       document.body.style.cursor = "pointer";
       document.body.getElementsByTagName("canvas")[0].style.cursor = "pointer";
@@ -92,6 +101,37 @@ export function generateIconsComponents(k) {
       document.body.style.cursor = "default";
       document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
     });
+  });
+}
+
+function showModal(k, text) {
+  const modal = k.add([
+    k.rect(600, 300),
+    k.pos(k.width() / 2 - 300, k.height() / 2 - 150),
+    k.color(0, 0, 0),
+    k.opacity(0.8),
+    k.layer("ui"),
+    "modal",
+  ]);
+
+  modal.add([
+    k.text(text, { size: 32, width: 580, align: "center" }),
+    k.color(255, 255, 255),
+    k.pos(20, 100),
+  ]);
+
+  modal.add([
+    k.text("Tekan 'Enter' untuk menutup", {
+      size: 24,
+      width: 580,
+      align: "center",
+    }),
+    k.color(255, 255, 255),
+    k.pos(20, 200),
+  ]);
+
+  k.onKeyPress("enter", () => {
+    k.destroyAll("modal");
   });
 }
 
