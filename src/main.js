@@ -188,4 +188,4 @@ for (const sceneName in scenes) {
   k.scene(sceneName, () => scenes[sceneName](k));
 }
 
-k.go("halaman");
+k.go("battle");

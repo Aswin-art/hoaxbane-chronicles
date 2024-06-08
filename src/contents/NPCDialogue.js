@@ -1,37 +1,60 @@
-const english = [
-  [
-    "It's dangerous to go alone!",
-    "Take this sword, press space to use it.",
-    "Please save my son! He's captured in a dungeon towards the west.",
-    "I will reward you handsomely!",
-  ],
-  [
-    "You forgot how to use your sword?",
-    "Press the space key to attack.",
-    "Please now go save my son before it's too late!",
-  ],
-  ["Please save my son!"],
-  ["As a reward for saving my son, you can keep the sword I gave you."],
-];
-
-const indonesia = [
+const misi1 = [
   [
     "Pahlawan, para monster ganas muncul dari arah hutan sebelah barat!",
     "Para monster telah menyerang! menyebabkan kekacauan dan ketakutan.",
-    "Pergi ke hutan barat dan kalah monster tersebut!",
+    "Pergi ke hutan barat dan kalahkan monster tersebut!",
     "Aku akan memberimu hadiah yang bagus!",
   ],
   [
-    "Cepat! orang - orang memerlukan bantuanmu",
+    "Cepat! orang - orang memerlukan bantuanmu.",
     "Pergi ke arah hutan barat dan taklukan monster tersebut!",
   ],
   ["Tolong selamatkan kami!"],
-  ["Comme recompense pour avoir sauve mon fils...", "Tu peux garder l'epee."],
+];
+
+const misi2 = [
+  [
+    "Terimakasih! telah mengalahkan monster - monster itu.",
+    "Sekarang para monster muncul dari hutan arah utara!",
+    "Pergi ke hutan utara dan kalahkan monster tersebut!",
+    "Semoga dewi memberkatimu!",
+  ],
+  [
+    "Cepat! orang - orang memerlukan bantuanmu.",
+    "Pergi ke arah hutan utara dan taklukan monster tersebut!",
+  ],
+  ["Tolong selamatkan kami!"],
+];
+
+const misi3 = [
+  [
+    "Pahlawan anda sangat hebat!",
+    "Sekarang selamatkan warga yang disandra!",
+    "Pergi ke hutan selatan dan bebaskan para warga!",
+    "Kalahkan para monster agar kamu dapat membebaskan para sandra!",
+  ],
+  [
+    "Cepat! orang - orang memerlukan bantuanmu.",
+    "Pergi ke arah hutan selatan dan bebaskan para sandra!",
+  ],
+  ["Tolong selamatkan kami!"],
+];
+
+const congratulate = [
+  [
+    "Terimakasih pahlawan, anda sangat hebat!",
+    "Para monster berhasil dibasmi.",
+    "Kedamaian telah kembali!",
+  ],
+  ["Kami sangat bersyukur atas bantuanmu!", "Semoga dewi selalu memberkatimu!"],
+  ["Terimakasih!"],
 ];
 
 const npcLines = {
-  english,
-  indonesia,
+  misi1,
+  misi2,
+  misi3,
+  congratulate,
 };
 
 export default npcLines;

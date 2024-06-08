@@ -34,16 +34,33 @@ export async function startInteraction(k, npc, player) {
     playAnimIfNotPlaying(npc, "oldman-down");
   }
 
-  const responses = npcLines[gameState.getLocale()];
-
-  const currMission = gameState.getCurrMission();
+  let currMission = gameState.getCurrMission();
 
   if (currMission == null) {
     gameState.setCurrMission(1);
+    currMission = 1;
+  }
+
+  let responses = npcLines["misi1"];
+
+  if (currMission == 1 && gameState.getMonster1()) {
+    gameState.setCurrMission(2);
+    currMission = 2;
+    responses = npcLines["misi2"];
+  }
+
+  if (currMission == 2 && gameState.getMonster2()) {
+    gameState.setCurrMission(3);
+    currMission = 3;
+    responses = npcLines["congratulate"];
+  }
+
+  if (currMission == 3 && gameState.getMonster3()) {
+    responses = npcLines["congratulate"];
   }
 
   let numberTalked = NPCState.getNumberTalkedOldMan();
-  if (numberTalked > responses.length - 2) {
+  if (numberTalked >= 3) {
     NPCState.setNumberTalkedOldMan(1);
     numberTalked = NPCState.getNumberTalkedOldMan();
   }

@@ -59,7 +59,7 @@ export default async function hutanBawah(k) {
           );
         }
 
-        if (object.name === "monster") {
+        if (object.name === "monster" && gameState.getMonster3() == false) {
           entities.monster = map.add(
             generateSlimeComponents(
               k,

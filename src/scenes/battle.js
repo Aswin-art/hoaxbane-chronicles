@@ -15,7 +15,7 @@ export default async function battle(k) {
   const map = k.add([
     k.sprite("battle-background"),
     k.scale(1.5),
-    k.pos(170, 50),
+    k.pos(k.width() / 2 - 1550 / 2, k.height() / 2 - 400),
   ]);
 
   const enemyMon = k.add([
@@ -23,7 +23,7 @@ export default async function battle(k) {
       anim: "slime-idle-down",
     }),
     k.scale(8),
-    k.pos(1000, 200),
+    k.pos(k.width() - 1000, k.height() - 700),
     k.opacity(1),
     {
       fainted: false,
@@ -33,7 +33,7 @@ export default async function battle(k) {
 
   k.tween(
     enemyMon.pos.x,
-    1400,
+    k.width() - 500,
     0.3,
     (val) => (enemyMon.pos.x = val),
     k.easings.easeInSine
@@ -59,26 +59,26 @@ export default async function battle(k) {
     k.easings.easeInSine
   );
 
-  const playerMonHealthBox = k.add([
-    k.rect(400, 100),
+  const playerMonHealthBox = map.add([
+    k.rect(300, 80),
     k.outline(4),
-    k.pos(400, 500),
+    k.pos(100, k.height() - 650),
   ]);
 
   playerMonHealthBox.add([
-    k.text("PLAYER", { size: 32, width: 380 }),
+    k.text("PLAYER", { size: 24, width: 200 }),
     k.color(10, 10, 10),
     k.pos(10, 10),
   ]);
 
   playerMonHealthBox.add([
-    k.rect(370, 10),
+    k.rect(270, 10),
     k.color(200, 200, 200),
     k.pos(15, 50),
   ]);
 
   const playerMonHealthBar = playerMonHealthBox.add([
-    k.rect((playerHealth / playerMaxHealth) * 370, 10),
+    k.rect((playerHealth / playerMaxHealth) * 270, 10),
     k.color(0, 200, 0),
     k.pos(15, 50),
     k.fixed(),
@@ -86,39 +86,39 @@ export default async function battle(k) {
 
   k.tween(
     playerMonHealthBox.pos.x,
-    1200,
+    k.width() - 1280,
     0.3,
     (val) => (playerMonHealthBox.pos.x = val),
     k.easings.easeInSine
   );
 
-  const enemyMonHealthBox = k.add([
-    k.rect(400, 100),
+  const enemyMonHealthBox = map.add([
+    k.rect(300, 80),
     k.outline(4),
-    k.pos(-100, 100),
+    k.pos(-200, k.height() - 900),
   ]);
 
   enemyMonHealthBox.add([
-    k.text("MONSTER", { size: 32, width: 380 }),
+    k.text("MONSTER", { size: 24, width: 200 }),
     k.color(10, 10, 10),
     k.pos(10, 10),
   ]);
 
   enemyMonHealthBox.add([
-    k.rect(370, 10),
+    k.rect(270, 10),
     k.color(200, 200, 200),
     k.pos(15, 50),
   ]);
 
   const enemyMonHealthBar = enemyMonHealthBox.add([
-    k.rect(370, 10),
+    k.rect(270, 10),
     k.color(0, 200, 0),
     k.pos(15, 50),
   ]);
 
   k.tween(
     enemyMonHealthBox.pos.x,
-    250,
+    k.width() - 1850,
     0.3,
     (val) => (enemyMonHealthBox.pos.x = val),
     k.easings.easeInSine
@@ -135,7 +135,11 @@ export default async function battle(k) {
     k.pos(20, 20),
   ]);
 
-  const timerContainer = k.add([k.rect(1535, 30), k.pos(170, 5), k.outline(2)]);
+  const timerContainer = k.add([
+    k.rect(1535, 30),
+    k.pos(k.width() / 2 - 1550 / 2, k.height() - 900),
+    k.outline(2),
+  ]);
   const timerBar = timerContainer.add([k.rect(1535, 30), k.color(0, 200, 0)]);
   const timerText = timerContainer.add([
     k.text(`Time: 30`, { size: 24 }),
@@ -209,7 +213,7 @@ export default async function battle(k) {
     playerState.setHealth(playerHealth);
 
     const healthPercentage = playerHealth / playerMaxHealth;
-    const newWidth = healthPercentage * 370;
+    const newWidth = healthPercentage * 270;
 
     k.tween(
       healthBar.width,
@@ -391,12 +395,15 @@ export default async function battle(k) {
     if (enemyMonHealthBar.width <= 0 && !enemyMon.fainted) {
       if (gameState.getPreviousScene() == "hutanKiri") {
         gameState.setMonster1Defeated(true);
+        gameState.setMission1Done(true);
       }
       if (gameState.getPreviousScene() == "hutanAtas") {
         gameState.setMonster2Defeated(true);
+        gameState.setMission2Done(true);
       }
       if (gameState.getPreviousScene() == "hutanBawah") {
         gameState.setMonster3Defeated(true);
+        gameState.setMission3Done(true);
       }
       if (gameState.getPreviousScene() == "bos") {
         gameState.setBossDefeated(true);
