@@ -71,7 +71,7 @@ export default async function battle(k) {
   const playerMonHealthBox = map.add([
     k.rect(scale * 300, scale * 80),
     k.outline(scale * 4),
-    k.pos(-scale * 200, screenHeight - scale * 650),
+    k.pos(scale * 650, screenHeight - scale * 650),
   ]);
 
   playerMonHealthBox.add([
@@ -94,7 +94,7 @@ export default async function battle(k) {
 
   k.tween(
     playerMonHealthBox.pos.x,
-    scale * 650,
+    scale * 640,
     0.3,
     (val) => (playerMonHealthBox.pos.x = val),
     k.easings.easeInSine
@@ -103,7 +103,7 @@ export default async function battle(k) {
   const enemyMonHealthBox = map.add([
     k.rect(scale * 300, scale * 80),
     k.outline(scale * 4),
-    k.pos(-scale * 200, screenHeight - scale * 900),
+    k.pos(scale * 650, screenHeight - scale * 900),
   ]);
 
   enemyMonHealthBox.add([
@@ -126,7 +126,7 @@ export default async function battle(k) {
 
   k.tween(
     enemyMonHealthBox.pos.x,
-    screenWidth - scale * 1850,
+    scale * 80,
     0.3,
     (val) => (enemyMonHealthBox.pos.x = val),
     k.easings.easeInSine
@@ -214,7 +214,7 @@ export default async function battle(k) {
       const answerElement = box.add([
         k.text(answer, { size: 32, width: 1260 }),
         k.color(index === selectedAnswerIndex ? 255 : 10, 10, 10),
-        k.pos(20, 80 + index * 40),
+        k.pos(scale * 20, scale * 80 + index * 40),
         { tag: "answers" },
       ]);
       answerElements.push(answerElement);
