@@ -14,7 +14,7 @@ export default async function battle(k) {
 
   const screenWidth = k.width();
   const screenHeight = k.height();
-  const scale = screenWidth / 1920; // Assuming 1920 is the original design width
+  const scale = screenWidth / 1920;
   const battleBgWidth = 1550 * scale;
   const battleBgHeight = 400 * scale;
 
@@ -48,12 +48,12 @@ export default async function battle(k) {
     k.easings.easeInSine
   );
 
-  const playerMon = map.add([
+  const playerMon = k.add([
     k.sprite("assets", {
       anim: "player-idle-up",
     }),
-    k.scale(scale * 8),
-    k.pos(scale * 450, scale * 250),
+    k.scale(scale * 10),
+    k.pos(scale * 300, screenHeight - scale * 450),
     k.opacity(1),
     {
       fainted: false,
@@ -62,7 +62,7 @@ export default async function battle(k) {
 
   k.tween(
     playerMon.pos.x,
-    scale * 300,
+    scale * 600,
     0.3,
     (val) => (playerMon.pos.x = val),
     k.easings.easeInSine
@@ -71,7 +71,7 @@ export default async function battle(k) {
   const playerMonHealthBox = map.add([
     k.rect(scale * 300, scale * 80),
     k.outline(scale * 4),
-    k.pos(scale * 100, screenHeight - scale * 650),
+    k.pos(-scale * 200, screenHeight - scale * 650),
   ]);
 
   playerMonHealthBox.add([
@@ -90,12 +90,11 @@ export default async function battle(k) {
     k.rect((playerHealth / playerMaxHealth) * scale * 270, scale * 10),
     k.color(0, 200, 0),
     k.pos(scale * 15, scale * 50),
-    k.fixed(),
   ]);
 
   k.tween(
     playerMonHealthBox.pos.x,
-    screenWidth - scale * 1280,
+    scale * 650,
     0.3,
     (val) => (playerMonHealthBox.pos.x = val),
     k.easings.easeInSine
@@ -229,7 +228,7 @@ export default async function battle(k) {
     playerState.setHealth(playerHealth);
 
     const healthPercentage = playerHealth / playerMaxHealth;
-    const newWidth = healthPercentage * 270;
+    const newWidth = healthPercentage * scale * 270;
 
     k.tween(
       healthBar.width,
@@ -270,11 +269,11 @@ export default async function battle(k) {
   }
 
   function colorizeHealthBar(healthBar) {
-    if (healthBar.width < 200) {
+    if (healthBar.width < scale * 200) {
       healthBar.use(k.color(250, 150, 0));
     }
 
-    if (healthBar.width < 100) {
+    if (healthBar.width < scale * 100) {
       healthBar.use(k.color(200, 0, 0));
     }
   }
@@ -282,7 +281,7 @@ export default async function battle(k) {
   function makeMonDrop(mon) {
     k.tween(
       mon.pos.y,
-      800,
+      screenHeight,
       0.5,
       (val) => (mon.pos.y = val),
       k.easings.easeInSine
