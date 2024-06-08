@@ -12,18 +12,27 @@ const playerHealth = playerState.getHealth();
 export default async function battle(k) {
   colorizeBackground(k, 27, 29, 52);
 
+  const screenWidth = k.width();
+  const screenHeight = k.height();
+  const scale = screenWidth / 1920; // Assuming 1920 is the original design width
+  const battleBgWidth = 1550 * scale;
+  const battleBgHeight = 400 * scale;
+
   const map = k.add([
     k.sprite("battle-background"),
-    k.scale(1.5),
-    k.pos(k.width() / 2 - 1550 / 2, k.height() / 2 - 400),
+    k.scale(scale * 1.5),
+    k.pos(
+      screenWidth / 2 - battleBgWidth / 2,
+      screenHeight / 2 - battleBgHeight
+    ),
   ]);
 
   const enemyMon = k.add([
     k.sprite("assets", {
       anim: "slime-idle-down",
     }),
-    k.scale(8),
-    k.pos(k.width() - 1000, k.height() - 700),
+    k.scale(scale * 8),
+    k.pos(screenWidth - scale * 1000, screenHeight - scale * 700),
     k.opacity(1),
     {
       fainted: false,
@@ -33,7 +42,7 @@ export default async function battle(k) {
 
   k.tween(
     enemyMon.pos.x,
-    k.width() - 500,
+    screenWidth - scale * 500,
     0.3,
     (val) => (enemyMon.pos.x = val),
     k.easings.easeInSine
@@ -43,8 +52,8 @@ export default async function battle(k) {
     k.sprite("assets", {
       anim: "player-idle-up",
     }),
-    k.scale(8),
-    k.pos(450, 250),
+    k.scale(scale * 8),
+    k.pos(scale * 450, scale * 250),
     k.opacity(1),
     {
       fainted: false,
@@ -53,98 +62,105 @@ export default async function battle(k) {
 
   k.tween(
     playerMon.pos.x,
-    300,
+    scale * 300,
     0.3,
     (val) => (playerMon.pos.x = val),
     k.easings.easeInSine
   );
 
   const playerMonHealthBox = map.add([
-    k.rect(300, 80),
-    k.outline(4),
-    k.pos(100, k.height() - 650),
+    k.rect(scale * 300, scale * 80),
+    k.outline(scale * 4),
+    k.pos(scale * 100, screenHeight - scale * 650),
   ]);
 
   playerMonHealthBox.add([
-    k.text("PLAYER", { size: 24, width: 200 }),
+    k.text("PLAYER", { size: scale * 24, width: scale * 200 }),
     k.color(10, 10, 10),
-    k.pos(10, 10),
+    k.pos(scale * 10, scale * 10),
   ]);
 
   playerMonHealthBox.add([
-    k.rect(270, 10),
+    k.rect(scale * 270, scale * 10),
     k.color(200, 200, 200),
-    k.pos(15, 50),
+    k.pos(scale * 15, scale * 50),
   ]);
 
   const playerMonHealthBar = playerMonHealthBox.add([
-    k.rect((playerHealth / playerMaxHealth) * 270, 10),
+    k.rect((playerHealth / playerMaxHealth) * scale * 270, scale * 10),
     k.color(0, 200, 0),
-    k.pos(15, 50),
+    k.pos(scale * 15, scale * 50),
     k.fixed(),
   ]);
 
   k.tween(
     playerMonHealthBox.pos.x,
-    k.width() - 1280,
+    screenWidth - scale * 1280,
     0.3,
     (val) => (playerMonHealthBox.pos.x = val),
     k.easings.easeInSine
   );
 
   const enemyMonHealthBox = map.add([
-    k.rect(300, 80),
-    k.outline(4),
-    k.pos(-200, k.height() - 900),
+    k.rect(scale * 300, scale * 80),
+    k.outline(scale * 4),
+    k.pos(-scale * 200, screenHeight - scale * 900),
   ]);
 
   enemyMonHealthBox.add([
-    k.text("MONSTER", { size: 24, width: 200 }),
+    k.text("MONSTER", { size: scale * 24, width: scale * 200 }),
     k.color(10, 10, 10),
-    k.pos(10, 10),
+    k.pos(scale * 10, scale * 10),
   ]);
 
   enemyMonHealthBox.add([
-    k.rect(270, 10),
+    k.rect(scale * 270, scale * 10),
     k.color(200, 200, 200),
-    k.pos(15, 50),
+    k.pos(scale * 15, scale * 50),
   ]);
 
   const enemyMonHealthBar = enemyMonHealthBox.add([
-    k.rect(270, 10),
+    k.rect(scale * 270, scale * 10),
     k.color(0, 200, 0),
-    k.pos(15, 50),
+    k.pos(scale * 15, scale * 50),
   ]);
 
   k.tween(
     enemyMonHealthBox.pos.x,
-    k.width() - 1850,
+    screenWidth - scale * 1850,
     0.3,
     (val) => (enemyMonHealthBox.pos.x = val),
     k.easings.easeInSine
   );
 
-  const box = k.add([k.rect(1300, 300), k.outline(4), k.pos(300, 650)]);
+  const box = k.add([
+    k.rect(scale * 1300, scale * 300),
+    k.outline(scale * 4),
+    k.pos(scale * 300, scale * 650),
+  ]);
 
   const content = box.add([
     k.text(
       "Kalahkan monster dengan memilih jawaban yang tepat! Tekan 'Enter' untuk memulai dan tekan 'Spasi' untuk menjawab.",
-      { size: 32, width: 1260 }
+      { size: scale * 32, width: scale * 1260 }
     ),
     k.color(10, 10, 10),
-    k.pos(20, 20),
+    k.pos(scale * 20, scale * 20),
   ]);
 
   const timerContainer = k.add([
-    k.rect(1535, 30),
-    k.pos(k.width() / 2 - 1550 / 2, k.height() - 900),
-    k.outline(2),
+    k.rect(scale * 1535, scale * 30),
+    k.pos(screenWidth / 2 - (scale * 1535) / 2 - 5, screenHeight - scale * 900),
+    k.outline(scale * 2),
   ]);
-  const timerBar = timerContainer.add([k.rect(1535, 30), k.color(0, 200, 0)]);
+  const timerBar = timerContainer.add([
+    k.rect(scale * 1535, scale * 30),
+    k.color(0, 200, 0),
+  ]);
   const timerText = timerContainer.add([
-    k.text(`Time: 30`, { size: 24 }),
+    k.text(`Time: 30`, { size: scale * 24 }),
     k.color(10, 10, 10),
-    k.pos(750, 5),
+    k.pos(scale * 750, scale * 5),
   ]);
 
   const questions = [
