@@ -19,13 +19,13 @@ export default async function battle(k) {
   const battleBgHeight = 400 * scale;
 
   const playerHealthBoxPosX = screenWidth / 2 - battleBgWidth / 2 + scale * 350;
-  const playerHealthBoxPosY = screenHeight - scale * 550;
+  const playerHealthBoxPosY = screenHeight - scale * 600;
 
   const enemyHealthBoxPosX = screenWidth / 2 - battleBgWidth / 2 + scale * 350;
-  const enemyHealthBoxPosY = screenHeight - scale * 850;
+  const enemyHealthBoxPosY = screenHeight - scale * 800;
 
   const timerContainerPosX = screenWidth / 2 - (scale * 1535) / 2 - 7;
-  const timerContainerPosY = screenHeight - scale * 880;
+  const timerContainerPosY = screenHeight - scale * 860;
 
   const map = k.add([
     k.sprite("battle-background"),
@@ -103,7 +103,7 @@ export default async function battle(k) {
 
   k.tween(
     playerMonHealthBox.pos.x,
-    scale * 640,
+    scale * 700,
     0.3,
     (val) => (playerMonHealthBox.pos.x = val),
     k.easings.easeInSine
