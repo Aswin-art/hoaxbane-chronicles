@@ -35,48 +35,103 @@ export async function startInteraction(k, npc, player) {
   }
 
   let currMission = gameState.getCurrMission();
-  console.log("awal", currMission);
 
-  if (currMission == null) {
+  if (
+    currMission == null ||
+    (gameState.getCurrMission() == 1 && !gameState.getMonster1())
+  ) {
     gameState.setCurrMission(1);
+    const responses = npcLines["misi1"];
     currMission = 1;
+
+    let numberTalked = NPCState.getNumberTalkedOldMan();
+    if (numberTalked >= 3) {
+      NPCState.setNumberTalkedOldMan(1);
+      numberTalked = NPCState.getNumberTalkedOldMan();
+    }
+
+    if (responses[numberTalked]) {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        responses[numberTalked]
+      );
+      NPCState.setNumberTalkedOldMan(numberTalked + 1);
+    }
   }
 
-  let responses = npcLines["misi1"];
-
-  if (currMission == 1 && gameState.getMonster1()) {
-    playerState.addCoin(30);
-    console.log("sebelum", gameState.getCurrMission());
+  if (
+    (gameState.getCurrMission() == 1 && gameState.getMonster1()) ||
+    (gameState.getCurrMission() == 2 && !gameState.getMonster2())
+  ) {
+    if (gameState.getCurrMission() == 1 && gameState.getMonster1()) {
+      playerState.addCoin(30);
+    }
     gameState.setCurrMission(2);
-    console.log("sesudah", gameState.getCurrMission());
     currMission = 2;
-    responses = npcLines["misi2"];
+    const responses = npcLines["misi2"];
+
+    let numberTalked = NPCState.getNumberTalkedOldMan();
+    if (numberTalked >= 3) {
+      NPCState.setNumberTalkedOldMan(1);
+      numberTalked = NPCState.getNumberTalkedOldMan();
+    }
+
+    if (responses[numberTalked]) {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        responses[numberTalked]
+      );
+      NPCState.setNumberTalkedOldMan(numberTalked + 1);
+    }
   }
 
-  if (currMission == 2 && gameState.getMonster2()) {
-    playerState.addCoin(35);
+  if (
+    (gameState.getCurrMission() == 2 && gameState.getMonster2()) ||
+    (gameState.getCurrMission() == 3 && !gameState.getMonster3())
+  ) {
+    if (gameState.getCurrMission() == 2 && gameState.getMonster2()) {
+      playerState.addCoin(35);
+    }
     gameState.setCurrMission(3);
     currMission = 3;
-    responses = npcLines["congratulate"];
+    const responses = npcLines["misi3"];
+
+    let numberTalked = NPCState.getNumberTalkedOldMan();
+    if (numberTalked >= 3) {
+      NPCState.setNumberTalkedOldMan(1);
+      numberTalked = NPCState.getNumberTalkedOldMan();
+    }
+
+    if (responses[numberTalked]) {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        responses[numberTalked]
+      );
+      NPCState.setNumberTalkedOldMan(numberTalked + 1);
+    }
   }
 
   if (currMission == 3 && gameState.getMonster3()) {
-    responses = npcLines["congratulate"];
-  }
+    playerState.addCoin(50);
+    const responses = npcLines["congratulate"];
 
-  let numberTalked = NPCState.getNumberTalkedOldMan();
-  if (numberTalked >= 3) {
-    NPCState.setNumberTalkedOldMan(1);
-    numberTalked = NPCState.getNumberTalkedOldMan();
-  }
+    let numberTalked = NPCState.getNumberTalkedOldMan();
+    if (numberTalked >= 3) {
+      NPCState.setNumberTalkedOldMan(1);
+      numberTalked = NPCState.getNumberTalkedOldMan();
+    }
 
-  if (responses[numberTalked]) {
-    await dialogue(
-      k,
-      k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
-      responses[numberTalked]
-    );
-    NPCState.setNumberTalkedOldMan(numberTalked + 1);
+    if (responses[numberTalked]) {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        responses[numberTalked]
+      );
+      NPCState.setNumberTalkedOldMan(numberTalked + 1);
+    }
   }
 }
 

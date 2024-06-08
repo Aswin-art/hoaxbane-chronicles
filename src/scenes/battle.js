@@ -1,6 +1,6 @@
 import { colorizeBackground } from "../../utils.js";
 import { generatePlayerComponents } from "../components/player.js";
-import { gameState, playerState } from "../states/index.js";
+import { gameState, NPCState, playerState } from "../states/index.js";
 
 const correctSound = new Audio("correct.mp3");
 const wrongSound = new Audio("wrong.mp3");
@@ -420,22 +420,26 @@ export default async function battle(k) {
       if (gameState.getPreviousScene() == "hutanKiri") {
         gameState.setMonster1Defeated(true);
         gameState.setMission1Done(true);
+        playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "hutanAtas") {
         gameState.setMonster2Defeated(true);
         gameState.setMission2Done(true);
+        playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "hutanBawah") {
         gameState.setMonster3Defeated(true);
         gameState.setMission3Done(true);
+        playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "bos") {
         gameState.setBossDefeated(true);
+        playerState.addCoin(50);
       }
       makeMonDrop(enemyMon);
       showGameOverModal("Monster kalah! Kamu memenangkan pertandingan!");
       enemyMon.fainted = true;
-      playerState.addCoin(20);
+      NPCState.setNumberTalkedOldMan(0);
       phase = "end";
       k.destroyAll("answers");
     }
