@@ -19,13 +19,13 @@ export default async function battle(k) {
   const battleBgHeight = 400 * scale;
 
   const playerHealthBoxPosX = screenWidth / 2 - battleBgWidth / 2 + scale * 350;
-  const playerHealthBoxPosY = screenHeight - scale * 650;
+  const playerHealthBoxPosY = screenHeight - scale * 550;
 
   const enemyHealthBoxPosX = screenWidth / 2 - battleBgWidth / 2 + scale * 350;
-  const enemyHealthBoxPosY = screenHeight - scale * 900;
+  const enemyHealthBoxPosY = screenHeight - scale * 850;
 
-  const timerContainerPosX = screenWidth / 2 - (scale * 1535) / 2 - 5;
-  const timerContainerPosY = screenHeight - scale * 900;
+  const timerContainerPosX = screenWidth / 2 - (scale * 1535) / 2 - 7;
+  const timerContainerPosY = screenHeight - scale * 880;
 
   const map = k.add([
     k.sprite("battle-background"),
