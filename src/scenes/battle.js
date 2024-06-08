@@ -435,7 +435,7 @@ export default async function battle(k) {
       makeMonDrop(enemyMon);
       showGameOverModal("Monster kalah! Kamu memenangkan pertandingan!");
       enemyMon.fainted = true;
-      playerState.setCoin(20);
+      playerState.addCoin(20);
       phase = "end";
       k.destroyAll("answers");
     }

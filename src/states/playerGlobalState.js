@@ -17,8 +17,8 @@ export default function playerGlobalStateManager() {
         health = value;
       },
       getHealth: () => health,
-      setCoin(value) {
-        coin = value;
+      addCoin(value) {
+        coin += value;
       },
       getCoin: () => coin,
       setHasKey(value) {

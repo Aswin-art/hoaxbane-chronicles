@@ -35,6 +35,7 @@ export async function startInteraction(k, npc, player) {
   }
 
   let currMission = gameState.getCurrMission();
+  console.log("awal", currMission);
 
   if (currMission == null) {
     gameState.setCurrMission(1);
@@ -44,12 +45,16 @@ export async function startInteraction(k, npc, player) {
   let responses = npcLines["misi1"];
 
   if (currMission == 1 && gameState.getMonster1()) {
+    playerState.addCoin(30);
+    console.log("sebelum", gameState.getCurrMission());
     gameState.setCurrMission(2);
+    console.log("sesudah", gameState.getCurrMission());
     currMission = 2;
     responses = npcLines["misi2"];
   }
 
   if (currMission == 2 && gameState.getMonster2()) {
+    playerState.addCoin(35);
     gameState.setCurrMission(3);
     currMission = 3;
     responses = npcLines["congratulate"];
