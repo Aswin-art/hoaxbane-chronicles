@@ -132,6 +132,16 @@ k.loadSpriteAtlas("/assets/images/keys.png", {
   },
 });
 
+// memuat asset keys (space key)
+k.loadSpriteAtlas("/assets/images/important_key.png", {
+  space: {
+    x: 175,
+    y: 93,
+    width: 75,
+    height: 32,
+  },
+});
+
 // memuat asset icons (quest, map)
 k.loadSpriteAtlas("/assets/images/items.png", {
   "quest-icon": {

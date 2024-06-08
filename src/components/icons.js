@@ -4,17 +4,67 @@ export function generateArrowKeyComponents(k) {
   const keysContainer = k.add([k.pos(20, 20), k.fixed(), "keysContainer"]);
 
   const keyData = [
-    { sprite: "arrow-up", text: "Jalan Atas", pos: k.vec2(0, 0) },
-    { sprite: "arrow-right", text: "Jalan Kanan", pos: k.vec2(0, 60) },
-    { sprite: "arrow-down", text: "Jalan Bawah", pos: k.vec2(0, 120) },
-    { sprite: "arrow-left", text: "Jalan Kiri", pos: k.vec2(0, 180) },
+    {
+      sprite: "arrow-up",
+      text: "Jalan Atas",
+      textPosition: {
+        x: 50,
+        y: 10,
+      },
+      pos: k.vec2(0, 0),
+      scale: 0.6,
+    },
+    {
+      sprite: "arrow-right",
+      text: "Jalan Kanan",
+      textPosition: {
+        x: 50,
+        y: 10,
+      },
+      pos: k.vec2(0, 60),
+      scale: 0.6,
+    },
+    {
+      sprite: "arrow-down",
+      text: "Jalan Bawah",
+      textPosition: {
+        x: 50,
+        y: 10,
+      },
+      pos: k.vec2(0, 120),
+      scale: 0.6,
+    },
+    {
+      sprite: "arrow-left",
+      text: "Jalan Kiri",
+      textPosition: {
+        x: 50,
+        y: 10,
+      },
+      pos: k.vec2(0, 180),
+      scale: 0.6,
+    },
+    {
+      sprite: "space",
+      text: "Untuk Interaksi",
+      textPosition: {
+        x: 100,
+        y: 10,
+      },
+      pos: k.vec2(0, 240),
+      scale: 1.2,
+    },
   ];
 
   keyData.forEach((key) => {
-    keysContainer.add([k.sprite(key.sprite), k.pos(key.pos), k.scale(0.6)]);
+    keysContainer.add([
+      k.sprite(key.sprite),
+      k.pos(key.pos),
+      k.scale(key.scale),
+    ]);
     keysContainer.add([
       k.text(key.text, { size: 24 }),
-      k.pos(key.pos.add(k.vec2(50, 10))),
+      k.pos(key.pos.add(k.vec2(key.textPosition.x, key.textPosition.y))),
       k.color(255, 255, 255),
     ]);
   });
