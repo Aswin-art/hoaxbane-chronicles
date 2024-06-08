@@ -18,6 +18,15 @@ export default async function battle(k) {
   const battleBgWidth = 1550 * scale;
   const battleBgHeight = 400 * scale;
 
+  const playerHealthBoxPosX = screenWidth / 2 - battleBgWidth / 2 + scale * 350;
+  const playerHealthBoxPosY = screenHeight - scale * 650;
+
+  const enemyHealthBoxPosX = screenWidth / 2 - battleBgWidth / 2 + scale * 350;
+  const enemyHealthBoxPosY = screenHeight - scale * 900;
+
+  const timerContainerPosX = screenWidth / 2 - (scale * 1535) / 2 - 5;
+  const timerContainerPosY = screenHeight - scale * 900;
+
   const map = k.add([
     k.sprite("battle-background"),
     k.scale(scale * 1.5),
@@ -71,7 +80,7 @@ export default async function battle(k) {
   const playerMonHealthBox = map.add([
     k.rect(scale * 300, scale * 80),
     k.outline(scale * 4),
-    k.pos(scale * 650, screenHeight - scale * 650),
+    k.pos(playerHealthBoxPosX, playerHealthBoxPosY),
   ]);
 
   playerMonHealthBox.add([
@@ -103,7 +112,7 @@ export default async function battle(k) {
   const enemyMonHealthBox = map.add([
     k.rect(scale * 300, scale * 80),
     k.outline(scale * 4),
-    k.pos(scale * 650, screenHeight - scale * 900),
+    k.pos(enemyHealthBoxPosX, enemyHealthBoxPosY),
   ]);
 
   enemyMonHealthBox.add([
@@ -149,7 +158,7 @@ export default async function battle(k) {
 
   const timerContainer = k.add([
     k.rect(scale * 1535, scale * 30),
-    k.pos(screenWidth / 2 - (scale * 1535) / 2 - 5, screenHeight - scale * 900),
+    k.pos(timerContainerPosX, timerContainerPosY),
     k.outline(scale * 2),
   ]);
   const timerBar = timerContainer.add([
