@@ -889,22 +889,25 @@ export default async function battle(k) {
       if (gameState.getPreviousScene() == "hutanKiri") {
         gameState.setMonster1Defeated(true);
         gameState.setMission1Done(true);
+        playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "hutanAtas") {
         gameState.setMonster2Defeated(true);
         gameState.setMission2Done(true);
+        playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "hutanBawah") {
         gameState.setMonster3Defeated(true);
         gameState.setMission3Done(true);
+        playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "bos") {
         gameState.setBossDefeated(true);
+        playerState.addCoin(20);
       }
       makeMonDrop(enemyMon);
       showGameOverModal("Monster kalah! Kamu memenangkan pertandingan!");
       enemyMon.fainted = true;
-      playerState.setCoin(20);
       phase = "end";
       k.destroyAll("answers");
     }
