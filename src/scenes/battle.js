@@ -641,14 +641,26 @@ export default async function battle(k) {
 
   const questions = [
     {
-      question: "Apa ibu kota Indonesia?",
-      answers: ["Jakarta", "Bandung", "Surabaya", "Medan"],
-      correct: 0,
+      question:
+        "Fungsi logika F(A, B) = A + B dalam bentuk kanonik POS adalah:",
+      answers: [
+        "(A + B)(A' + B)",
+        "(A + B)(A + B')",
+        "(A' + B)(A + B')",
+        "(A' + B')(A + B')",
+      ],
+      correct: 1,
     },
     {
-      question: "Berapa jumlah provinsi di Indonesia?",
-      answers: ["33", "34", "35", "36"],
-      correct: 1,
+      question:
+        "Fungsi logika F(A, B, C) = AB + AC dalam bentuk kanonik SOP adalah:",
+      answers: [
+        "ABC + ABC'",
+        "AB'C' + AB'C + ABC",
+        "A'BC + AB'C + ABC",
+        "A'B'C + A'BC + AB'C",
+      ],
+      correct: 0,
     },
   ];
 
