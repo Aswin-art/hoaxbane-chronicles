@@ -5,7 +5,10 @@ export default function globalStateManager() {
     let freezePlayer = false;
     let locale = "indonesia";
     let fontSize = 30;
+
     let previousScene = null;
+    let currScene = null;
+
     let isSonSaved = false;
     let isGhostDefeated = false;
 
@@ -81,6 +84,10 @@ export default function globalStateManager() {
         previousScene = sceneName;
       },
       getPreviousScene: () => previousScene,
+      setCurrScene(sceneName) {
+        currScene = sceneName;
+      },
+      getCurrScene: () => currScene,
       setIsSonSaved(value) {
         isSonSaved = value;
       },

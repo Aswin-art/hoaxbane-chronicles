@@ -3,22 +3,20 @@ import {
   drawBoundaries,
   drawTiles,
   fetchMapData,
-  onAttacked,
-  onCollideWithPlayer,
 } from "../../utils.js";
 import {
   generatePlayerComponents,
   setPlayerMovement,
 } from "../components/player.js";
-// import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import { generateIconsComponents } from "../components/icons.js";
 import { generateSlimeComponents } from "../components/slime.js";
 
-export default async function bos(k) {
+export default async function boss(k) {
   colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("/assets/map/boss.json");
+  gameState.setCurrScene("boss");
 
   const map = k.add([k.pos(0, 0)]);
 

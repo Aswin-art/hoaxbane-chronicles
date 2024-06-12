@@ -4,12 +4,12 @@ import house from "./scenes/house";
 import halaman from "./scenes/halaman";
 import hutanKiri from "./scenes/hutanKiri";
 import village from "./scenes/village";
-import bos from "./scenes/bos";
 import battle from "./scenes/battle";
 import hutanAtas from "./scenes/hutanAtas";
 import hutanBawah from "./scenes/hutanBawah";
 import { gameState, playerState } from "./states";
 import { playBackgroundMusic } from "./components/backgroundMusic";
+import boss from "./scenes/boss";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -192,8 +192,6 @@ k.loadSprite("inventory_bar", "/assets/images/inventory_bar.png");
 // memuat asset inventory
 k.loadSprite("inventory", "/assets/images/inventory.png");
 
-k.add([k.pos(100, 500), k.fixed(), "backpack"]);
-
 gameState.setSoundTheme("explore");
 playBackgroundMusic();
 
@@ -205,7 +203,7 @@ const scenes = {
   hutanAtas,
   hutanBawah,
   village,
-  bos,
+  boss,
   battle,
 };
 

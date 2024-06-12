@@ -28,6 +28,7 @@ import { warningDialog } from "../components/warningDialog.js";
 export default async function village(k) {
   colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("/assets/map/village.json");
+  gameState.setCurrScene("village");
 
   const map = k.add([k.pos(0, 0)]);
 

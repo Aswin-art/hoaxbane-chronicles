@@ -1,6 +1,8 @@
 import { gameState } from "../states";
+import { playNotAllowedEffect } from "./backgroundMusic";
 
 export function warningDialog(k, content) {
+  playNotAllowedEffect();
   gameState.setFreezePlayer(true);
   const dialogBox = k.add([
     k.rect(800, 200),

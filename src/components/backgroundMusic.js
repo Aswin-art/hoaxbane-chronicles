@@ -5,6 +5,7 @@ let footstepEffect = null;
 let attackEffect = null;
 let typingEffect = null;
 let clickEffect = null;
+let notAllowedEffect = null;
 
 export function playBackgroundMusic() {
   const theme = gameState.getSoundTheme();
@@ -47,14 +48,14 @@ export function playFootstepEffect(state = false) {
 }
 
 export function playAttackEffect() {
-  attackEffect = new Audio("assets/sounds/attack.wav");
+  attackEffect = new Audio("/assets/sounds/attack.wav");
   attackEffect.volume = 1;
 
   attackEffect.play();
 }
 
 export function playTypingEffect() {
-  typingEffect = new Audio("assets/sounds/typing-sound.mp3");
+  typingEffect = new Audio("/assets/sounds/typing-sound.mp3");
   typingEffect.volume = 1;
   typingEffect.loop = true;
 
@@ -67,8 +68,15 @@ export function stopTypingEffect() {
 }
 
 export function playClickEffect() {
-  clickEffect = new Audio("assets/sounds/click.wav");
+  clickEffect = new Audio("/assets/sounds/click.wav");
   clickEffect.volume = 1;
 
   clickEffect.play();
+}
+
+export function playNotAllowedEffect() {
+  notAllowedEffect = new Audio("/assets/sounds/not-allowed.mp3");
+  notAllowedEffect.volume = 1;
+
+  notAllowedEffect.play();
 }
