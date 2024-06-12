@@ -3,6 +3,8 @@ import { gameState } from "../states";
 let backgroundMusic = null;
 let footstepEffect = null;
 let attackEffect = null;
+let typingEffect = null;
+let clickEffect = null;
 
 export function playBackgroundMusic() {
   const theme = gameState.getSoundTheme();
@@ -25,8 +27,6 @@ export function playBackgroundMusic() {
     backgroundMusic.volume = 0.2;
   }
 
-  console.log(backgroundMusic);
-
   backgroundMusic.loop = true;
   backgroundMusic.play();
 }
@@ -34,7 +34,6 @@ export function playBackgroundMusic() {
 export function playFootstepEffect(state = false) {
   if (!footstepEffect) {
     footstepEffect = new Audio("/assets/sounds/walk.mp3");
-    console.log(footstepEffect);
     footstepEffect.volume = 1;
     footstepEffect.loop = true;
   }
@@ -48,8 +47,28 @@ export function playFootstepEffect(state = false) {
 }
 
 export function playAttackEffect() {
-  attackEffect = new Audio("/public/assets/sounds/attack.wav");
+  attackEffect = new Audio("assets/sounds/attack.wav");
   attackEffect.volume = 1;
 
   attackEffect.play();
+}
+
+export function playTypingEffect() {
+  typingEffect = new Audio("assets/sounds/typing-sound.mp3");
+  typingEffect.volume = 1;
+  typingEffect.loop = true;
+
+  typingEffect.play();
+}
+
+export function stopTypingEffect() {
+  typingEffect.pause();
+  typingEffect.currentTime = 0;
+}
+
+export function playClickEffect() {
+  clickEffect = new Audio("assets/sounds/click.wav");
+  clickEffect.volume = 1;
+
+  clickEffect.play();
 }

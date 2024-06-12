@@ -1,6 +1,11 @@
+import {
+  playTypingEffect,
+  stopTypingEffect,
+} from "../components/backgroundMusic.js";
 import { gameState } from "./index.js";
 
 async function displayLine(textContainer, line) {
+  playTypingEffect();
   for (const char of line) {
     await new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -9,6 +14,7 @@ async function displayLine(textContainer, line) {
       }, 5);
     });
   }
+  stopTypingEffect();
 }
 
 export async function dialogue(k, pos, content) {

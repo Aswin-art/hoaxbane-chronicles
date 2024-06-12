@@ -1,4 +1,5 @@
-import { playerState } from "../states";
+import { gameState, playerState } from "../states";
+import { playClickEffect } from "./backgroundMusic";
 
 export function generateArrowKeyComponents(k) {
   const keysContainer = k.add([k.pos(20, 20), k.fixed(), "keysContainer"]);
@@ -72,33 +73,66 @@ export function generateArrowKeyComponents(k) {
   return keysContainer;
 }
 
-function showModal(k, text) {
+function showModal(k) {
+  const modalAlreadyShowed = k.get("modal-mission");
+
+  if (modalAlreadyShowed.length > 0) return;
+
+  const modalWidth = 800;
+  const modalHeight = 400;
+  const currMission = gameState.getCurrMission();
+  let textModal = "";
+
+  if (currMission == null) {
+    textModal =
+      "Anda belum mempunyai misi, pergi ke kota dan bicara kepada tetua untuk mendapatkan misi.";
+  }
+
+  if (currMission == 1) {
+    textModal =
+      "Pergi ke hutan barat dan kalahkan monster, laporkan kepada tetua di kota jika sudah berhasil mengalahkan monster!";
+  }
+
+  if (currMission == 2) {
+    textModal =
+      "Pergi ke hutan utara dan kalahkan monster, laporkan kepada tetua di kota jika sudah berhasil mengalahkan monster!";
+  }
+
+  if (currMission == 3) {
+    textModal =
+      "Pergi ke hutan selatan dan kalahkan monster, laporkan kepada tetua di kota jika sudah berhasil mengalahkan monster!";
+  }
+
   const modal = k.add([
-    k.rect(600, 300),
-    k.pos(500, 500),
+    k.rect(modalWidth, modalHeight),
+    k.pos((k.width() - modalWidth) / 2, (k.height() - modalHeight) / 2),
     k.color(0, 0, 0),
-    k.opacity(0.8),
-    "modal",
+    k.fixed(),
+    k.opacity(0.5),
+    "modal-mission",
   ]);
 
+  gameState.setFreezePlayer(true);
+
   modal.add([
-    k.text(text, { size: 32, width: 580, align: "center" }),
+    k.text(textModal, { size: 32, width: 780, align: "center" }),
     k.color(255, 255, 255),
-    k.pos(20, 100),
+    k.pos(10, 80),
   ]);
 
   modal.add([
     k.text("Tekan 'Enter' untuk menutup", {
-      size: 24,
-      width: 580,
+      size: 32,
+      width: 780,
       align: "center",
     }),
     k.color(255, 255, 255),
-    k.pos(20, 200),
+    k.pos(10, 300),
   ]);
 
   k.onKeyPress("enter", () => {
-    k.destroyAll("modal");
+    k.destroyAll("modal-mission");
+    gameState.setFreezePlayer(false);
   });
 }
 
@@ -121,7 +155,7 @@ export function generateIconsComponents(k) {
         x: -5,
         y: 60,
       },
-      modalText: "Ini adalah modal untuk Misi",
+      tag: "quest",
     },
     {
       sprite: "shop-icon",
@@ -132,7 +166,7 @@ export function generateIconsComponents(k) {
         x: -5,
         y: 60,
       },
-      modalText: "Ini adalah modal untuk Toko",
+      tag: "shop",
     },
     {
       sprite: "coin-icon",
@@ -143,7 +177,7 @@ export function generateIconsComponents(k) {
         x: 60,
         y: 12,
       },
-      modalText: "Ini adalah modal untuk Coin",
+      tag: "coin",
     },
     {
       sprite: "trophy-icon",
@@ -154,7 +188,7 @@ export function generateIconsComponents(k) {
         x: 60,
         y: 12,
       },
-      modalText: "Ini adalah modal untuk Point",
+      tag: "trophy",
     },
     {
       sprite: "map-icon",
@@ -165,33 +199,36 @@ export function generateIconsComponents(k) {
         x: -5,
         y: 60,
       },
-      modalText: "Ini adalah modal untuk Peta",
+      tag: "map",
     },
   ];
 
   iconData.forEach((icon) => {
-    const iconSprite = iconsContainer.add([
+    iconsContainer.add([
       k.sprite(icon.sprite),
       k.pos(icon.pos),
       k.scale(icon.scale),
       k.area(),
-      "icons",
+      icon.tag,
     ]);
 
-    const iconText = iconsContainer.add([
+    iconsContainer.add([
       k.text(icon.text, { size: 24 }),
       k.pos(icon.pos.add(k.vec2(icon.textPosition.x, icon.textPosition.y))),
       k.color(255, 255, 255),
     ]);
 
-    k.onClick("icons", () => showModal(k, icon.modalText));
+    k.onClick("quest", () => {
+      playClickEffect();
+      showModal(k);
+    });
 
-    k.onHover("icons", () => {
+    k.onHover("quest", () => {
       document.body.style.cursor = "pointer";
       document.body.getElementsByTagName("canvas")[0].style.cursor = "pointer";
     });
 
-    k.onHoverEnd("icons", () => {
+    k.onHoverEnd("quest", () => {
       document.body.style.cursor = "default";
       document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
     });
@@ -221,9 +258,5 @@ export function generateInventoryBarComponents(k) {
   k.onHoverEnd(inventoryBarSprite, () => {
     document.body.style.cursor = "default";
     document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
-  });
-
-  k.onClick(inventoryBarSprite, () => {
-    showModal(k, "Ini adalah modal untuk inventaris");
   });
 }
