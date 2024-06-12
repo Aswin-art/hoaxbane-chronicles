@@ -261,6 +261,11 @@ export function generateIconsComponents(k) {
 
     // Interaksi Quest
     k.onClick("quest", () => {
+      const modalAlreadyShowed = k.get("modal-mission");
+      const modalMapShowed = k.get("modal-map");
+
+      if (modalAlreadyShowed.length > 0 || modalMapShowed.length > 0) return;
+
       playClickEffect();
       showModalMission(k);
     });
@@ -277,6 +282,11 @@ export function generateIconsComponents(k) {
 
     // Interaksi Map
     k.onClick("map", () => {
+      const modalAlreadyShowed = k.get("modal-mission");
+      const modalMapShowed = k.get("modal-map");
+
+      if (modalAlreadyShowed.length > 0 || modalMapShowed.length > 0) return;
+
       playClickEffect();
       showModalMap(k);
     });
