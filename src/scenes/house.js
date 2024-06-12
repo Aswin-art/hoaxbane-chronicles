@@ -5,11 +5,6 @@ import {
   fetchMapData,
 } from "../../utils.js";
 import {
-  endInteraction,
-  generateNPCComponents,
-  startInteraction,
-} from "../components/npc.js";
-import {
   generatePlayerComponents,
   setPlayerMovement,
 } from "../components/player.js";
@@ -24,6 +19,7 @@ import {
 export default async function house(k) {
   colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("/assets/map/house.json");
+  gameState.setCurrScene("halaman");
 
   const map = k.add([k.pos(0, 0)]);
 

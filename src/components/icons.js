@@ -73,10 +73,11 @@ export function generateArrowKeyComponents(k) {
   return keysContainer;
 }
 
-function showModal(k) {
+function showModalMission(k) {
   const modalAlreadyShowed = k.get("modal-mission");
+  const modalMapShowed = k.get("modal-map");
 
-  if (modalAlreadyShowed.length > 0) return;
+  if (modalAlreadyShowed.length > 0 || modalMapShowed.length > 0) return;
 
   const modalWidth = 800;
   const modalHeight = 400;
@@ -132,6 +133,46 @@ function showModal(k) {
 
   k.onKeyPress("enter", () => {
     k.destroyAll("modal-mission");
+    gameState.setFreezePlayer(false);
+  });
+}
+
+function showModalMap(k) {
+  const modalAlreadyShowed = k.get("modal-mission");
+  const modalMapShowed = k.get("modal-map");
+
+  if (modalAlreadyShowed.length > 0 || modalMapShowed.length > 0) return;
+
+  const currScene = gameState.getCurrScene();
+
+  const modalWidth = 375 * 2.5;
+  const modalHeight = 375 * 2;
+
+  const modal = k.add([
+    k.rect(modalWidth, modalHeight),
+    k.pos((k.width() - modalWidth) / 2, (k.height() - modalHeight) / 2),
+    k.color(0, 0, 0),
+    k.fixed(),
+    k.opacity(0),
+    "modal-map",
+  ]);
+
+  modal.add([k.sprite("map-" + currScene), k.scale(1.5), k.pos(0, 0)]);
+
+  gameState.setFreezePlayer(true);
+
+  modal.add([
+    k.text("Tekan 'Enter' untuk menutup", {
+      size: 32,
+      width: 780,
+      align: "center",
+    }),
+    k.color(255, 255, 255),
+    k.pos(100, 600),
+  ]);
+
+  k.onKeyPress("enter", () => {
+    k.destroyAll("modal-map");
     gameState.setFreezePlayer(false);
   });
 }
@@ -218,9 +259,10 @@ export function generateIconsComponents(k) {
       k.color(255, 255, 255),
     ]);
 
+    // Interaksi Quest
     k.onClick("quest", () => {
       playClickEffect();
-      showModal(k);
+      showModalMission(k);
     });
 
     k.onHover("quest", () => {
@@ -229,6 +271,22 @@ export function generateIconsComponents(k) {
     });
 
     k.onHoverEnd("quest", () => {
+      document.body.style.cursor = "default";
+      document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
+    });
+
+    // Interaksi Map
+    k.onClick("map", () => {
+      playClickEffect();
+      showModalMap(k);
+    });
+
+    k.onHover("map", () => {
+      document.body.style.cursor = "pointer";
+      document.body.getElementsByTagName("canvas")[0].style.cursor = "pointer";
+    });
+
+    k.onHoverEnd("map", () => {
       document.body.style.cursor = "default";
       document.body.getElementsByTagName("canvas")[0].style.cursor = "default";
     });

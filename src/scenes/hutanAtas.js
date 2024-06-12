@@ -20,7 +20,7 @@ import { generateSlimeComponents } from "../components/slime.js";
 export default async function hutanAtas(k) {
   colorizeBackground(k, 27, 29, 52);
   const mapData = await fetchMapData("./assets/map/hutan-atas.json");
-  gameState.setCurrScene("hutanAtas");
+  gameState.setCurrScene("hutan-atas");
 
   const map = k.add([k.pos(0, 0)]);
 

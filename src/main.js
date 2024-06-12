@@ -192,6 +192,24 @@ k.loadSprite("inventory_bar", "/assets/images/inventory_bar.png");
 // memuat asset inventory
 k.loadSprite("inventory", "/assets/images/inventory.png");
 
+// Memuat asset preview map (halaman)
+k.loadSprite("map-halaman", "/assets/map/map-halaman.png");
+
+// Memuat asset preview map (hutan-kiri)
+k.loadSprite("map-hutan-kiri", "/assets/map/map-hutan-kiri.png");
+
+// Memuat asset preview map (hutan-atas)
+k.loadSprite("map-hutan-atas", "/assets/map/map-hutan-atas.png");
+
+// Memuat asset preview map (hutan-bawah)
+k.loadSprite("map-hutan-bawah", "/assets/map/map-hutan-bawah.png");
+
+// Memuat asset preview map (village)
+k.loadSprite("map-village", "/assets/map/map-village.png");
+
+// Memuat asset preview map (boss)
+k.loadSprite("map-boss", "/assets/map/map-boss.png");
+
 gameState.setSoundTheme("explore");
 playBackgroundMusic();
 
