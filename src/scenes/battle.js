@@ -315,10 +315,11 @@ export default async function battle(k) {
     const timeBonus = timer > 20 ? 2 : 1;
     // const baseHit = 100;
     const baseHit = 40;
-    const hit = baseHit * timeBonus;
+    const hit = baseHit;
     const criticalChance = timer > 20 ? Math.random() : 0;
     const damageDealt = criticalChance > 0.8 ? hit * 2 : hit;
     reduceMonsterHealth(enemyMonHealthBar, damageDealt, enemyMon);
+    playerState.addPoint(10 * timeBonus);
     // correctSound.play();
     nextQuestion();
   }
@@ -455,7 +456,7 @@ export default async function battle(k) {
       if (gameState.getPreviousScene() == "bos") {
         NPCState.setNumberTalkedOldMan(0);
         gameState.setBossDefeated(true);
-        playerState.addCoin(20);
+        playerState.addCoin(30);
       }
       makeMonDrop(enemyMon);
       showGameOverModal("Monster kalah! Kamu memenangkan pertandingan!");
