@@ -15,13 +15,13 @@ export function playBackgroundMusic() {
   backgroundMusic = new Audio();
 
   if (theme === "explore") {
-    backgroundMusic.src = "/public/assets/sounds/background-music.mp3";
+    backgroundMusic.src = "/assets/sounds/background-music.mp3";
     backgroundMusic.volume = 0.5;
   } else if (theme === "battle-monster") {
-    backgroundMusic.src = "/public/assets/sounds/battle-monster.mp3";
+    backgroundMusic.src = "/assets/sounds/battle-monster.mp3";
     backgroundMusic.volume = 0.5;
   } else if (theme === "battle-boss") {
-    backgroundMusic.src = "/public/assets/sounds/battle-boss.mp3";
+    backgroundMusic.src = "/assets/sounds/battle-boss.mp3";
     backgroundMusic.volume = 0.2;
   }
 
@@ -33,7 +33,7 @@ export function playBackgroundMusic() {
 
 export function playFootstepEffect(state = false) {
   if (!footstepEffect) {
-    footstepEffect = new Audio("/public/assets/sounds/walk.mp3");
+    footstepEffect = new Audio("/assets/sounds/walk.mp3");
     console.log(footstepEffect);
     footstepEffect.volume = 1;
     footstepEffect.loop = true;
