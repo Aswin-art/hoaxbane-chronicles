@@ -15,9 +15,12 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
+import { playBackgroundMusic } from "../components/backgroundMusic.js";
 
 export default async function halaman(k) {
   colorizeBackground(k, 27, 29, 52);
+  gameState.setSoundTheme("explore");
+  playBackgroundMusic();
   const mapData = await fetchMapData("/assets/map/halaman-rumah.json");
 
   const map = k.add([k.pos(0, 0)]);

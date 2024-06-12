@@ -7,6 +7,7 @@ export default function playerGlobalStateManager() {
     let health = 100;
     let hasKey = false;
     let coin = 0;
+    let isMove = false;
 
     return {
       setIsSwordEquipped(value) {
@@ -17,6 +18,10 @@ export default function playerGlobalStateManager() {
         health = value;
       },
       getHealth: () => health,
+      setIsMove(value) {
+        isMove = value;
+      },
+      getIsMove: () => isMove,
       addCoin(value) {
         coin += value;
       },

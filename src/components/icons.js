@@ -145,6 +145,28 @@ export function generateIconsComponents(k) {
       modalText: "Ini adalah modal untuk Coin",
     },
     {
+      sprite: "music-off-icon",
+      text: "",
+      pos: k.vec2(-240, 5),
+      scale: 1,
+      textPosition: {
+        x: 0,
+        y: 0,
+      },
+      modalText: "",
+    },
+    {
+      sprite: "music-on-icon",
+      text: "",
+      pos: k.vec2(-200, 5),
+      scale: 1,
+      textPosition: {
+        x: 0,
+        y: 0,
+      },
+      modalText: "",
+    },
+    {
       sprite: "map-icon",
       text: "Peta",
       pos: k.vec2(0, 120),

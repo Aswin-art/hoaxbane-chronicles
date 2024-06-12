@@ -22,11 +22,17 @@ export default function globalStateManager() {
     let currMission = null;
     let isSoundEnabled = false;
 
+    let soundTheme = null;
+
     return {
       setFreezePlayer(value) {
         freezePlayer = value;
       },
       getFreezePlayer: () => freezePlayer,
+      setSoundTheme(value) {
+        soundTheme = value;
+      },
+      getSoundTheme: () => soundTheme,
       setIsSoundEnabled(value) {
         isSoundEnabled = value;
       },

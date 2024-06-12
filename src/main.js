@@ -8,6 +8,8 @@ import bos from "./scenes/bos";
 import battle from "./scenes/battle";
 import hutanAtas from "./scenes/hutanAtas";
 import hutanBawah from "./scenes/hutanBawah";
+import { gameState, playerState } from "./states";
+import { playBackgroundMusic } from "./components/backgroundMusic";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -171,6 +173,22 @@ k.loadSpriteAtlas("/assets/images/general.png", {
     y: 38,
     width: 52,
     height: 50,
+  },
+});
+
+// memuat asset icons (musics)
+k.loadSpriteAtlas("/assets/images/barsheet.png", {
+  "music-off-icon": {
+    x: 682,
+    y: 55,
+    width: 44,
+    height: 40,
+  },
+  "music-on-icon": {
+    x: 725,
+    y: 55,
+    width: 44,
+    height: 40,
   },
 });
 
