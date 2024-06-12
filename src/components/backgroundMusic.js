@@ -6,6 +6,7 @@ let attackEffect = null;
 let typingEffect = null;
 let clickEffect = null;
 let notAllowedEffect = null;
+let selectEffect = null;
 
 export function playBackgroundMusic() {
   const theme = gameState.getSoundTheme();
@@ -79,4 +80,11 @@ export function playNotAllowedEffect() {
   notAllowedEffect.volume = 1;
 
   notAllowedEffect.play();
+}
+
+export function playSelectEffect() {
+  selectEffect = new Audio("/assets/sounds/select-answer.mp3");
+  selectEffect.volume = 1;
+
+  selectEffect.play();
 }

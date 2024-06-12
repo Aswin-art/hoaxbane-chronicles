@@ -2,6 +2,7 @@ import { colorizeBackground } from "../../utils.js";
 import {
   playAttackEffect,
   playBackgroundMusic,
+  playSelectEffect,
 } from "../components/backgroundMusic.js";
 import { generatePlayerComponents } from "../components/player.js";
 import { gameState, NPCState, playerState } from "../states/index.js";
@@ -404,6 +405,7 @@ export default async function battle(k) {
 
   k.onKeyPress("up", () => {
     if (phase !== "question") return;
+    playSelectEffect();
     selectedAnswerIndex =
       (selectedAnswerIndex -
         1 +
@@ -414,6 +416,7 @@ export default async function battle(k) {
 
   k.onKeyPress("down", () => {
     if (phase !== "question") return;
+    playSelectEffect();
     selectedAnswerIndex =
       (selectedAnswerIndex + 1) %
       questions[currentQuestionIndex].answers.length;
