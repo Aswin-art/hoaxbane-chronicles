@@ -16,7 +16,7 @@ export function playBackgroundMusic() {
 
   if (theme === "explore") {
     backgroundMusic.src = "/public/assets/sounds/background-music.mp3";
-    backgroundMusic.volume = 0.1;
+    backgroundMusic.volume = 0.5;
   } else if (theme === "battle-monster") {
     backgroundMusic.src = "/public/assets/sounds/battle-monster.mp3";
     backgroundMusic.volume = 0.5;
@@ -25,6 +25,8 @@ export function playBackgroundMusic() {
     backgroundMusic.volume = 0.2;
   }
 
+  console.log(backgroundMusic);
+
   backgroundMusic.loop = true;
   backgroundMusic.play();
 }
@@ -32,6 +34,7 @@ export function playBackgroundMusic() {
 export function playFootstepEffect(state = false) {
   if (!footstepEffect) {
     footstepEffect = new Audio("/public/assets/sounds/walk.mp3");
+    console.log(footstepEffect);
     footstepEffect.volume = 1;
     footstepEffect.loop = true;
   }

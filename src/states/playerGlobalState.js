@@ -7,6 +7,7 @@ export default function playerGlobalStateManager() {
     let health = 100;
     let hasKey = false;
     let coin = 0;
+    let point = 0;
     let isMove = false;
 
     return {
@@ -26,6 +27,10 @@ export default function playerGlobalStateManager() {
         coin += value;
       },
       getCoin: () => coin,
+      addPoint(value) {
+        point += value;
+      },
+      getPoint: () => point,
       setHasKey(value) {
         hasKey = value;
       },

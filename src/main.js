@@ -178,14 +178,8 @@ k.loadSpriteAtlas("/assets/images/general.png", {
 
 // memuat asset icons (musics)
 k.loadSpriteAtlas("/assets/images/barsheet.png", {
-  "music-off-icon": {
-    x: 682,
-    y: 55,
-    width: 44,
-    height: 40,
-  },
-  "music-on-icon": {
-    x: 725,
+  "trophy-icon": {
+    x: 865,
     y: 55,
     width: 44,
     height: 40,
@@ -199,6 +193,9 @@ k.loadSprite("inventory_bar", "/assets/images/inventory_bar.png");
 k.loadSprite("inventory", "/assets/images/inventory.png");
 
 k.add([k.pos(100, 500), k.fixed(), "backpack"]);
+
+gameState.setSoundTheme("explore");
+playBackgroundMusic();
 
 const scenes = {
   world,

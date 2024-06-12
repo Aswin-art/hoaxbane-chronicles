@@ -4,7 +4,7 @@ import {
   playBackgroundMusic,
 } from "../components/backgroundMusic.js";
 import { generatePlayerComponents } from "../components/player.js";
-import { gameState, playerState } from "../states/index.js";
+import { gameState, NPCState, playerState } from "../states/index.js";
 
 const correctSound = new Audio("correct.mp3");
 const wrongSound = new Audio("wrong.mp3");
@@ -338,6 +338,8 @@ export default async function battle(k) {
       content.text =
         "Pertandingan berakhir. Tekan Enter untuk kembali ke dunia.";
       k.onKeyPress("enter", () => {
+        gameState.setSoundTheme("explore");
+        playBackgroundMusic();
         k.go(gameState.getPreviousScene());
       });
       return;
@@ -393,6 +395,8 @@ export default async function battle(k) {
 
     if (phase === "end") {
       gameState.setFreezePlayer(false);
+      gameState.setSoundTheme("explore");
+      playBackgroundMusic();
       k.go(gameState.getPreviousScene());
     }
   });
@@ -431,21 +435,25 @@ export default async function battle(k) {
 
     if (enemyMonHealthBar.width <= 0 && !enemyMon.fainted) {
       if (gameState.getPreviousScene() == "hutanKiri") {
+        NPCState.setNumberTalkedOldMan(0);
         gameState.setMonster1Defeated(true);
         gameState.setMission1Done(true);
         playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "hutanAtas") {
+        NPCState.setNumberTalkedOldMan(0);
         gameState.setMonster2Defeated(true);
         gameState.setMission2Done(true);
         playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "hutanBawah") {
+        NPCState.setNumberTalkedOldMan(0);
         gameState.setMonster3Defeated(true);
         gameState.setMission3Done(true);
         playerState.addCoin(20);
       }
       if (gameState.getPreviousScene() == "bos") {
+        NPCState.setNumberTalkedOldMan(0);
         gameState.setBossDefeated(true);
         playerState.addCoin(20);
       }
