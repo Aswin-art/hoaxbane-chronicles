@@ -19,13 +19,13 @@ export function playBackgroundMusic() {
 
   if (theme === "explore") {
     backgroundMusic.src = "/assets/sounds/background-music.mp3";
-    backgroundMusic.volume = 0.5;
+    backgroundMusic.volume = 0.7;
   } else if (theme === "battle-monster") {
     backgroundMusic.src = "/assets/sounds/battle-monster.mp3";
     backgroundMusic.volume = 0.5;
   } else if (theme === "battle-boss") {
     backgroundMusic.src = "/assets/sounds/battle-boss.mp3";
-    backgroundMusic.volume = 0.2;
+    backgroundMusic.volume = 0.7;
   }
 
   backgroundMusic.loop = true;
