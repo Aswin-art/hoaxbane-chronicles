@@ -15,7 +15,6 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
-import { playBackgroundMusic } from "../components/backgroundMusic.js";
 
 export default async function halaman(k) {
   colorizeBackground(k, 27, 29, 52);

@@ -454,6 +454,7 @@ export default async function battle(k) {
       if (gameState.getPreviousScene() == "bos") {
         NPCState.setNumberTalkedOldMan(0);
         gameState.setBossDefeated(true);
+        gameState.setMission4Done(true);
         playerState.addCoin(30);
       }
       makeMonDrop(enemyMon);

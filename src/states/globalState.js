@@ -19,6 +19,7 @@ export default function globalStateManager() {
     let mission1 = false;
     let mission2 = false;
     let mission3 = false;
+    let mission4 = false;
 
     let boss = false;
 
@@ -68,6 +69,10 @@ export default function globalStateManager() {
         mission3 = value;
       },
       getMission3: () => mission3,
+      setMission4Done(value) {
+        mission4 = value;
+      },
+      getMission4: () => mission4,
       setBossDefeated(value) {
         boss = value;
       },

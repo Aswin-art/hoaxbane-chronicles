@@ -9,6 +9,7 @@ import hutanBawah from "./scenes/hutanBawah";
 import { gameState, playerState } from "./states";
 import { playBackgroundMusic } from "./components/backgroundMusic";
 import boss from "./scenes/boss";
+import menu from "./scenes/menu";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -209,9 +210,6 @@ k.loadSprite("map-village", "/assets/map/map-village.png");
 // Memuat asset preview map (boss)
 k.loadSprite("map-boss", "/assets/map/map-boss.png");
 
-gameState.setSoundTheme("explore");
-playBackgroundMusic();
-
 const scenes = {
   house,
   halaman,
@@ -221,10 +219,11 @@ const scenes = {
   village,
   boss,
   battle,
+  menu,
 };
 
 for (const sceneName in scenes) {
   k.scene(sceneName, () => scenes[sceneName](k));
 }
 
-k.go("halaman");
+k.go("menu");

@@ -115,7 +115,7 @@ export async function startInteraction(k, npc, player) {
 
   if (
     (gameState.getCurrMission() == 3 && gameState.getMonster3()) ||
-    (gameState.getCurrMission() == 4 && !gameState.getMonster4())
+    (gameState.getCurrMission() == 4 && !gameState.getBoss())
   ) {
     if (gameState.getCurrMission() == 3 && gameState.getMonster3()) {
       playerState.addCoin(35);
@@ -139,7 +139,7 @@ export async function startInteraction(k, npc, player) {
     }
   }
 
-  if (gameState.getCurrMission() == 4 && gameState.getMonster4()) {
+  if (gameState.getCurrMission() == 4 && gameState.getBoss()) {
     playerState.addCoin(50);
     const responses = npcLines["congratulate"];
 
