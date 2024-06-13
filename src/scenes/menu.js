@@ -23,7 +23,7 @@ export default function menu(k) {
   ]);
 
   k.add([
-    k.text("Press 'Enter' to start the game", {
+    k.text("Tekan 'Enter' untuk memulai permainan", {
       size: 24,
       font: "gameboy",
     }),

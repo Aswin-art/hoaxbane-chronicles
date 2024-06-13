@@ -33,6 +33,13 @@ export function playBackgroundMusic() {
   backgroundMusic.play();
 }
 
+export function stopBackgroundMusic() {
+  if (backgroundMusic) {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+  }
+}
+
 export function playFootstepEffect(state = false) {
   if (!footstepEffect) {
     footstepEffect = new Audio("/assets/sounds/walk.mp3");

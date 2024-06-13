@@ -10,6 +10,7 @@ import { gameState, playerState } from "./states";
 import { playBackgroundMusic } from "./components/backgroundMusic";
 import boss from "./scenes/boss";
 import menu from "./scenes/menu";
+import gameover from "./scenes/gameover";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -220,10 +221,11 @@ const scenes = {
   boss,
   battle,
   menu,
+  gameover,
 };
 
 for (const sceneName in scenes) {
   k.scene(sceneName, () => scenes[sceneName](k));
 }
 
-k.go("menu");
+k.go("gameover");
