@@ -29,13 +29,27 @@ const misi2 = [
 const misi3 = [
   [
     "Pahlawan anda sangat hebat!",
-    "Sekarang selamatkan warga yang disandra!",
-    "Pergi ke hutan selatan dan bebaskan para warga!",
-    "Kalahkan para monster agar kamu dapat membebaskan para sandra!",
+    "Aku mendapatkan informasi, monster muncul dari hutan selatan!",
+    "Pergi ke hutan selatan dan basmi para monster!",
+    "Kalahkan para monster agar kamu dapat membawa kedamaian!",
   ],
   [
     "Cepat! orang - orang memerlukan bantuanmu.",
-    "Pergi ke arah hutan selatan dan bebaskan para sandra!",
+    "Pergi ke arah hutan selatan dan basmi para monster!",
+  ],
+  ["Tolong selamatkan kami!"],
+];
+
+const misi4 = [
+  [
+    "Pahlawan, para monster memanggil boss mereka!",
+    "Ini buruk, kita harus segera mengalahkan boss monster!",
+    "Kalahkan boss monster sebelum dia mencelakai penduduk!",
+    "Tidak ada waktu lagi, pergi sekarang!",
+  ],
+  [
+    "Cepat! orang - orang memerlukan bantuanmu.",
+    "Kalahkan boss monster agar penduduk merasa aman!",
   ],
   ["Tolong selamatkan kami!"],
 ];
@@ -54,6 +68,7 @@ const npcLines = {
   misi1,
   misi2,
   misi3,
+  misi4,
   congratulate,
 };
 

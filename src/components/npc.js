@@ -95,7 +95,6 @@ export async function startInteraction(k, npc, player) {
       playerState.addCoin(35);
     }
     gameState.setCurrMission(3);
-    currMission = 3;
     const responses = npcLines["misi3"];
 
     let numberTalked = NPCState.getNumberTalkedOldMan();
@@ -114,7 +113,33 @@ export async function startInteraction(k, npc, player) {
     }
   }
 
-  if (currMission == 3 && gameState.getMonster3()) {
+  if (
+    (gameState.getCurrMission() == 3 && gameState.getMonster3()) ||
+    (gameState.getCurrMission() == 4 && !gameState.getMonster4())
+  ) {
+    if (gameState.getCurrMission() == 3 && gameState.getMonster3()) {
+      playerState.addCoin(35);
+    }
+    gameState.setCurrMission(4);
+    const responses = npcLines["misi4"];
+
+    let numberTalked = NPCState.getNumberTalkedOldMan();
+    if (numberTalked >= 3) {
+      NPCState.setNumberTalkedOldMan(1);
+      numberTalked = NPCState.getNumberTalkedOldMan();
+    }
+
+    if (responses[numberTalked]) {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        responses[numberTalked]
+      );
+      NPCState.setNumberTalkedOldMan(numberTalked + 1);
+    }
+  }
+
+  if (gameState.getCurrMission() == 4 && gameState.getMonster4()) {
     playerState.addCoin(50);
     const responses = npcLines["congratulate"];
 
