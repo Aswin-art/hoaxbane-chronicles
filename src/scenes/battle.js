@@ -394,7 +394,12 @@ export default async function battle(k) {
       gameState.setFreezePlayer(false);
       gameState.setSoundTheme("explore");
       playBackgroundMusic();
-      k.go(gameState.getPreviousScene());
+
+      if (playerState.getHealth() > 0) {
+        k.go(gameState.getPreviousScene());
+      } else {
+        k.go("gameover");
+      }
     }
   });
 
