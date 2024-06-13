@@ -1,5 +1,4 @@
 import kaboom from "kaboom";
-import world from "./scenes/world";
 import house from "./scenes/house";
 import halaman from "./scenes/halaman";
 import hutanKiri from "./scenes/hutanKiri";
@@ -214,7 +213,6 @@ gameState.setSoundTheme("explore");
 playBackgroundMusic();
 
 const scenes = {
-  world,
   house,
   halaman,
   hutanKiri,

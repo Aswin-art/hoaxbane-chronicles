@@ -167,7 +167,7 @@ function showModalMap(k) {
       width: 780,
       align: "center",
     }),
-    k.color(255, 255, 255),
+    k.color(0, 0, 0),
     k.pos(100, 600),
   ]);
 

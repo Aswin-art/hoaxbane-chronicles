@@ -7,12 +7,8 @@ import {
 import { generatePlayerComponents } from "../components/player.js";
 import { gameState, NPCState, playerState } from "../states/index.js";
 
-const correctSound = new Audio("correct.mp3");
-const wrongSound = new Audio("wrong.mp3");
-const hitSound = new Audio("hit.mp3");
-
 const playerMaxHealth = playerState.getMaxHealth();
-const playerHealth = playerState.getHealth();
+let playerHealth = playerState.getHealth();
 
 export default async function battle(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -243,7 +239,6 @@ export default async function battle(k) {
 
   function reducePlayerHealth(healthBar, damageDealt, mon) {
     const playerMaxHealth = playerState.getMaxHealth();
-    let playerHealth = playerState.getHealth();
     playerHealth -= damageDealt;
     playerState.setHealth(playerHealth);
     playAttackEffect();
