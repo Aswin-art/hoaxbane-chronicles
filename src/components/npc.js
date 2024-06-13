@@ -157,6 +157,8 @@ export async function startInteraction(k, npc, player) {
       );
       NPCState.setNumberTalkedOldMan(numberTalked + 1);
     }
+
+    k.go("gameover", "win");
   }
 }
 

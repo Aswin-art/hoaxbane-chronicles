@@ -2,7 +2,7 @@ import { colorizeBackground } from "../../utils.js";
 import { stopBackgroundMusic } from "../components/backgroundMusic.js";
 import { gameState, playerState } from "../states/index.js";
 
-export default function gameover(k) {
+export default function gameover(k, state = "lose") {
   colorizeBackground(k, 0, 0, 0);
 
   stopBackgroundMusic();
@@ -11,8 +11,16 @@ export default function gameover(k) {
   const coin = playerState.getCoin();
   const currMission = gameState.getCurrMission();
 
+  let textTitle = "";
+
+  if (state == "lose") {
+    textTitle = "Kamu Kalah!";
+  } else {
+    textTitle = "Kamu Menang!";
+  }
+
   k.add([
-    k.text("Game Over", { size: 48, font: "gameboy" }),
+    k.text(textTitle, { size: 48, font: "gameboy" }),
     k.area(),
     k.anchor("center"),
     k.pos(k.center().x, k.center().y - 50),
