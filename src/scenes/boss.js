@@ -59,7 +59,7 @@ export default async function boss(k) {
 
         if (object.name === "boss") {
           entities.boss = map.add(
-            generateBossComponents(k, k.vec2(object.x, object.y))
+            generateBossComponents(k, k.vec2(object.x - 15, object.y - 15))
           );
         }
       }
@@ -114,7 +114,7 @@ export default async function boss(k) {
     );
   }
 
-  entities.player.onCollide("monster", () => {
+  entities.player.onCollide("boss", () => {
     flashScreen();
     setTimeout(() => {
       gameState.setPreviousScene("boss");

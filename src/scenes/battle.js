@@ -21,6 +21,9 @@ export default async function battle(k) {
   const battleBgWidth = 1550 * scale;
   const battleBgHeight = 400 * scale;
 
+  let enemyMon = null;
+  let enemyLabel = "MONSTER";
+
   const map = k.add([
     k.sprite("battle-background"),
     k.scale(scale * 1.5),
@@ -30,26 +33,49 @@ export default async function battle(k) {
     ),
   ]);
 
-  const enemyMon = k.add([
-    k.sprite("assets", {
-      anim: "slime-idle-down",
-    }),
-    k.scale(scale * 8),
-    k.pos(screenWidth - scale * 1000, screenHeight - scale * 700),
-    k.opacity(1),
-    {
-      fainted: false,
-    },
-  ]);
-  enemyMon.flipX = true;
+  if (gameState.getPreviousScene() == "boss") {
+    enemyLabel = "BOSS MONSTER";
 
-  k.tween(
-    enemyMon.pos.x,
-    screenWidth - scale * 500,
-    0.3,
-    (val) => (enemyMon.pos.x = val),
-    k.easings.easeInSine
-  );
+    enemyMon = k.add([
+      k.sprite("boss-monster"),
+      k.scale(scale * 0.6),
+      k.pos(screenWidth - scale * 1000, screenHeight - scale * 850),
+      k.opacity(1),
+      {
+        fainted: false,
+      },
+    ]);
+
+    k.tween(
+      enemyMon.pos.x,
+      screenWidth - scale * 600,
+      0.3,
+      (val) => (enemyMon.pos.x = val),
+      k.easings.easeInSine
+    );
+  } else {
+    enemyMon = k.add([
+      k.sprite("assets", {
+        anim: "slime-idle-down",
+      }),
+      k.scale(scale * 8),
+      k.pos(screenWidth - scale * 1000, screenHeight - scale * 700),
+      k.opacity(1),
+      {
+        fainted: false,
+      },
+    ]);
+
+    enemyMon.flipX = true;
+
+    k.tween(
+      enemyMon.pos.x,
+      screenWidth - scale * 500,
+      0.3,
+      (val) => (enemyMon.pos.x = val),
+      k.easings.easeInSine
+    );
+  }
 
   const playerMon = k.add([
     k.sprite("assets", {
@@ -111,7 +137,7 @@ export default async function battle(k) {
   ]);
 
   enemyMonHealthBox.add([
-    k.text("MONSTER", { size: scale * 24, width: scale * 200 }),
+    k.text(enemyLabel, { size: scale * 24, width: scale * 200 }),
     k.color(10, 10, 10),
     k.pos(scale * 10, scale * 10),
   ]);

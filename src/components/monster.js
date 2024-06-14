@@ -23,12 +23,12 @@ export function generateMonsterComponents(k, pos, slimePosition) {
 
 export function generateBossComponents(k, pos) {
   return [
-    k.sprite("boss"),
-    k.area({ shape: new k.Rect(k.vec2(0, 6), 16, 10) }),
+    k.sprite("boss-monster"),
+    k.area({ shape: new k.Rect(k.vec2(0, 6), 350, 450) }),
     k.body({ isStatic: true }),
     k.pos(pos),
     k.offscreen(),
-    k.scale(0.5),
+    k.scale(0.1),
     "boss",
   ];
 }

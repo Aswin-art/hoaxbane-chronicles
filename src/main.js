@@ -210,7 +210,14 @@ k.loadSprite("map-village", "/assets/map/map-village.png");
 k.loadSprite("map-boss", "/assets/map/map-boss.png");
 
 // memuat asset boss
-k.loadSprite("boss", "/assets/images/boss.png");
+k.loadSpriteAtlas("/assets/images/boss.png", {
+  "boss-monster": {
+    x: 360,
+    y: 360,
+    width: 400,
+    height: 500,
+  },
+});
 
 const scenes = {
   house,
@@ -229,4 +236,4 @@ for (const sceneName in scenes) {
   k.scene(sceneName, () => scenes[sceneName](k));
 }
 
-k.go("boss");
+k.go("halaman");
