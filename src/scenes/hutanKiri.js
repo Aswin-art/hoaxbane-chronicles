@@ -15,7 +15,7 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
-import { generateSlimeComponents } from "../components/slime.js";
+import { generateMonsterComponents } from "../components/monster.js";
 
 export default async function hutanKiri(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -39,19 +39,7 @@ export default async function hutanKiri(k) {
 
     if (layer.name === "SpawnPoints") {
       for (const object of layer.objects) {
-        if (
-          object.name === "player-dungeon" &&
-          gameState.getPreviousScene() === "dungeon"
-        ) {
-          entities.player = map.add(
-            generatePlayerComponents(k, k.vec2(object.x, object.y))
-          );
-        }
-
-        if (
-          object.name === "player" &&
-          gameState.getPreviousScene() !== "dungeon"
-        ) {
+        if (object.name === "player") {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
           );
@@ -59,7 +47,7 @@ export default async function hutanKiri(k) {
 
         if (object.name === "monster" && gameState.getMonster1() == false) {
           entities.monster = map.add(
-            generateSlimeComponents(
+            generateMonsterComponents(
               k,
               k.vec2(object.x, object.y),
               "slime-idle-side"

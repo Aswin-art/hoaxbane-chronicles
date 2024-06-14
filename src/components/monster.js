@@ -1,7 +1,7 @@
 import { playAnimIfNotPlaying } from "../../utils.js";
 
 const directionalState = ["left", "right", "up", "down"];
-export function generateSlimeComponents(k, pos, slimePosition) {
+export function generateMonsterComponents(k, pos, slimePosition) {
   return [
     k.sprite("assets", {
       anim: slimePosition,
@@ -18,6 +18,18 @@ export function generateSlimeComponents(k, pos, slimePosition) {
       attackPower: 0.5,
     },
     "monster",
+  ];
+}
+
+export function generateBossComponents(k, pos) {
+  return [
+    k.sprite("boss"),
+    k.area({ shape: new k.Rect(k.vec2(0, 6), 16, 10) }),
+    k.body({ isStatic: true }),
+    k.pos(pos),
+    k.offscreen(),
+    k.scale(0.5),
+    "boss",
   ];
 }
 

@@ -15,7 +15,7 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
-import { generateSlimeComponents } from "../components/slime.js";
+import { generateMonsterComponents } from "../components/monster.js";
 
 export default async function hutanBawah(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -40,8 +40,8 @@ export default async function hutanBawah(k) {
     if (layer.name === "SpawnPoints") {
       for (const object of layer.objects) {
         if (
-          object.name === "player-dungeon" &&
-          gameState.getPreviousScene() === "dungeon"
+          object.name === "player-boss" &&
+          gameState.getPreviousScene() === "boss"
         ) {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
@@ -50,7 +50,7 @@ export default async function hutanBawah(k) {
 
         if (
           object.name === "player" &&
-          gameState.getPreviousScene() !== "dungeon"
+          gameState.getPreviousScene() !== "boss"
         ) {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
@@ -59,7 +59,7 @@ export default async function hutanBawah(k) {
 
         if (object.name === "monster" && gameState.getMonster3() == false) {
           entities.monster = map.add(
-            generateSlimeComponents(
+            generateMonsterComponents(
               k,
               k.vec2(object.x, object.y),
               "slime-idle-down"
@@ -96,12 +96,6 @@ export default async function hutanBawah(k) {
   });
 
   setPlayerMovement(k, entities.player);
-
-  //   //   for (const slime of entities.slimes) {
-  //   //     setSlimeAI(k, slime);
-  //   //     onAttacked(k, slime, entities.player);
-  //   //     onCollideWithPlayer(k, slime);
-  //   //   }
 
   entities.player.onCollide("exit-village", () => {
     gameState.setPreviousScene("hutanBawah");

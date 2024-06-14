@@ -10,7 +10,7 @@ import {
   generatePlayerComponents,
   setPlayerMovement,
 } from "../components/player.js";
-// import { generateSlimeComponents, setSlimeAI } from "../components/slime.js";
+// import { generateMonsterComponents, setSlimeAI } from "../components/slime.js";
 import { gameState } from "../states/index.js";
 import { healthBar } from "../states/healthbar.js";
 import {

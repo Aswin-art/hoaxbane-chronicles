@@ -220,48 +220,70 @@
                  "y":288
                 }, 
                 {
-                 "height":71.5,
+                 "height":66.75,
                  "id":17,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":33,
+                 "width":32.25,
                  "x":328,
-                 "y":48
+                 "y":51
                 }, 
                 {
-                 "height":72,
+                 "height":66.25,
                  "id":18,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":38.5,
-                 "x":324.5,
-                 "y":176
+                 "width":30.5,
+                 "x":329.25,
+                 "y":180
                 }, 
                 {
-                 "height":72,
+                 "height":65.5,
                  "id":19,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":34,
+                 "width":31,
                  "x":425,
-                 "y":176
+                 "y":180.25
                 }, 
                 {
-                 "height":80,
+                 "height":71.75,
                  "id":20,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":40.3333333333333,
-                 "x":419.333333333333,
+                 "width":24.3333333333333,
+                 "x":427.583333333333,
                  "y":46
+                }, 
+                {
+                 "height":143.75,
+                 "id":21,
+                 "name":"exit-hutan-bawah",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":15.5,
+                 "x":0.5,
+                 "y":111.583333333333
+                }, 
+                {
+                 "height":189.333333333333,
+                 "id":24,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":15.3333333333333,
+                 "x":463.333333333333,
+                 "y":62
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -274,17 +296,6 @@
          "id":8,
          "name":"SpawnPoints",
          "objects":[
-                {
-                 "height":143.75,
-                 "id":21,
-                 "name":"exit-hutan-bawah",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":15.5,
-                 "x":0.5,
-                 "y":111.583333333333
-                }, 
                 {
                  "height":0,
                  "id":22,
@@ -316,7 +327,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":24,
+ "nextobjectid":25,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
