@@ -16,6 +16,7 @@ import {
   generateInventoryBarComponents,
 } from "../components/icons.js";
 import { generateMonsterComponents } from "../components/monster.js";
+import { warningDialog } from "../components/warningDialog.js";
 
 export default async function hutanBawah(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -103,8 +104,16 @@ export default async function hutanBawah(k) {
   });
 
   entities.player.onCollide("exit-boss", () => {
-    gameState.setPreviousScene("hutanBawah");
-    k.go("bos");
+    const currMission = gameState.getCurrMission();
+    if (currMission >= 4) {
+      gameState.setPreviousScene("hutanBawah");
+      k.go("boss");
+    } else {
+      warningDialog(
+        k,
+        "Ambil misi terlebih dahulu sebelum pergi ke area boss!"
+      );
+    }
   });
 
   function flashScreen() {
