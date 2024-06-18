@@ -482,7 +482,7 @@ export default async function battle(k) {
         gameState.setMission3Done(true);
         playerState.addCoin(20);
       }
-      if (gameState.getPreviousScene() == "bos") {
+      if (gameState.getPreviousScene() == "boss") {
         NPCState.setNumberTalkedOldMan(0);
         gameState.setBossDefeated(true);
         gameState.setMission4Done(true);
