@@ -39,10 +39,7 @@ export default async function boss(k) {
 
     if (layer.name === "SpawnPoints") {
       for (const object of layer.objects) {
-        if (
-          object.name === "player" &&
-          gameState.getPreviousScene() === "hutanBawah"
-        ) {
+        if (object.name === "player") {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
           );
