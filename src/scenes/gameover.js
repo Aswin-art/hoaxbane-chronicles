@@ -2,7 +2,7 @@ import { colorizeBackground } from "../../utils.js";
 import { stopBackgroundMusic } from "../components/backgroundMusic.js";
 import { APIHandle, gameState, playerState } from "../states/index.js";
 
-export default function gameover(k, state = "lose") {
+export default async function gameover(k, state = "lose") {
   colorizeBackground(k, 0, 0, 0);
 
   stopBackgroundMusic();
@@ -11,7 +11,7 @@ export default function gameover(k, state = "lose") {
   const coin = playerState.getCoin();
   const currMission = gameState.getCurrMission();
 
-  APIHandle.saveState();
+  await APIHandle.saveState();
 
   let textTitle = "";
 
