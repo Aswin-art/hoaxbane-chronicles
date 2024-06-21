@@ -8,14 +8,7 @@ export default function APIStateHandler() {
       saveState: async () => {
         const point = playerState.getPoint();
         const query = await fetch(
-          `https://digital-odyssey-sable.vercel.app/api/save-point?point=${point}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }
+          `https://digital-odyssey-sable.vercel.app/api/save-point?point=${point}`
         );
 
         if (query.ok) {
