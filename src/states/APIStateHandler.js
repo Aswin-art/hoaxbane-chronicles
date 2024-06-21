@@ -15,14 +15,12 @@ export default function APIStateHandler() {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
-            body: JSON.stringify(point),
           }
         );
 
         if (query.ok) {
           const data = await query.json();
-
-          return data, data;
+          console.log(data);
         }
       },
       getPlayerData: async () => {
@@ -58,7 +56,7 @@ export default function APIStateHandler() {
         if (query.ok) {
           const data = await query.json();
 
-          return data, data;
+          return data.data;
         }
       },
     };
