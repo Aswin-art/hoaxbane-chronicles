@@ -1,4 +1,4 @@
-import { playerState } from "./index,js";
+import { playerState } from "./index.js";
 
 export default function APIStateHandler() {
   let instance = null;
