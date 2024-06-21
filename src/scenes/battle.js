@@ -5,10 +5,16 @@ import {
   playSelectEffect,
 } from "../components/backgroundMusic.js";
 import { generatePlayerComponents } from "../components/player.js";
-import { gameState, NPCState, playerState } from "../states/index.js";
+import {
+  APIHandle,
+  gameState,
+  NPCState,
+  playerState,
+} from "../states/index.js";
 
 const playerMaxHealth = playerState.getMaxHealth();
 let playerHealth = playerState.getHealth();
+let questions = APIHandle.getGameQuestion();
 
 export default async function battle(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -195,23 +201,38 @@ export default async function battle(k) {
   const questions = [
     {
       question:
-        "Fungsi logika F(A, B) = A + B dalam bentuk kanonik POS adalah:",
+        "Fungsi logika F(A, B, C) = A'B + BC dalam bentuk kanonik SOP adalah: ?",
       answers: [
-        "(A + B)(A' + B)",
-        "(A + B)(A + B')",
-        "(A' + B)(A + B')",
-        "(A' + B')(A + B')",
+        "A'B'C + A'BC' + A'BC + AB'C",
+        "AB'C + ABC' + ABC + A'BC",
+        "A'B'C + A'BC' + ABC + A'BC",
       ],
-      correct: 1,
+      correct: 0,
     },
     {
       question:
         "Fungsi logika F(A, B, C) = AB + AC dalam bentuk kanonik SOP adalah:",
+      answers: ["ABC + ABC'", "AB'C' + AB'C + ABC", "A'BC + AB'C + ABC"],
+      correct: 0,
+    },
+    {
+      question:
+        "Fungsi logika F(A, B) = A + B dalam bentuk kanonik POS adalah:",
+      answers: ["(A + B)(A' + B)", "(A + B)(A + B')", "A' + B)(A + B')"],
+      correct: 1,
+    },
+    {
+      question: "Fungsi logika F(A, B) = A'B' dalam bentuk kanonik SOP adalah:",
+      answers: ["A'B'", "A'B + AB'", "A'B' + AB"],
+      correct: 0,
+    },
+    {
+      question:
+        "Fungsi logika F(A, B, C) = A + B' dalam bentuk kanonik POS adalah:",
       answers: [
-        "ABC + ABC'",
-        "AB'C' + AB'C + ABC",
-        "A'BC + AB'C + ABC",
-        "A'B'C + A'BC + AB'C",
+        "(A + B')(A' + B)(A + B)(A' + B')",
+        "(A + B)(A' + B)",
+        "(A + B')(A' + B)(A + B)",
       ],
       correct: 0,
     },
