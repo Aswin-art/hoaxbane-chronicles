@@ -8,9 +8,9 @@ export default function APIStateHandler() {
       saveState: async () => {
         const point = playerState.getPoint();
         const query = await fetch(
-          "https://digital-odyssey-sable.vercel.app/api/save-point",
+          `https://digital-odyssey-sable.vercel.app/api/save-point?point=${point}`,
           {
-            method: "POST",
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
