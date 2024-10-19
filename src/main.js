@@ -9,6 +9,7 @@ import hutanBawah from "./scenes/hutanBawah";
 import boss from "./scenes/boss";
 import menu from "./scenes/menu";
 import gameover from "./scenes/gameover";
+import BattleCard from "./scenes/battle-card";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -232,6 +233,7 @@ const scenes = {
   battle,
   menu,
   gameover,
+  BattleCard,
 };
 
 for (const sceneName in scenes) {
@@ -268,4 +270,4 @@ k.onLoading((progress) => {
   });
 });
 
-k.go("menu");
+k.go("BattleCard");
