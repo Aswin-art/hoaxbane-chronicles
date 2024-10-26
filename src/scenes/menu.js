@@ -33,8 +33,9 @@ export default function menu(k) {
   ]);
 
   k.onKeyPress("enter", () => {
-    gameState.setSoundTheme("explore");
-    playBackgroundMusic();
-    k.go("halaman");
+    // gameState.setSoundTheme("battle-monster");
+    // playBackgroundMusic();
+    // k.go("BattleCard");
+    k.go("intro");
   });
 }

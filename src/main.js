@@ -10,6 +10,7 @@ import boss from "./scenes/boss";
 import menu from "./scenes/menu";
 import gameover from "./scenes/gameover";
 import BattleCard from "./scenes/battle-card";
+import intro from "./scenes/intro";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -21,10 +22,10 @@ const k = kaboom({
 });
 
 // memuat font
-k.loadFont("gameboy", "/assets/fonts/gb.ttf");
+await k.loadFont("gameboy", "/assets/fonts/gb.ttf");
 
 // memuat asset gambar
-k.loadSprite("assets", "/assets/images/topdownasset.png", {
+await k.loadSprite("assets", "/assets/images/topdownasset.png", {
   sliceX: 39,
   sliceY: 31,
   anims: {
@@ -79,15 +80,15 @@ k.loadSprite("assets", "/assets/images/topdownasset.png", {
   },
 });
 
-k.loadSprite("topdown-assets", "/assets/images/tilesheet2.png", {
+await k.loadSprite("topdown-assets", "/assets/images/tilesheet2.png", {
   sliceX: 20,
   sliceY: 98,
 });
 
-k.loadSprite("battle-background", "/assets/images/battleBackground.png");
+await k.loadSprite("battle-background", "/assets/images/battleBackground.png");
 
 // memuat asset heart (nyawa)
-k.loadSpriteAtlas("/assets/images/topdownasset.png", {
+await k.loadSpriteAtlas("/assets/images/topdownasset.png", {
   "full-heart": {
     x: 0,
     y: 224,
@@ -109,7 +110,7 @@ k.loadSpriteAtlas("/assets/images/topdownasset.png", {
 });
 
 // memuat asset keys (arrow key)
-k.loadSpriteAtlas("/assets/images/keys.png", {
+await k.loadSpriteAtlas("/assets/images/keys.png", {
   "arrow-up": {
     x: 28,
     y: 30,
@@ -137,7 +138,7 @@ k.loadSpriteAtlas("/assets/images/keys.png", {
 });
 
 // memuat asset keys (space key)
-k.loadSpriteAtlas("/assets/images/important_key.png", {
+await k.loadSpriteAtlas("/assets/images/important_key.png", {
   space: {
     x: 175,
     y: 93,
@@ -147,7 +148,7 @@ k.loadSpriteAtlas("/assets/images/important_key.png", {
 });
 
 // memuat asset icons (quest, map)
-k.loadSpriteAtlas("/assets/images/items.png", {
+await k.loadSpriteAtlas("/assets/images/items.png", {
   "quest-icon": {
     x: 6,
     y: 71,
@@ -163,7 +164,7 @@ k.loadSpriteAtlas("/assets/images/items.png", {
 });
 
 // memuat asset icons (coin, shop)
-k.loadSpriteAtlas("/assets/images/general.png", {
+await k.loadSpriteAtlas("/assets/images/general.png", {
   "shop-icon": {
     x: 45,
     y: 45,
@@ -179,7 +180,7 @@ k.loadSpriteAtlas("/assets/images/general.png", {
 });
 
 // memuat asset icons (musics)
-k.loadSpriteAtlas("/assets/images/barsheet.png", {
+await k.loadSpriteAtlas("/assets/images/barsheet.png", {
   "trophy-icon": {
     x: 865,
     y: 55,
@@ -189,36 +190,135 @@ k.loadSpriteAtlas("/assets/images/barsheet.png", {
 });
 
 // memuat asset inventory bar
-k.loadSprite("inventory_bar", "/assets/images/inventory_bar.png");
+await k.loadSprite("inventory_bar", "/assets/images/inventory_bar.png");
 
 // memuat asset inventory
-k.loadSprite("inventory", "/assets/images/inventory.png");
+await k.loadSprite("inventory", "/assets/images/inventory.png");
 
 // Memuat asset preview map (halaman)
-k.loadSprite("map-halaman", "/assets/map/map-halaman.png");
+await k.loadSprite("map-halaman", "/assets/map/map-halaman.png");
 
 // Memuat asset preview map (hutan-kiri)
-k.loadSprite("map-hutan-kiri", "/assets/map/map-hutan-kiri.png");
+await k.loadSprite("map-hutan-kiri", "/assets/map/map-hutan-kiri.png");
 
 // Memuat asset preview map (hutan-atas)
-k.loadSprite("map-hutan-atas", "/assets/map/map-hutan-atas.png");
+await k.loadSprite("map-hutan-atas", "/assets/map/map-hutan-atas.png");
 
 // Memuat asset preview map (hutan-bawah)
-k.loadSprite("map-hutan-bawah", "/assets/map/map-hutan-bawah.png");
+await k.loadSprite("map-hutan-bawah", "/assets/map/map-hutan-bawah.png");
 
 // Memuat asset preview map (village)
-k.loadSprite("map-village", "/assets/map/map-village.png");
+await k.loadSprite("map-village", "/assets/map/map-village.png");
 
 // Memuat asset preview map (boss)
-k.loadSprite("map-boss", "/assets/map/map-boss.png");
+await k.loadSprite("map-boss", "/assets/map/map-boss.png");
 
-// memuat asset boss
-k.loadSpriteAtlas("/assets/images/boss.png", {
+// Memuat asset boss
+await k.loadSpriteAtlas("/assets/images/boss.png", {
   "boss-monster": {
     x: 360,
     y: 360,
     width: 400,
     height: 500,
+  },
+});
+
+// Load battle background
+await k.loadSprite(
+  "battle-card-background",
+  "/assets/images/battle-background.png"
+);
+
+// Load heroes in battle
+await k.loadSpriteAtlas("/assets/images/heroes.png", {
+  // "heroes-idle-down": {
+  //   x: 0,
+  //   y: 0,
+  //   width: 16,
+  //   height: 16,
+  // },
+  // "heroes-down": {
+  //   from: 936,
+  //   to: 939,
+  //   loop: true,
+  // },
+  "heroes-idle-side": {
+    x: 16,
+    y: 64,
+    width: 32,
+    height: 64,
+  },
+  // "heroes-side": {
+  //   from: 976,
+  //   to: 978,
+  //   loop: true,
+  // },
+  // "heroes-idle-up": 1014,
+  // "heroes-up": {
+  //   from: 1014,
+  //   to: 1017,
+  //   loop: true,
+  // },
+});
+
+// Load enemies in battle
+await k.loadSprite("enemies", "/assets/images/character1.png");
+
+// Load pause button
+await k.loadSpriteAtlas("/assets/images/pause-button.png", {
+  "pause-button": {
+    x: 64,
+    y: 48,
+    width: 104,
+    height: 89,
+  },
+});
+
+// Load skill cards
+await k.loadSprite("fakta-card", "/assets/images/card.fakta.png");
+await k.loadSprite("opini-card", "/assets/images/card.opini.png");
+await k.loadSprite("saran-card", "/assets/images/card.saran.png");
+await k.loadSprite("halus-card", "/assets/images/card.halus.png");
+await k.loadSprite("sarkas-card", "/assets/images/card.sarkas.png");
+await k.loadSprite("mengancam-card", "/assets/images/card.mengancam.png");
+
+// Load health bar
+await k.loadSpriteAtlas("/assets/images/health-energy-bar.png", {
+  "health-bar-bg": {
+    x: 64,
+    y: 48,
+    width: 647,
+    height: 57,
+  },
+  "health-bar-fill": {
+    x: 112,
+    y: 176,
+    width: 647,
+    height: 57,
+  },
+  "belief-bar-bg-enemy": {
+    x: 64,
+    y: 48,
+    width: 647,
+    height: 83,
+  },
+  "belief-bar-fill-enemy": {
+    x: 96,
+    y: 176,
+    width: 647,
+    height: 144,
+  },
+  "bar-white-icon": {
+    x: 64,
+    y: 336,
+    width: 70,
+    height: 50,
+  },
+  "bar-yellow-icon": {
+    x: 192,
+    y: 336,
+    width: 70,
+    height: 50,
   },
 });
 
@@ -234,40 +334,11 @@ const scenes = {
   menu,
   gameover,
   BattleCard,
+  intro,
 };
 
 for (const sceneName in scenes) {
   k.scene(sceneName, (args) => scenes[sceneName](k, args));
 }
 
-k.load(
-  new Promise((res) => {
-    setTimeout(() => {
-      res();
-    }, 1000);
-  })
-);
-
-k.onLoading((progress) => {
-  k.drawRect({
-    width: k.width(),
-    height: k.height(),
-    color: k.rgb(0, 0, 0),
-  });
-
-  k.drawCircle({
-    pos: k.center(),
-    radius: 32,
-    end: k.map(progress, 0, 1, 0, 360),
-  });
-
-  k.drawText({
-    text: "loading" + ".".repeat(k.wave(1, 4, k.time() * 12)),
-    font: "monospace",
-    size: 24,
-    anchor: "center",
-    pos: k.center().add(0, 70),
-  });
-});
-
-k.go("BattleCard");
+k.go("menu");

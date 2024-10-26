@@ -8,6 +8,8 @@ let clickEffect = null;
 let notAllowedEffect = null;
 let selectEffect = null;
 
+let clickSkillCardEffect = null;
+
 export function playBackgroundMusic() {
   const theme = gameState.getSoundTheme();
 
@@ -22,7 +24,8 @@ export function playBackgroundMusic() {
     backgroundMusic.src = "/assets/sounds/background-music.mp3";
     backgroundMusic.volume = 0.7;
   } else if (theme === "battle-monster") {
-    backgroundMusic.src = "/assets/sounds/battle-monster.mp3";
+    // backgroundMusic.src = "/assets/sounds/battle-monster.mp3";
+    backgroundMusic.src = "/assets/sounds/bgm-battle.mp3";
     backgroundMusic.volume = 0.5;
   } else if (theme === "battle-boss") {
     backgroundMusic.src = "/assets/sounds/battle-boss.mp3";
@@ -60,6 +63,13 @@ export function playAttackEffect() {
   attackEffect.volume = 1;
 
   attackEffect.play();
+}
+
+export function playClickSkillCard() {
+  clickSkillCardEffect = new Audio("/assets/sounds/clickCard.mp3");
+  clickSkillCardEffect.volume = 1;
+
+  clickSkillCardEffect.play();
 }
 
 export function playTypingEffect() {
