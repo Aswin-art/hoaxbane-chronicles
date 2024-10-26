@@ -86,7 +86,8 @@ export function stopTypingEffect() {
 }
 
 export function playClickEffect() {
-  clickEffect = new Audio("/assets/sounds/click.wav");
+  // clickEffect = new Audio("/assets/sounds/click.wav");
+  clickEffect = new Audio("/assets/sounds/click.mp3");
   clickEffect.volume = 1;
 
   clickEffect.play();

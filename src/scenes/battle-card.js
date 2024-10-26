@@ -1,6 +1,7 @@
 import {
   playAttackEffect,
   playBackgroundMusic,
+  playClickEffect,
   playClickSkillCard,
   playTypingEffect,
   stopTypingEffect,
@@ -9,21 +10,17 @@ import {
 const maxHealth = 100;
 let playerHealth = maxHealth;
 
-const maxMana = 50;
-let playerMana = maxMana;
-
 const maxHostility = 100;
 const maxBelief = 100;
 let enemyHostility = 30;
 let enemyBelief = maxBelief;
 
 let isAnimating = false;
+let isGameOver = false;
+let turnInProgress = false;
 
 const playerName = "Hero Adimas";
 const enemyName = "Penduduk Galuh";
-
-const totalAction = 3;
-let remainingActions = totalAction;
 
 let currentTurn = "player";
 
@@ -40,7 +37,7 @@ const cognitiveCards = [
       "Fakta bagus untuk meningkatkan tekanan pada lawan, tetapi juga meningkatnya hostility.",
     type: "Kognitif",
     method: "Fakta",
-    result1: "+attack",
+    result1: "++attack",
     result2: "+hostility",
   },
   {
@@ -52,8 +49,8 @@ const cognitiveCards = [
       "Opini bisa menciptakan strategi yang lebih defensif dan mendukung ketahanan karakter.",
     type: "Kognitif",
     method: "Opini",
-    result1: "+defense",
-    result2: "+health",
+    result1: "+attack",
+    result2: "--hostility",
   },
   {
     name: "saran-card",
@@ -64,7 +61,7 @@ const cognitiveCards = [
       "Saran membantu menciptakan serangan yang kuat namun terkontrol, mengurangi risiko konflik yang terlalu besar.",
     type: "Kognitif",
     method: "Saran",
-    result1: "+attack",
+    result1: "+++attack",
     result2: "-hostility",
   },
 ];
@@ -79,8 +76,8 @@ const affectiveCards = [
       "Menggunakan metode halus dapat mengurangi hostility namun kurang efektif dalam menyerang langsung.",
     type: "Afektif",
     method: "Halus",
-    result1: "+attack",
-    result2: "+hostility",
+    result1: "-attack",
+    result2: "-hostility",
   },
   {
     name: "sarkas-card",
@@ -91,8 +88,8 @@ const affectiveCards = [
       "Sarkasme menambah tekanan pada lawan tetapi dapat meningkatkan hostility secara signifikan.",
     type: "Afektif",
     method: "Sarkas",
-    result1: "+defense",
-    result2: "+health",
+    result1: "+attack",
+    result2: "+hostility",
   },
   {
     name: "mengancam-card",
@@ -103,10 +100,20 @@ const affectiveCards = [
       "Mengancam adalah cara yang efektif untuk meningkatkan serangan, tetapi hostility juga akan meningkat pesat.",
     type: "Afektif",
     method: "Mengancam",
-    result1: "+attack",
-    result2: "-hostility",
+    result1: "++attack",
+    result2: "++hostility",
   },
 ];
+
+const checkGameEnd = (player, enemy) => {
+  if (playerHealth <= 0 || enemyHostility >= 100) {
+    console.log("Game Over: Player kalah!");
+    isGameOver = true;
+  } else if (enemyBelief <= 0) {
+    console.log("Game Over: Player menang!");
+    isGameOver = true;
+  }
+};
 
 const addBoldText = (k, object, text, type, options) => {
   const layerOffset = 0.3;
@@ -190,10 +197,10 @@ function playerReceiveDamage(k, damage, player, playerHealthBarFill) {
   playAttackEffect();
 }
 
-const npcTurn = (k, player, playerHealthBarFill) => {
+const npcTurn = (k, player, playerHealthBarFill, onTurnEnd) => {
   const npcDamage = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
 
-  k.tween(currentCognitiveCard.opacity, 0, 1.2, (val) => {
+  k.tween(currentCognitiveCard.opacity, 0, 1.4, (val) => {
     currentCognitiveCard.opacity = val;
   }).then(() => {
     currentCognitiveCard.destroy();
@@ -205,18 +212,13 @@ const npcTurn = (k, player, playerHealthBarFill) => {
     currentAffectiveCard.destroy();
   });
 
-  k.wait(1.7, () => {
+  k.wait(1.6, () => {
     playerReceiveDamage(k, npcDamage, player, playerHealthBarFill);
   });
 
-  isAnimating = false;
-};
-
-const playerTurn = (card, enemyBeliefBar, enemyBeliefBarLabel) => {
-  console.log(card);
-  const npcDamage = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
-
-  isAnimating = true;
+  k.wait(2.0, () => {
+    onTurnEnd();
+  });
 };
 
 let spawnCards = [];
@@ -242,6 +244,7 @@ const applyCardDamage = () => {
 
   let attack = 0;
   let hostility = 0;
+  let content = "";
 
   switch (currentCognitiveCard.method) {
     case "Fakta":
@@ -273,9 +276,45 @@ const applyCardDamage = () => {
       break;
   }
 
+  if (currentCognitiveCard.method === "Fakta") {
+    if (currentAffectiveCard.method === "Halus") {
+      content =
+        "Statistik menunjukkan bahwa hoax tentang pajak ini hanya menciptakan kebingungan. Mari kita hadapi isu ini dengan tenang dan menjelaskan kepada rakyat bahwa pajak adalah untuk kesejahteraan bersama.";
+    } else if (currentAffectiveCard.method === "Sarkas") {
+      content =
+        "Oh, jadi hoax tentang pajak ini adalah cara baru untuk memimpin rakyat? Bagus sekali, siapa yang butuh fakta saat kita punya kebohongan yang menyenangkan?";
+    } else if (currentAffectiveCard.method === "Mengancam") {
+      content =
+        "Statistik jelas menunjukkan bahwa hoax ini merugikan kerajaan! Siapa pun yang berani menyebarkan kebohongan ini akan merasakan konsekuensinya!";
+    }
+  } else if (currentCognitiveCard.method === "Saran") {
+    if (currentAffectiveCard.method === "Halus") {
+      content =
+        "Saya sarankan kita memberi penjelasan yang tepat. Dengan cara yang tenang, kita bisa membantu masyarakat memahami pentingnya pajak dan menghindari kesalahpahaman.";
+    } else if (currentAffectiveCard.method === "Sarkas") {
+      content =
+        "Saya rasa mengabaikan pajak adalah ide yang cemerlang. Kenapa tidak kita biarkan saja semuanya terpuruk?";
+    } else if (currentAffectiveCard.method === "Mengancam") {
+      content =
+        "Saya sarankan kita segera memberikan klarifikasi. Siapa pun yang terus menyebarkan hoax ini harus siap menghadapi konsekuensi!";
+    }
+  } else if (currentCognitiveCard.method === "Opini") {
+    if (currentAffectiveCard.method === "Halus") {
+      content =
+        "Menurut pendapat saya, kita harus menjaga ketenangan. Pajak adalah hal yang perlu dipahami dengan benar, dan mari kita bantu orang lain untuk melihat hal itu.";
+    } else if (currentAffectiveCard.method === "Sarkas") {
+      content =
+        "Ah, jadi kita semua setuju bahwa pajak itu tidak penting, bukan? Mari kita abaikan semua yang telah dibangun dan berharap semuanya baik-baik saja!";
+    } else if (currentAffectiveCard.method === "Mengancam") {
+      content =
+        "Saya percaya kita perlu bertindak cepat. Siapa pun yang menyebarkan hoax ini akan dihadapkan pada kemarahan kerajaan!";
+    }
+  }
+
   return {
     attack,
     hostility,
+    content,
   };
 };
 
@@ -291,8 +330,11 @@ const spawnNewAffectiveCard = (
   player,
   playerHealthBarFill,
   enemy,
-  enemyBeliefBarFill
+  enemyBeliefBarFill,
+  onTurnEnd
 ) => {
+  isAnimating = false;
+
   const cardSpacing = 50;
   const totalCardsWidth = (cardWidth + cardSpacing) * 3 - cardSpacing;
   const startX = (mapWidth - totalCardsWidth) / 2;
@@ -314,6 +356,8 @@ const spawnNewAffectiveCard = (
         method: card.method,
       },
     ]);
+
+    let isClicked = false;
 
     spawnCards.push(cardSprite);
 
@@ -376,23 +420,41 @@ const spawnNewAffectiveCard = (
     let result1Color;
     let result2Color;
 
-    if (card.result1 === "+attack") result1Color = k.rgb(200, 0, 0);
-    if (card.result1 === "+defense") result1Color = k.rgb(200, 100, 200);
-    if (card.result1 === "+health") result1Color = k.rgb(0, 200, 200);
-    if (card.result1 === "+hostility" || card.result1 === "-hostility")
+    if (
+      card.result1 === "-attack" ||
+      card.result1 === "+attack" ||
+      card.result1 === "++attack" ||
+      card.result1 === "+++attack"
+    )
+      result1Color = k.rgb(200, 0, 0);
+    if (
+      card.result1 === "-hostility" ||
+      card.result1 === "+hostility" ||
+      card.result1 === "++hostility" ||
+      card.result1 === "+++hostility"
+    )
       result1Color = k.rgb(200, 100, 0);
 
-    if (card.result2 === "+attack") result2Color = k.rgb(200, 0, 0);
-    if (card.result2 === "+defense") result2Color = k.rgb(200, 100, 200);
-    if (card.result2 === "+health") result2Color = k.rgb(0, 200, 200);
-    if (card.result2 === "+hostility" || card.result2 === "-hostility")
+    if (
+      card.result2 === "-attack" ||
+      card.result2 === "+attack" ||
+      card.result2 === "++attack" ||
+      card.result2 === "+++attack"
+    )
+      result2Color = k.rgb(200, 0, 0);
+    if (
+      card.result2 === "-hostility" ||
+      card.result2 === "+hostility" ||
+      card.result2 === "++hostility" ||
+      card.result2 === "+++hostility"
+    )
       result2Color = k.rgb(200, 100, 0);
 
     const skillCardDescriptionFooterResult1 =
       skillCardDescriptionFooterType.add([
         k.text(`${card.result1}`, {
           size: 14,
-          width: 90,
+          width: 95,
           align: "center",
           transform: {
             color: result1Color,
@@ -407,7 +469,7 @@ const spawnNewAffectiveCard = (
       skillCardDescriptionFooterResult1.add([
         k.text(`${card.result2}`, {
           size: 14,
-          width: 90,
+          width: 95,
           align: "center",
           transform: {
             color: result2Color,
@@ -423,7 +485,7 @@ const spawnNewAffectiveCard = (
         k.setCursor("pointer");
         clearTimeout(hoverTimeout);
 
-        if (!card.isClicked) {
+        if (!isClicked) {
           k.tween(
             initialYPos,
             initialYPos - 25,
@@ -445,7 +507,7 @@ const spawnNewAffectiveCard = (
       if (!isAnimating) {
         k.setCursor("default");
 
-        if (!card.isClicked) {
+        if (!isClicked) {
           hoverTimeout = setTimeout(() => {
             k.tween(
               cardSprite.pos.y,
@@ -466,12 +528,12 @@ const spawnNewAffectiveCard = (
     });
 
     k.onClick("skill-card" + card.cardId, async () => {
-      if (card.isClicked || isAnimating) return;
+      if (isClicked || isAnimating) return;
       currentAffectiveCard = cardSprite;
       const attackValue = applyCardDamage();
       playClickSkillCard();
 
-      card.isClicked = true;
+      isClicked = true;
       isAnimating = true;
       skillCardDescriptionBox.destroy();
       k.setCursor("default");
@@ -512,7 +574,7 @@ const spawnNewAffectiveCard = (
         k.pos(10, 10),
       ]);
 
-      await displayLine(descriptionText, card.description);
+      await displayLine(descriptionText, attackValue.content);
 
       k.wait(1.2, () => {
         const newPosX = currentCognitiveCard.pos.x + 100;
@@ -568,13 +630,13 @@ const spawnNewAffectiveCard = (
         enemyBelief -= attackValue.attack;
         enemyBeliefBarFill.width = (enemyBelief / maxBelief) * 647;
 
-        // Hapus semua card kognitive
+        // Hapus semua card affective
         k.wait(0.5, () => {
           removeSpawnCards(k, card.cardId);
         });
 
         // switch to npc turn
-        npcTurn(k, player, playerHealthBarFill);
+        onTurnEnd();
       });
     });
   });
@@ -592,7 +654,8 @@ const spawnNewCognitiveCard = (
   player,
   playerHealthBarFill,
   enemy,
-  enemyBeliefBarFill
+  enemyBeliefBarFill,
+  onTurnEnd
 ) => {
   const cardSprite = map.add([
     k.sprite(card.name),
@@ -608,6 +671,8 @@ const spawnNewCognitiveCard = (
       method: card.method,
     },
   ]);
+
+  let isClicked = false;
 
   spawnCards.push(cardSprite);
 
@@ -670,22 +735,41 @@ const spawnNewCognitiveCard = (
   let result1Color;
   let result2Color;
 
-  if (card.result1 === "+attack") result1Color = k.rgb(200, 0, 0);
-  if (card.result1 === "+defense") result1Color = k.rgb(200, 100, 200);
-  if (card.result1 === "+health") result1Color = k.rgb(0, 200, 200);
-  if (card.result1 === "+hostility" || card.result1 === "-hostility")
+  if (
+    card.result1 === "-attack" ||
+    card.result1 === "+attack" ||
+    card.result1 === "++attack" ||
+    card.result1 === "+++attack"
+  )
+    result1Color = k.rgb(200, 0, 0);
+  if (
+    card.result1 === "-hostility" ||
+    card.result1 === "+hostility" ||
+    card.result1 === "++hostility" ||
+    card.result1 === "+++hostility"
+  )
     result1Color = k.rgb(200, 100, 0);
 
-  if (card.result2 === "+attack") result2Color = k.rgb(200, 0, 0);
-  if (card.result2 === "+defense") result2Color = k.rgb(200, 100, 200);
-  if (card.result2 === "+health") result2Color = k.rgb(0, 200, 200);
-  if (card.result2 === "+hostility" || card.result2 === "-hostility")
+  if (
+    card.result2 === "-attack" ||
+    card.result2 === "+attack" ||
+    card.result2 === "++attack" ||
+    card.result2 === "+++attack"
+  )
+    result2Color = k.rgb(200, 0, 0);
+  if (
+    card.result2 === "-hostility" ||
+    card.result2 === "--hostility" ||
+    card.result2 === "+hostility" ||
+    card.result2 === "++hostility" ||
+    card.result2 === "+++hostility"
+  )
     result2Color = k.rgb(200, 100, 0);
 
   const skillCardDescriptionFooterResult1 = skillCardDescriptionFooterType.add([
     k.text(`${card.result1}`, {
       size: 14,
-      width: 90,
+      width: 95,
       align: "center",
       transform: {
         color: result1Color,
@@ -700,7 +784,7 @@ const spawnNewCognitiveCard = (
     skillCardDescriptionFooterResult1.add([
       k.text(`${card.result2}`, {
         size: 14,
-        width: 90,
+        width: 95,
         align: "center",
         transform: {
           color: result2Color,
@@ -711,12 +795,12 @@ const spawnNewCognitiveCard = (
       k.pos(skillCardDescriptionFooterResult1.width, 0),
     ]);
 
-  k.onHover("skill-card" + card.cardId, () => {
+  k.onHover("skill-card" + cardSprite.cardId, () => {
     if (!isAnimating) {
       k.setCursor("pointer");
       clearTimeout(hoverTimeout);
 
-      if (!card.isClicked) {
+      if (!isClicked) {
         k.tween(
           initialYPos,
           initialYPos - 25,
@@ -734,11 +818,11 @@ const spawnNewCognitiveCard = (
     }
   });
 
-  k.onHoverEnd("skill-card" + card.cardId, () => {
+  k.onHoverEnd("skill-card" + cardSprite.cardId, () => {
     if (!isAnimating) {
       k.setCursor("default");
 
-      if (!card.isClicked) {
+      if (!isClicked) {
         hoverTimeout = setTimeout(() => {
           k.tween(
             cardSprite.pos.y,
@@ -758,13 +842,13 @@ const spawnNewCognitiveCard = (
     }
   });
 
-  k.onClick("skill-card" + card.cardId, async () => {
-    if (card.isClicked || isAnimating) return;
+  k.onClick("skill-card" + cardSprite.cardId, async () => {
+    if (isClicked || isAnimating) return;
 
     currentCognitiveCard = cardSprite;
     playClickSkillCard();
 
-    card.isClicked = true;
+    isClicked = true;
     isAnimating = true;
     skillCardDescriptionBox.destroy();
     k.setCursor("default");
@@ -803,7 +887,7 @@ const spawnNewCognitiveCard = (
       // Hapus semua card kognitive
       k.wait(0.5, () => removeSpawnCards(k, card.cardId));
 
-      // tambah spawn affective
+      // Spawn affective card
       k.wait(0.6, () =>
         spawnNewAffectiveCard(
           k,
@@ -817,56 +901,172 @@ const spawnNewCognitiveCard = (
           player,
           playerHealthBarFill,
           enemy,
-          enemyBeliefBarFill
+          enemyBeliefBarFill,
+          onTurnEnd
         )
       );
-
-      isAnimating = false;
     });
   });
 };
 
-function enablePlayerActions() {
-  // Enable clicking on skill cards
-  // Once player selects a card, calculate its effect and end the turn
-  onPlayerCardSelect((card) => {
-    applyCardEffect(card);
-    endTurn();
-  });
-}
+const playerTurn = (
+  k,
+  map,
+  mapWidth,
+  mapHeight,
+  player,
+  playerHealthBarFill,
+  enemy,
+  enemyBeliefBarFill,
+  onTurnEnd
+) => {
+  const cardWidth = 250;
+  const cardSpacing = 50;
+  const totalCardsWidth = (cardWidth + cardSpacing) * 3 - cardSpacing;
+  const startX = (mapWidth - totalCardsWidth) / 2;
 
-function startTurn() {
-  if (currentTurn === "player") {
-    // Allow player to choose a skill card
-    enablePlayerActions();
-  } else {
-    // NPC's turn logic
-    performNpcTurn();
+  cognitiveCards.forEach((card, index) => {
+    console.log;
+    const cardX = startX + index * (cardWidth + cardSpacing) + 25;
+    const cardY = mapHeight - 425;
+
+    spawnNewCognitiveCard(
+      k,
+      map,
+      card,
+      cardX,
+      cardY,
+      mapWidth,
+      mapHeight,
+      cardWidth,
+      player,
+      playerHealthBarFill,
+      enemy,
+      enemyBeliefBarFill,
+      onTurnEnd
+    );
+  });
+};
+
+const startTurn = (
+  k,
+  map,
+  mapWidth,
+  mapHeight,
+  player,
+  playerHealthBarFill,
+  enemy,
+  enemyBeliefBarFill
+) => {
+  checkGameEnd(player, enemy);
+  if (isGameOver) {
+    return;
   }
-}
+
+  if (currentTurn === "player") {
+    playerTurn(
+      k,
+      map,
+      mapWidth,
+      mapHeight,
+      player,
+      playerHealthBarFill,
+      enemy,
+      enemyBeliefBarFill,
+      () =>
+        endTurn(
+          k,
+          map,
+          mapWidth,
+          mapHeight,
+          player,
+          playerHealthBarFill,
+          enemy,
+          enemyBeliefBarFill
+        )
+    );
+  } else {
+    npcTurn(k, player, playerHealthBarFill, () =>
+      endTurn(
+        k,
+        map,
+        mapWidth,
+        mapHeight,
+        player,
+        playerHealthBarFill,
+        enemy,
+        enemyBeliefBarFill
+      )
+    );
+  }
+};
+
+const endTurn = (
+  k,
+  map,
+  mapWidth,
+  mapHeight,
+  player,
+  playerHealthBarFill,
+  enemy,
+  enemyBeliefBarFill
+) => {
+  isAnimating = false;
+
+  currentTurn = currentTurn === "player" ? "npc" : "player";
+
+  startTurn(
+    k,
+    map,
+    mapWidth,
+    mapHeight,
+    player,
+    playerHealthBarFill,
+    enemy,
+    enemyBeliefBarFill
+  );
+};
 
 export default async function BattleCard(k) {
-  // LOAD MAP
+  // RENDER MAP
   const map = k.add([k.sprite("battle-card-background")]);
 
   const mapWidth = map.width;
   const mapHeight = map.height;
 
-  // LOAD PAUSE BUTTON
+  // RENDER PAUSE BUTTON
   const pauseButton = map.add([
     k.sprite("pause-button"),
     k.pos(mapWidth / 2 - 104 / 2, 0),
     k.scale(0.8),
+    k.area(),
+    "pause-button",
   ]);
 
-  // LOAD PLAYER
+  k.onHover("pause-button", () => {
+    if (!isAnimating) {
+      k.setCursor("pointer");
+    }
+  });
+
+  k.onHoverEnd("pause-button", () => {
+    if (!isAnimating) {
+      k.setCursor("default");
+    }
+  });
+
+  k.onClick("pause-button", () => {
+    playClickEffect();
+  });
+
+  // RENDER PLAYER
   const player = map.add([
     k.sprite("heroes-idle-side"),
     k.pos(150, mapHeight - 470),
     k.scale(5),
   ]);
 
-  // LOAD ENEMY
+  // RENDER ENEMY
   const enemy = map.add([
     k.sprite("heroes-idle-side"),
     k.pos(mapWidth - 300, mapHeight - 470),
@@ -912,28 +1112,14 @@ export default async function BattleCard(k) {
     align: "center",
   });
 
-  const cardWidth = 250;
-  const cardSpacing = 50;
-  const totalCardsWidth = (cardWidth + cardSpacing) * 3 - cardSpacing;
-  const startX = (mapWidth - totalCardsWidth) / 2;
-
-  cognitiveCards.forEach((card, index) => {
-    const cardX = startX + index * (cardWidth + cardSpacing) + 25;
-    const cardY = mapHeight - 425;
-
-    spawnNewCognitiveCard(
-      k,
-      map,
-      card,
-      cardX,
-      cardY,
-      mapWidth,
-      mapHeight,
-      cardWidth,
-      player,
-      playerHealthBarFill,
-      enemy,
-      enemyBeliefBarFill
-    );
-  });
+  startTurn(
+    k,
+    map,
+    mapWidth,
+    mapHeight,
+    player,
+    playerHealthBarFill,
+    enemy,
+    enemyBeliefBarFill
+  );
 }
