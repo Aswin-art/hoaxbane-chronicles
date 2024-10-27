@@ -335,7 +335,7 @@
                 {
                  "height":0,
                  "id":17,
-                 "name":"npc",
+                 "name":"chief",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -379,6 +379,54 @@
                  "width":0,
                  "x":256,
                  "y":400
+                }, 
+                {
+                 "height":0,
+                 "id":30,
+                 "name":"NPC2",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":307.344494684101,
+                 "y":213.246975436881
+                }, 
+                {
+                 "height":0,
+                 "id":31,
+                 "name":"NPC3",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":127.703776121227,
+                 "y":185.445435659294
+                }, 
+                {
+                 "height":0,
+                 "id":32,
+                 "name":"NPC4",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":149.089575950141,
+                 "y":344.616888671636
+                }, 
+                {
+                 "height":0,
+                 "id":33,
+                 "name":"NPC5",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":326.591714530123,
+                 "y":406.024685323231
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -387,10 +435,10 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":30,
+ "nextobjectid":34,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.2",
+ "tiledversion":"1.11.0",
  "tileheight":16,
  "tilesets":[
         {

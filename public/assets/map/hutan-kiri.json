@@ -174,14 +174,14 @@
                 {
                  "height":0,
                  "id":3,
-                 "name":"monster",
+                 "name":"NPC11",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":161.085,
-                 "y":226.446
+                 "x":111.585,
+                 "y":290.946
                 }, 
                 {
                  "height":0,
@@ -282,7 +282,7 @@
  "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.2",
+ "tiledversion":"1.11.0",
  "tileheight":16,
  "tilesets":[
         {

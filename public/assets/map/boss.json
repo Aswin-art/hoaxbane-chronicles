@@ -311,14 +311,38 @@
                 {
                  "height":0,
                  "id":23,
-                 "name":"boss",
+                 "name":"NPC12",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":400,
-                 "y":160
+                 "x":257.74655617145,
+                 "y":122.065748312387
+                }, 
+                {
+                 "height":0,
+                 "id":25,
+                 "name":"NPC13",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":287.668075297733,
+                 "y":219.702541024093
+                }, 
+                {
+                 "height":0,
+                 "id":26,
+                 "name":"NPC14",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":397.782778113166,
+                 "y":153.31760057077
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -327,10 +351,10 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":25,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.2",
+ "tiledversion":"1.11.0",
  "tileheight":16,
  "tilesets":[
         {
