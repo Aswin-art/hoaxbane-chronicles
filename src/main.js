@@ -437,20 +437,6 @@ await k.loadSprite("map-boss", "/assets/map/map-boss.png");
     k.scene(sceneName, (args) => scenes[sceneName](k, args));
   }
 
-const scenes = {
-  house,
-  halaman,
-  boss,
-  menu,
-  gameover,
-  BattleCard,
-  intro,
-  village
-};
-
-for (const sceneName in scenes) {
-  k.scene(sceneName, (args) => scenes[sceneName](k, args));
-}
 
 k.go("halaman");
 
