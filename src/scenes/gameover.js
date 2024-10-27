@@ -1,6 +1,6 @@
 import { colorizeBackground } from "../../utils.js";
 import { stopBackgroundMusic } from "../components/backgroundMusic.js";
-import { APIHandle, gameState, playerState } from "../states/index.js";
+import { gameState, playerState } from "../states/index.js";
 
 export default async function gameover(k, state = "lose") {
   colorizeBackground(k, 0, 0, 0);
@@ -39,6 +39,5 @@ export default async function gameover(k, state = "lose") {
   ]);
 
   k.onKeyPress("enter", () => {
-    window.location.href = "https://digital-odyssey-sable.vercel.app/";
   });
 }

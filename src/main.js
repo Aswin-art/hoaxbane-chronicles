@@ -1,16 +1,15 @@
 import kaboom from "kaboom";
 import house from "./scenes/house";
 import halaman from "./scenes/halaman";
-import hutanKiri from "./scenes/hutanKiri";
-import village from "./scenes/village";
-import battle from "./scenes/battle";
-import hutanAtas from "./scenes/hutanAtas";
-import hutanBawah from "./scenes/hutanBawah";
 import boss from "./scenes/boss";
 import menu from "./scenes/menu";
 import gameover from "./scenes/gameover";
 import BattleCard from "./scenes/battle-card";
 import intro from "./scenes/intro";
+import village from "./scenes/village";
+
+// new
+// import villageHall from "./scenes/village-hall";
 
 const k = kaboom({
   width: window.innerWidth,
@@ -109,6 +108,68 @@ await k.loadSpriteAtlas("/assets/images/topdownasset.png", {
   },
 });
 
+// memuat asset npc
+// await k.loadSpriteAtlas("/assets/images/npc1-4.png", {
+//   "npc1-up": {
+//     x: 0,
+//     y: 0,
+//     width: 32,
+//     height: 32,
+//     sliceX: 3,
+//   },
+//   "npc1-right": {
+//     x: 0,
+//     y: 32,
+//     width: 32,
+//     height: 32,
+//     sliceX: 3,
+//   },
+//   "npc1-down": {
+//     x: 0,
+//     y: 64,
+//     width: 32,
+//     height: 32,
+//     sliceX: 3,
+//   },
+//   "npc1-left": {
+//     x: 0,
+//     y: 96,
+//     width: 32,
+//     height: 32,
+//     sliceX: 3,
+//   },
+// });
+// await k.loadSprite("npcs", "/assets/images/npc1-4.png", {
+//   sliceX: 39,
+//   sliceY: 31,
+//   anims: {
+//     "npc1-up": 905,
+//     "npc1-side": 907,
+//     "npc1-down": 866
+//   },
+// });
+
+await k.loadSpriteAtlas("/assets/images/npc1-4.png", {
+  "npc1-up": {
+    x: 16,
+    y: 140,
+    width: 32,
+    height: 40,
+  },
+  "npc1-side": {
+    x: 16,
+    y: 75,
+    width: 32,
+    height: 40,
+  },
+  "npc1-down": {
+    x: 16,
+    y: 10,
+    width: 32,
+    height: 45,
+  }
+});
+
 // memuat asset keys (arrow key)
 await k.loadSpriteAtlas("/assets/images/keys.png", {
   "arrow-up": {
@@ -197,18 +258,6 @@ await k.loadSprite("inventory", "/assets/images/inventory.png");
 
 // Memuat asset preview map (halaman)
 await k.loadSprite("map-halaman", "/assets/map/map-halaman.png");
-
-// Memuat asset preview map (hutan-kiri)
-await k.loadSprite("map-hutan-kiri", "/assets/map/map-hutan-kiri.png");
-
-// Memuat asset preview map (hutan-atas)
-await k.loadSprite("map-hutan-atas", "/assets/map/map-hutan-atas.png");
-
-// Memuat asset preview map (hutan-bawah)
-await k.loadSprite("map-hutan-bawah", "/assets/map/map-hutan-bawah.png");
-
-// Memuat asset preview map (village)
-await k.loadSprite("map-village", "/assets/map/map-village.png");
 
 // Memuat asset preview map (boss)
 await k.loadSprite("map-boss", "/assets/map/map-boss.png");
@@ -325,20 +374,16 @@ await k.loadSpriteAtlas("/assets/images/health-energy-bar.png", {
 const scenes = {
   house,
   halaman,
-  hutanKiri,
-  hutanAtas,
-  hutanBawah,
-  village,
   boss,
-  battle,
   menu,
   gameover,
   BattleCard,
   intro,
+  village
 };
 
 for (const sceneName in scenes) {
   k.scene(sceneName, (args) => scenes[sceneName](k, args));
 }
 
-k.go("BattleCard");
+k.go("halaman");

@@ -131,39 +131,18 @@ export default async function village(k) {
   });
   entities.player.onCollide("exit-hutan-kiri", () => {
     const currMission = gameState.getCurrMission();
-    if (currMission >= 1) {
-      gameState.setPreviousScene("village");
-      k.go("hutanKiri");
-    } else {
-      warningDialog(
-        k,
-        "Ambil misi terlebih dahulu sebelum pergi ke hutan barat!"
-      );
-    }
+    gameState.setPreviousScene("village");
+    k.go("hutanKiri");
   });
   entities.player.onCollide("exit-hutan-atas", () => {
     const currMission = gameState.getCurrMission();
-    if (currMission >= 2) {
-      gameState.setPreviousScene("village");
-      k.go("hutanAtas");
-    } else {
-      warningDialog(
-        k,
-        "Ambil misi terlebih dahulu sebelum pergi ke hutan utara!"
-      );
-    }
+    gameState.setPreviousScene("village");
+    k.go("hutanAtas");
   });
   entities.player.onCollide("exit-hutan-bawah", () => {
     const currMission = gameState.getCurrMission();
-    if (currMission >= 3) {
-      gameState.setPreviousScene("village");
-      k.go("hutanBawah");
-    } else {
-      warningDialog(
-        k,
-        "Ambil misi terlebih dahulu sebelum pergi ke hutan selatan!"
-      );
-    }
+    gameState.setPreviousScene("village");
+    k.go("hutanBawah");
   });
 
   //   entities.player.onCollide("dungeon-door-entrance", () => {

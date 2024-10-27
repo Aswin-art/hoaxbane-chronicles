@@ -15,17 +15,24 @@ import {
   generateIconsComponents,
   generateInventoryBarComponents,
 } from "../components/icons.js";
+import {
+  endInteraction,
+  generateNPC1Components,
+  startInteraction,
+  startInteractionNPC1,
+  endInteractionNPC1,
+} from "../components/npc.js";
 
 export default async function halaman(k) {
   colorizeBackground(k, 27, 29, 52);
   gameState.setCurrScene("halaman");
-  const mapData = await fetchMapData("/assets/map/halaman-rumah.json");
+  const mapData = await fetchMapData("/assets/map/new/halaman-rumah.json");
 
   const map = k.add([k.pos(0, 0)]);
 
   const entities = {
     player: null,
-    slimes: [],
+    npc: null,
   };
 
   const layers = mapData.layers;
@@ -53,6 +60,12 @@ export default async function halaman(k) {
         ) {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
+          );
+        }
+        
+        if (object.name === "NPC1") {
+          entities.npc = map.add(
+            generateNPC1Components(k, k.vec2(object.x, object.y))
           );
         }
       }
@@ -85,6 +98,14 @@ export default async function halaman(k) {
   });
 
   setPlayerMovement(k, entities.player);
+
+  entities.player.onCollide("npc1", () => {
+    startInteractionNPC1(k, entities.npc, entities.player);
+  });
+
+  entities.player.onCollideEnd("npc1", () => {
+    endInteractionNPC1(entities.npc);
+  });
 
   entities.player.onCollide("exit-village", () => {
     gameState.setPreviousScene("halaman");

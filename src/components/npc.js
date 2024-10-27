@@ -15,6 +15,60 @@ export function generateNPCComponents(k, pos) {
   ];
 }
 
+export function generateNPC1Components(k, pos) {
+  return [
+    k.sprite("npc1-down"),
+    k.area({ shape: new k.Rect(k.vec2(2, 4), 12, 12) }),
+    k.body({ isStatic: true }),
+    k.pos(pos),
+    k.scale(0.44),
+    "npc1",
+  ];
+}
+
+export async function startInteractionNPC1(k, npc, player) {
+  if (player.direction === "left") {
+    npc.flipX = true;
+    playAnimIfNotPlaying(npc, "npc1-side");
+  }
+
+  if (player.direction === "right") {
+    npc.flipX = false;
+    playAnimIfNotPlaying(npc, "npc1-side");
+  }
+
+  if (player.direction === "down") {
+    playAnimIfNotPlaying(npc, "npc1-up");
+  }
+
+  if (player.direction === "up") {
+    playAnimIfNotPlaying(npc, "npc1-down");
+  }
+
+  const responses = npcLines["npc1"];
+
+  for (let i = 0; i < responses.length; i++) {
+    if (i % 2 == 0) {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        "Pekerja Kontruksi : " + responses[i]
+      );
+    } else {
+      await dialogue(
+        k,
+        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+        "Player : " + responses[i]
+      );
+    }
+  }
+}
+
+export function endInteractionNPC1(npc) {
+  playAnimIfNotPlaying(npc, "npc1-down");
+}
+
+
 export async function startInteraction(k, npc, player) {
   if (player.direction === "left") {
     npc.flipX = true;
@@ -49,7 +103,7 @@ export async function startInteraction(k, npc, player) {
       NPCState.setNumberTalkedOldMan(1);
       numberTalked = NPCState.getNumberTalkedOldMan();
     }
-
+  numberTalked = NPCState.getNumberTalkedOldMan();
     if (responses[numberTalked]) {
       await dialogue(
         k,
@@ -60,105 +114,105 @@ export async function startInteraction(k, npc, player) {
     }
   }
 
-  if (
-    (gameState.getCurrMission() == 1 && gameState.getMonster1()) ||
-    (gameState.getCurrMission() == 2 && !gameState.getMonster2())
-  ) {
-    if (gameState.getCurrMission() == 1 && gameState.getMonster1()) {
-      playerState.addCoin(30);
-    }
-    gameState.setCurrMission(2);
-    currMission = 2;
-    const responses = npcLines["misi2"];
+  // if (
+  //   (gameState.getCurrMission() == 1 && gameState.getMonster1()) ||
+  //   (gameState.getCurrMission() == 2 && !gameState.getMonster2())
+  // ) {
+  //   if (gameState.getCurrMission() == 1 && gameState.getMonster1()) {
+  //     playerState.addCoin(30);
+  //   }
+  //   gameState.setCurrMission(2);
+  //   currMission = 2;
+  //   const responses = npcLines["misi2"];
 
-    let numberTalked = NPCState.getNumberTalkedOldMan();
-    if (numberTalked >= 3) {
-      NPCState.setNumberTalkedOldMan(1);
-      numberTalked = NPCState.getNumberTalkedOldMan();
-    }
+  //   let numberTalked = NPCState.getNumberTalkedOldMan();
+  //   if (numberTalked >= 3) {
+  //     NPCState.setNumberTalkedOldMan(1);
+  //     numberTalked = NPCState.getNumberTalkedOldMan();
+  //   }
 
-    if (responses[numberTalked]) {
-      await dialogue(
-        k,
-        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
-        responses[numberTalked]
-      );
-      NPCState.setNumberTalkedOldMan(numberTalked + 1);
-    }
-  }
+  //   if (responses[numberTalked]) {
+  //     await dialogue(
+  //       k,
+  //       k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+  //       responses[numberTalked]
+  //     );
+  //     NPCState.setNumberTalkedOldMan(numberTalked + 1);
+  //   }
+  // }
 
-  if (
-    (gameState.getCurrMission() == 2 && gameState.getMonster2()) ||
-    (gameState.getCurrMission() == 3 && !gameState.getMonster3())
-  ) {
-    if (gameState.getCurrMission() == 2 && gameState.getMonster2()) {
-      playerState.addCoin(35);
-    }
-    gameState.setCurrMission(3);
-    const responses = npcLines["misi3"];
+  // if (
+  //   (gameState.getCurrMission() == 2 && gameState.getMonster2()) ||
+  //   (gameState.getCurrMission() == 3 && !gameState.getMonster3())
+  // ) {
+  //   if (gameState.getCurrMission() == 2 && gameState.getMonster2()) {
+  //     playerState.addCoin(35);
+  //   }
+  //   gameState.setCurrMission(3);
+  //   const responses = npcLines["misi3"];
 
-    let numberTalked = NPCState.getNumberTalkedOldMan();
-    if (numberTalked >= 3) {
-      NPCState.setNumberTalkedOldMan(1);
-      numberTalked = NPCState.getNumberTalkedOldMan();
-    }
+  //   let numberTalked = NPCState.getNumberTalkedOldMan();
+  //   if (numberTalked >= 3) {
+  //     NPCState.setNumberTalkedOldMan(1);
+  //     numberTalked = NPCState.getNumberTalkedOldMan();
+  //   }
 
-    if (responses[numberTalked]) {
-      await dialogue(
-        k,
-        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
-        responses[numberTalked]
-      );
-      NPCState.setNumberTalkedOldMan(numberTalked + 1);
-    }
-  }
+  //   if (responses[numberTalked]) {
+  //     await dialogue(
+  //       k,
+  //       k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+  //       responses[numberTalked]
+  //     );
+  //     NPCState.setNumberTalkedOldMan(numberTalked + 1);
+  //   }
+  // }
 
-  if (
-    (gameState.getCurrMission() == 3 && gameState.getMonster3()) ||
-    (gameState.getCurrMission() == 4 && !gameState.getBoss())
-  ) {
-    if (gameState.getCurrMission() == 3 && gameState.getMonster3()) {
-      playerState.addCoin(35);
-    }
-    gameState.setCurrMission(4);
-    const responses = npcLines["misi4"];
+  // if (
+  //   (gameState.getCurrMission() == 3 && gameState.getMonster3()) ||
+  //   (gameState.getCurrMission() == 4 && !gameState.getBoss())
+  // ) {
+  //   if (gameState.getCurrMission() == 3 && gameState.getMonster3()) {
+  //     playerState.addCoin(35);
+  //   }
+  //   gameState.setCurrMission(4);
+  //   const responses = npcLines["misi4"];
 
-    let numberTalked = NPCState.getNumberTalkedOldMan();
-    if (numberTalked >= 3) {
-      NPCState.setNumberTalkedOldMan(1);
-      numberTalked = NPCState.getNumberTalkedOldMan();
-    }
+  //   let numberTalked = NPCState.getNumberTalkedOldMan();
+  //   if (numberTalked >= 3) {
+  //     NPCState.setNumberTalkedOldMan(1);
+  //     numberTalked = NPCState.getNumberTalkedOldMan();
+  //   }
 
-    if (responses[numberTalked]) {
-      await dialogue(
-        k,
-        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
-        responses[numberTalked]
-      );
-      NPCState.setNumberTalkedOldMan(numberTalked + 1);
-    }
-  }
+  //   if (responses[numberTalked]) {
+  //     await dialogue(
+  //       k,
+  //       k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+  //       responses[numberTalked]
+  //     );
+  //     NPCState.setNumberTalkedOldMan(numberTalked + 1);
+  //   }
+  // }
 
-  if (gameState.getCurrMission() == 4 && gameState.getBoss()) {
-    playerState.addCoin(50);
-    const responses = npcLines["congratulate"];
+  // if (gameState.getCurrMission() == 4 && gameState.getBoss()) {
+  //   playerState.addCoin(50);
+  //   const responses = npcLines["congratulate"];
 
-    let numberTalked = NPCState.getNumberTalkedOldMan();
-    if (numberTalked >= 3) {
-      NPCState.setNumberTalkedOldMan(1);
-      numberTalked = NPCState.getNumberTalkedOldMan();
-    }
+  //   let numberTalked = NPCState.getNumberTalkedOldMan();
+  //   if (numberTalked >= 3) {
+  //     NPCState.setNumberTalkedOldMan(1);
+  //     numberTalked = NPCState.getNumberTalkedOldMan();
+  //   }
 
-    if (responses[numberTalked]) {
-      await dialogue(
-        k,
-        k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
-        responses[numberTalked],
-        "win"
-      );
-      NPCState.setNumberTalkedOldMan(numberTalked + 1);
-    }
-  }
+  //   if (responses[numberTalked]) {
+  //     await dialogue(
+  //       k,
+  //       k.vec2(k.width() / 2 - 500 / 2 - 100, k.height() - 250),
+  //       responses[numberTalked],
+  //       "win"
+  //     );
+  //     NPCState.setNumberTalkedOldMan(numberTalked + 1);
+  //   }
+  // }
 }
 
 export function endInteraction(oldman) {
