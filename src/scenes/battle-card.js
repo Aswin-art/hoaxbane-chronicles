@@ -20,7 +20,7 @@ let isAnimating = false;
 let isGameOver = false;
 let turnInProgress = false;
 
-const playerName = "Hero Adimas";
+const playerName = "Player";
 const enemyName = "Penduduk Galuh";
 
 let currentTurn = "player";
