@@ -657,6 +657,8 @@ const spawnNewCognitiveCard = (
   enemyBeliefBarFill,
   onTurnEnd
 ) => {
+  isAnimating = false;
+
   const cardSprite = map.add([
     k.sprite(card.name),
     k.pos(cardX, cardY + 100),
@@ -842,7 +844,7 @@ const spawnNewCognitiveCard = (
     }
   });
 
-  k.onClick("skill-card" + cardSprite.cardId, async () => {
+  k.onClick("skill-card" + cardSprite.cardId, () => {
     if (isClicked || isAnimating) return;
 
     currentCognitiveCard = cardSprite;
@@ -884,10 +886,8 @@ const spawnNewCognitiveCard = (
         cardSprite.scale = scale;
       });
 
-      // Hapus semua card kognitive
       k.wait(0.5, () => removeSpawnCards(k, card.cardId));
 
-      // Spawn affective card
       k.wait(0.6, () =>
         spawnNewAffectiveCard(
           k,
@@ -926,7 +926,6 @@ const playerTurn = (
   const startX = (mapWidth - totalCardsWidth) / 2;
 
   cognitiveCards.forEach((card, index) => {
-    console.log;
     const cardX = startX + index * (cardWidth + cardSpacing) + 25;
     const cardY = mapHeight - 425;
 
@@ -1011,9 +1010,13 @@ const endTurn = (
   enemy,
   enemyBeliefBarFill
 ) => {
-  isAnimating = false;
-
   currentTurn = currentTurn === "player" ? "npc" : "player";
+
+  if (currentTurn === "player") {
+    currentAffectiveCard = null;
+    currentCognitiveCard = null;
+    spawnCards = [];
+  }
 
   startTurn(
     k,
