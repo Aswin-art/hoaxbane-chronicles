@@ -12,16 +12,16 @@ import gameover from "./scenes/gameover";
 import BattleCard from "./scenes/battle-card";
 import intro from "./scenes/intro";
 
-const k = kaboom({
-  width: window.innerWidth,
-  height: window.innerHeight,
-  letterbox: true,
-  global: false,
-  loadingScreen: false,
-  fullscreen: true,
-});
+const startGame = async () => {
+  const k = kaboom({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    letterbox: true,
+    global: false,
+    loadingScreen: false,
+    fullscreen: true,
+  });
 
-const loadAssets = async () => {
   // memuat font
   await k.loadFont("gameboy", "/assets/fonts/gb.ttf");
 
@@ -325,27 +325,27 @@ const loadAssets = async () => {
       height: 50,
     },
   });
+
+  const scenes = {
+    house,
+    halaman,
+    hutanKiri,
+    hutanAtas,
+    hutanBawah,
+    village,
+    boss,
+    battle,
+    menu,
+    gameover,
+    BattleCard,
+    intro,
+  };
+
+  for (const sceneName in scenes) {
+    k.scene(sceneName, (args) => scenes[sceneName](k, args));
+  }
+
+  k.go("BattleCard");
 };
 
-loadAssets();
-
-const scenes = {
-  house,
-  halaman,
-  hutanKiri,
-  hutanAtas,
-  hutanBawah,
-  village,
-  boss,
-  battle,
-  menu,
-  gameover,
-  BattleCard,
-  intro,
-};
-
-for (const sceneName in scenes) {
-  k.scene(sceneName, (args) => scenes[sceneName](k, args));
-}
-
-k.go("BattleCard");
+startGame();
