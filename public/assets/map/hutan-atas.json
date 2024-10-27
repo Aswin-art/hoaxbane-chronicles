@@ -134,14 +134,14 @@
                 {
                  "height":0,
                  "id":29,
-                 "name":"monster",
+                 "name":"NPC6",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":228,
-                 "y":70
+                 "x":125.455519418404,
+                 "y":123.568012244117
                 }, 
                 {
                  "height":0,
@@ -154,6 +154,30 @@
                  "width":0,
                  "x":273.333333333333,
                  "y":256.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":31,
+                 "name":"NPC7",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":338.626363114597,
+                 "y":74.6125884828774
+                }, 
+                {
+                 "height":0,
+                 "id":32,
+                 "name":"NPC8",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":192.079586761048,
+                 "y":69.6384159173522
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -261,10 +285,10 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":31,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.2",
+ "tiledversion":"1.11.0",
  "tileheight":16,
  "tilesets":[
         {

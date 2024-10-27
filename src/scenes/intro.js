@@ -18,8 +18,8 @@ export default function intro(k) {
 
   video.onended = () => {
     document.body.removeChild(video);
-    gameState.setSoundTheme("battle-monster");
+    gameState.setSoundTheme("explore");
     playBackgroundMusic();
-    k.go("BattleCard");
+    k.go("halaman");
   };
 }

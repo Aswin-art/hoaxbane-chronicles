@@ -1,12 +1,10 @@
 import { colorizeBackground } from "../../utils.js";
-import { playBackgroundMusic } from "../components/backgroundMusic.js";
-import { gameState } from "../states/index.js";
 
 export default function menu(k) {
   colorizeBackground(k, 0, 0, 0);
 
   k.add([
-    k.text("Digital Odyssey", { size: 32, font: "gameboy" }),
+    k.text("HoaxBane Chronicle", { size: 32, font: "gameboy" }),
     k.area(),
     k.anchor("center"),
     k.pos(k.center().x, k.center().y - 100),
@@ -33,9 +31,6 @@ export default function menu(k) {
   ]);
 
   k.onKeyPress("enter", () => {
-    // gameState.setSoundTheme("battle-monster");
-    // playBackgroundMusic();
-    // k.go("BattleCard");
     k.go("intro");
   });
 }
