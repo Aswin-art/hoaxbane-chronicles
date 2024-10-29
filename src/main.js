@@ -6,6 +6,10 @@ import menu from "./scenes/menu";
 import gameover from "./scenes/gameover";
 import BattleCard from "./scenes/battle-card";
 import intro from "./scenes/intro";
+import hutanKiri from "./scenes/hutanKiri";
+import hutanAtas from "./scenes/hutanAtas";
+import hutanBawah from "./scenes/hutanBawah";
+import battle from "./scenes/battle";
 import village from "./scenes/village";
 
 // new
@@ -150,95 +154,95 @@ const startGame = async () => {
     },
   });
 
-// memuat asset npc
-// await k.loadSpriteAtlas("/assets/images/npc1-4.png", {
-//   "npc1-up": {
-//     x: 0,
-//     y: 0,
-//     width: 32,
-//     height: 32,
-//     sliceX: 3,
-//   },
-//   "npc1-right": {
-//     x: 0,
-//     y: 32,
-//     width: 32,
-//     height: 32,
-//     sliceX: 3,
-//   },
-//   "npc1-down": {
-//     x: 0,
-//     y: 64,
-//     width: 32,
-//     height: 32,
-//     sliceX: 3,
-//   },
-//   "npc1-left": {
-//     x: 0,
-//     y: 96,
-//     width: 32,
-//     height: 32,
-//     sliceX: 3,
-//   },
-// });
-// await k.loadSprite("npcs", "/assets/images/npc1-4.png", {
-//   sliceX: 39,
-//   sliceY: 31,
-//   anims: {
-//     "npc1-up": 905,
-//     "npc1-side": 907,
-//     "npc1-down": 866
-//   },
-// });
+  // memuat asset npc
+  // await k.loadSpriteAtlas("/assets/images/npc1-4.png", {
+  //   "npc1-up": {
+  //     x: 0,
+  //     y: 0,
+  //     width: 32,
+  //     height: 32,
+  //     sliceX: 3,
+  //   },
+  //   "npc1-right": {
+  //     x: 0,
+  //     y: 32,
+  //     width: 32,
+  //     height: 32,
+  //     sliceX: 3,
+  //   },
+  //   "npc1-down": {
+  //     x: 0,
+  //     y: 64,
+  //     width: 32,
+  //     height: 32,
+  //     sliceX: 3,
+  //   },
+  //   "npc1-left": {
+  //     x: 0,
+  //     y: 96,
+  //     width: 32,
+  //     height: 32,
+  //     sliceX: 3,
+  //   },
+  // });
+  // await k.loadSprite("npcs", "/assets/images/npc1-4.png", {
+  //   sliceX: 39,
+  //   sliceY: 31,
+  //   anims: {
+  //     "npc1-up": 905,
+  //     "npc1-side": 907,
+  //     "npc1-down": 866
+  //   },
+  // });
 
-await k.loadSpriteAtlas("/assets/images/npc1-4.png", {
-  "npc1-up": {
-    x: 16,
-    y: 140,
-    width: 32,
-    height: 40,
-  },
-  "npc1-side": {
-    x: 16,
-    y: 75,
-    width: 32,
-    height: 40,
-  },
-  "npc1-down": {
-    x: 16,
-    y: 10,
-    width: 32,
-    height: 45,
-  }
-});
+  await k.loadSpriteAtlas("/assets/images/npc1-4.png", {
+    "npc1-up": {
+      x: 16,
+      y: 140,
+      width: 32,
+      height: 40,
+    },
+    "npc1-side": {
+      x: 16,
+      y: 75,
+      width: 32,
+      height: 40,
+    },
+    "npc1-down": {
+      x: 16,
+      y: 10,
+      width: 32,
+      height: 45,
+    },
+  });
 
-// memuat asset keys (arrow key)
-await k.loadSpriteAtlas("/assets/images/keys.png", {
-  "arrow-up": {
-    x: 28,
-    y: 30,
-    width: 75,
-    height: 75,
-  },
-  "arrow-right": {
-    x: 318,
-    y: 33,
-    width: 72,
-    height: 68,
-  },
-  "arrow-left": {
-    x: 220,
-    y: 30,
-    width: 75,
-    height: 75,
-  },
-  "arrow-down": {
-    x: 127,
-    y: 33,
-    width: 72,
-    height: 68,
-  },
-});
+  // memuat asset keys (arrow key)
+  await k.loadSpriteAtlas("/assets/images/keys.png", {
+    "arrow-up": {
+      x: 28,
+      y: 30,
+      width: 75,
+      height: 75,
+    },
+    "arrow-right": {
+      x: 318,
+      y: 33,
+      width: 72,
+      height: 68,
+    },
+    "arrow-left": {
+      x: 220,
+      y: 30,
+      width: 75,
+      height: 75,
+    },
+    "arrow-down": {
+      x: 127,
+      y: 33,
+      width: 72,
+      height: 68,
+    },
+  });
 
   // memuat asset icons (quest, map)
   await k.loadSpriteAtlas("/assets/images/items.png", {
@@ -297,8 +301,8 @@ await k.loadSpriteAtlas("/assets/images/keys.png", {
   // Memuat asset preview map (hutan-atas)
   await k.loadSprite("map-hutan-atas", "/assets/map/map-hutan-atas.png");
 
-// Memuat asset preview map (boss)
-await k.loadSprite("map-boss", "/assets/map/map-boss.png");
+  // Memuat asset preview map (boss)
+  await k.loadSprite("map-boss", "/assets/map/map-boss.png");
 
   // Memuat asset preview map (hutan-bawah)
   await k.loadSprite("map-hutan-bawah", "/assets/map/map-hutan-bawah.png");
@@ -437,10 +441,7 @@ await k.loadSprite("map-boss", "/assets/map/map-boss.png");
     k.scene(sceneName, (args) => scenes[sceneName](k, args));
   }
 
-
-k.go("halaman");
-
-  k.go("BattleCard");
+  k.go("menu");
 };
 
 startGame();
